@@ -73,7 +73,7 @@
   // ---- shared chrome ----
   function chrome() {
     var nav = [["/portal/home", "Home"], ["/portal/library", "Library"], ["/portal/core-four", "Core Four"], ["/portal/calls", "Calls"], ["/portal/agents", "Agents"], ["/portal/assistant", "Assistant"]];
-    var cur = location.pathname.split("/").pop() || "/portal/home";
+    var cur = "/portal/" + ((location.pathname.split("/").pop() || "home").replace(/\.html$/, "") || "home");
     var links = nav.map(function (n) { return '<a href="' + n[0] + '"' + (n[0] === cur ? ' aria-current="page"' : '') + '>' + n[1] + '</a>'; }).join("");
     var who = P.first() || "Member";
     var top = document.getElementById("chrome");
