@@ -231,6 +231,7 @@ document.documentElement.classList.add('js');
   if(!('IntersectionObserver' in window)){els.forEach(function(e){e.classList.add('on')});return}
   var io=new IntersectionObserver(function(entries){entries.forEach(function(en){if(en.isIntersecting){en.target.classList.add('on');io.unobserve(en.target)}})},{rootMargin:'0px 0px -12% 0px',threshold:0.05});
   els.forEach(function(e){io.observe(e)});
+  setTimeout(function(){els.forEach(function(e){e.classList.add('on')})},1500);
 })();
 </script>
 
