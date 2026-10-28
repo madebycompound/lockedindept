@@ -1,5 +1,5 @@
 {
   "cleanUrls": true,
-  "trailingSlash": true,
+  "trailingSlash": false,
   "headers": [{ "source": "/portal/(.*)", "headers": [{ "key": "X-Robots-Tag", "value": "noindex" }] }]
 }

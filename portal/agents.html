@@ -6,17 +6,17 @@
 <meta name="robots" content="noindex">
 <title>Agents / Locked In Dept.</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&display=swap">
-<link rel="stylesheet" href="portal.css">
+<link rel="stylesheet" href="/portal/portal.css">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
-<script src="config.js"></script>
-<script src="data.js"></script>
+<script src="/portal/config.js"></script>
+<script src="/portal/data.js"></script>
 </head>
 <body data-page="agents">
 <div id="chrome"></div>
 <main class="page">
 <section class="head gut">
 <div><p class="lbl" style="margin-bottom:12px">04 / Systems / Install into your own Claude setup</p><h1 class="big">Agent<br>library</h1></div>
-<a class="link" href="assistant.html?q=Which%20agent%20should%20I%20set%20up%20first%3F">Not sure where to start? Ask the assistant →</a>
+<a class="link" href="/portal/assistant?q=Which%20agent%20should%20I%20set%20up%20first%3F">Not sure where to start? Ask the assistant →</a>
 </section>
 <div class="gut lbl" style="padding-block:14px;display:flex;flex-wrap:wrap;gap:8px 24px;border-bottom:1px solid var(--line)"><span style="flex:0 0 40px">No.</span><span style="flex:2 1 300px">Agent</span><span style="flex:1 1 160px">Works with</span><span style="flex:2 1 420px">Install</span></div>
 <div id="list"></div>
@@ -47,6 +47,6 @@ document.addEventListener("lid:ready", function () {
 </main>
 <footer id="foot"></footer>
 <div id="toast" class="toast" role="status"></div>
-<script src="portal.js"></script>
+<script src="/portal/portal.js"></script>
 </body>
 </html>

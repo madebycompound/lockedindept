@@ -6,15 +6,15 @@
 <meta name="robots" content="noindex">
 <title>Lesson / Locked In Dept.</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&display=swap">
-<link rel="stylesheet" href="portal.css">
+<link rel="stylesheet" href="/portal/portal.css">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
-<script src="config.js"></script>
-<script src="data.js"></script>
+<script src="/portal/config.js"></script>
+<script src="/portal/data.js"></script>
 </head>
 <body data-page="lesson">
 <div id="chrome"></div>
 <main class="page">
-<section class="gut" style="padding-block:24px 0;display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px"><a class="link" href="library.html">← Library</a><span class="lbl" id="crumb"></span></section>
+<section class="gut" style="padding-block:24px 0;display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px"><a class="link" href="/portal/library">← Library</a><span class="lbl" id="crumb"></span></section>
 <section class="gut" style="padding-block:24px 32px;border-bottom:1px solid var(--line)">
 <p class="lbl" style="margin-bottom:12px" id="mod"></p>
 <h1 class="big" id="title" style="font-size:clamp(36px,6vw,92px)"></h1>
@@ -27,8 +27,8 @@
 <div style="display:flex;flex-direction:column;gap:24px"><span class="lbl" id="mins"></span><p id="summary" style="font-size:17px;line-height:1.5"></p></div>
 <div style="display:flex;flex-direction:column;gap:12px">
 <button class="btn" id="done" type="button" style="justify-content:space-between">Mark as watched <svg aria-hidden="true" width="22" height="12" viewBox="0 0 22 12" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M0 6h20M15 1l5 5-5 5"></path></svg></button>
-<a class="link" id="next" href="library.html">Next lesson →</a>
-<a class="link" href="assistant.html" id="askabout">Ask the assistant about this →</a>
+<a class="link" id="next" href="/portal/library">Next lesson →</a>
+<a class="link" href="/portal/assistant" id="askabout">Ask the assistant about this →</a>
 </div>
 </div>
 </section>
@@ -43,8 +43,8 @@ document.addEventListener("lid:ready", async function () {
   document.getElementById("title").textContent = l.title;
   document.getElementById("mins").textContent = l.mins + " min";
   document.getElementById("summary").textContent = l.summary;
-  document.getElementById("askabout").href = "assistant.html?q=" + encodeURIComponent("Help me apply lesson " + l.n + ", " + l.title + ", to my business.");
-  var nx = D.lessons[i + 1]; document.getElementById("next").href = nx ? "lesson.html?n=" + nx.n : "library.html"; if (!nx) document.getElementById("next").textContent = "Back to library →";
+  document.getElementById("askabout").href = "/portal/assistant?q=" + encodeURIComponent("Help me apply lesson " + l.n + ", " + l.title + ", to my business.");
+  var nx = D.lessons[i + 1]; document.getElementById("next").href = nx ? "/portal/lesson?n=" + nx.n : "/portal/library"; if (!nx) document.getElementById("next").textContent = "Back to library →";
   var p = document.getElementById("player");
   if (l.video) {
     var src = l.video.indexOf("vimeo.com") >= 0 && l.video.indexOf("player.vimeo.com") < 0 ? "https://player.vimeo.com/video/" + l.video.split("/").pop() : l.video;
@@ -59,6 +59,6 @@ document.addEventListener("lid:ready", async function () {
 </main>
 <footer id="foot"></footer>
 <div id="toast" class="toast" role="status"></div>
-<script src="portal.js"></script>
+<script src="/portal/portal.js"></script>
 </body>
 </html>

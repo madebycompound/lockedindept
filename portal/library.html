@@ -6,10 +6,10 @@
 <meta name="robots" content="noindex">
 <title>Library / Locked In Dept.</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&display=swap">
-<link rel="stylesheet" href="portal.css">
+<link rel="stylesheet" href="/portal/portal.css">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
-<script src="config.js"></script>
-<script src="data.js"></script>
+<script src="/portal/config.js"></script>
+<script src="/portal/data.js"></script>
 </head>
 <body data-page="library">
 <div id="chrome"></div>
@@ -29,7 +29,7 @@ document.addEventListener("lid:ready", function () {
     document.getElementById("grid").innerHTML = ls.map(function (l) {
       var m = D.method.find(function (x) { return x.key === l.module; });
       var st = done[l.n] ? '<span class="lbl" style="color:var(--mute)">Watched</span>' : (next && next.n === l.n ? '<span class="badge">Up next</span>' : (l.video ? '' : '<span class="badge soft">Soon</span>'));
-      return '<a class="card" href="lesson.html?n=' + l.n + '"><span class="meta lbl"><span>' + (m ? m.title : '') + ' / ' + l.mins + ' min</span>' + st + '</span><p class="ghost">' + l.n + '</p><p class="title">' + l.title + '</p></a>';
+      return '<a class="card" href="/portal/lesson?n=' + l.n + '"><span class="meta lbl"><span>' + (m ? m.title : '') + ' / ' + l.mins + ' min</span>' + st + '</span><p class="ghost">' + l.n + '</p><p class="title">' + l.title + '</p></a>';
     }).join("") || '<p class="gut" style="padding-block:40px">Nothing matches.</p>';
     document.getElementById("count").textContent = "The method, in order / " + LID.progress().done + " of " + D.lessons.length + " watched";
   }
@@ -43,6 +43,6 @@ document.addEventListener("lid:ready", function () {
 </main>
 <footer id="foot"></footer>
 <div id="toast" class="toast" role="status"></div>
-<script src="portal.js"></script>
+<script src="/portal/portal.js"></script>
 </body>
 </html>

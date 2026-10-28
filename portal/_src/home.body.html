@@ -1,10 +1,10 @@
 <section class="head gut">
 <div><p class="lbl" style="margin-bottom:12px" id="stageline">Club Locked In</p><h1 class="big" id="greet">Morning.</h1></div>
-<div style="display:flex;flex-direction:column;align-items:flex-end;gap:16px"><span class="lbl" id="cohort"></span><a class="btn" href="calls.html">Book a call <svg aria-hidden="true" width="22" height="12" viewBox="0 0 22 12" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M0 6h20M15 1l5 5-5 5"></path></svg></a></div>
+<div style="display:flex;flex-direction:column;align-items:flex-end;gap:16px"><span class="lbl" id="cohort"></span><a class="btn" href="/portal/calls">Book a call <svg aria-hidden="true" width="22" height="12" viewBox="0 0 22 12" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M0 6h20M15 1l5 5-5 5"></path></svg></a></div>
 </section>
 
 <section class="split">
-<a id="continue" href="library.html" class="cellR" style="flex:2 1 560px;min-width:0;text-decoration:none;display:flex;flex-wrap:wrap;border-bottom:1px solid var(--line)">
+<a id="continue" href="/portal/library" class="cellR" style="flex:2 1 560px;min-width:0;text-decoration:none;display:flex;flex-wrap:wrap;border-bottom:1px solid var(--line)">
 <div class="fig" style="flex:1 1 220px;min-height:300px"><img src="/img/red-blur.jpg" alt="" style="object-position:center 30%"></div>
 <div style="flex:2 1 280px;min-width:0;padding:24px;display:flex;flex-direction:column;justify-content:space-between;gap:32px">
 <div class="meta lbl"><span>Continue</span><span id="lessoncount"></span></div>
@@ -19,9 +19,9 @@
 </section>
 
 <section class="split">
-<div class="cell cellR" style="flex:1 1 320px;justify-content:space-between;min-height:240px"><span class="lbl">Next 1:1</span><div><p class="big" id="next11" style="font-size:32px">Not booked</p><p style="font-size:15px;margin-top:6px">Book your next session with Josh.</p></div><a class="link" href="calls.html">Book →</a></div>
-<div class="cell cellR" style="flex:1 1 320px;justify-content:space-between;min-height:240px"><span class="lbl">Live group session</span><div><p class="big" id="grouptitle" style="font-size:32px"></p><p style="font-size:15px;margin-top:6px" id="groupdate"></p></div><a class="link" href="calls.html">Details →</a></div>
-<div class="cell" style="flex:1 1 320px;justify-content:space-between;min-height:240px"><span class="meta lbl"><span>Core Four</span><span id="cfdate"></span></span><div id="cfsummary" style="display:flex;gap:16px;flex-wrap:wrap"></div><a class="link" href="core-four.html" id="cflink">Score yourself →</a></div>
+<div class="cell cellR" style="flex:1 1 320px;justify-content:space-between;min-height:240px"><span class="lbl">Next 1:1</span><div><p class="big" id="next11" style="font-size:32px">Not booked</p><p style="font-size:15px;margin-top:6px">Book your next session with Josh.</p></div><a class="link" href="/portal/calls">Book →</a></div>
+<div class="cell cellR" style="flex:1 1 320px;justify-content:space-between;min-height:240px"><span class="lbl">Live group session</span><div><p class="big" id="grouptitle" style="font-size:32px"></p><p style="font-size:15px;margin-top:6px" id="groupdate"></p></div><a class="link" href="/portal/calls">Details →</a></div>
+<div class="cell" style="flex:1 1 320px;justify-content:space-between;min-height:240px"><span class="meta lbl"><span>Core Four</span><span id="cfdate"></span></span><div id="cfsummary" style="display:flex;gap:16px;flex-wrap:wrap"></div><a class="link" href="/portal/core-four" id="cflink">Score yourself →</a></div>
 </section>
 
 <section class="gut" style="padding-block:40px 56px;display:flex;flex-wrap:wrap;gap:24px 40px">
@@ -38,7 +38,7 @@ document.addEventListener("lid:ready", function () {
   document.getElementById("cohort").textContent = D.cohort.name + " / Starts " + D.cohort.starts;
   var st = LID.stage(); if (st) document.getElementById("stageline").textContent = "Stage " + st.n + " / " + st.title;
   var nl = LID.nextLesson(), pr = LID.progress();
-  document.getElementById("continue").href = "lesson.html?n=" + nl.n;
+  document.getElementById("continue").href = "/portal/lesson?n=" + nl.n;
   document.getElementById("lessoncount").textContent = "Lesson " + nl.n + " / " + pr.total;
   var mod = D.method.find(function (m) { return m.key === nl.module; });
   document.getElementById("nextmod").textContent = (mod ? mod.n + " / " + mod.title : "");
@@ -64,6 +64,6 @@ document.addEventListener("lid:ready", function () {
     document.getElementById("cfsummary").innerHTML = D.coreFour.map(function (c) { return '<span style="display:flex;flex-direction:column;gap:4px"><span class="big" style="font-size:40px">' + (last.scores[c.key] || 0) + '</span><span class="lbl">' + c.title + '</span></span>'; }).join("");
     document.getElementById("cflink").textContent = "Score again →";
   } else { document.getElementById("cfsummary").innerHTML = '<p style="font-size:15px;line-height:1.5">Four areas, scored out of ten. Takes two minutes and shows where you\'re bleeding energy.</p>'; }
-  document.getElementById("askform").addEventListener("submit", function (e) { e.preventDefault(); var q = document.getElementById("ask").value.trim(); location.href = "assistant.html" + (q ? "?q=" + encodeURIComponent(q) : ""); });
+  document.getElementById("askform").addEventListener("submit", function (e) { e.preventDefault(); var q = document.getElementById("ask").value.trim(); location.href = "/portal/assistant" + (q ? "?q=" + encodeURIComponent(q) : ""); });
 });
 </script>

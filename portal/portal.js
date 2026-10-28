@@ -54,14 +54,14 @@
       return (D.method || []).find(function (m) { return m.key === nl.module; }) || null;
     },
     async signIn(email) {
-      if (!live) { this.state.preview = true; store.saveLocal(this.state); location.href = "home.html"; return; }
-      var r = await sb.auth.signInWithOtp({ email: email, options: { emailRedirectTo: location.origin + "/portal/home.html" } });
+      if (!live) { this.state.preview = true; store.saveLocal(this.state); location.href = "/portal/home"; return; }
+      var r = await sb.auth.signInWithOtp({ email: email, options: { emailRedirectTo: location.origin + "/portal/home" } });
       if (r.error) throw r.error;
     },
     async signOut() {
       if (live) await sb.auth.signOut();
       try { localStorage.removeItem(store.key); } catch (e) {}
-      location.href = "index.html";
+      location.href = "/portal/";
     },
     fmtDate: function (iso) {
       if (!iso) return "";
@@ -72,14 +72,14 @@
 
   // ---- shared chrome ----
   function chrome() {
-    var nav = [["home.html", "Home"], ["library.html", "Library"], ["core-four.html", "Core Four"], ["calls.html", "Calls"], ["agents.html", "Agents"], ["assistant.html", "Assistant"]];
-    var cur = location.pathname.split("/").pop() || "home.html";
+    var nav = [["/portal/home", "Home"], ["/portal/library", "Library"], ["/portal/core-four", "Core Four"], ["/portal/calls", "Calls"], ["/portal/agents", "Agents"], ["/portal/assistant", "Assistant"]];
+    var cur = location.pathname.split("/").pop() || "/portal/home";
     var links = nav.map(function (n) { return '<a href="' + n[0] + '"' + (n[0] === cur ? ' aria-current="page"' : '') + '>' + n[1] + '</a>'; }).join("");
     var who = P.first() || "Member";
     var top = document.getElementById("chrome");
     if (top) top.innerHTML =
-      (!live ? '<div class="preview lbl"><span>Preview mode. Progress is saved in this browser only.</span><a href="../">Back to lockedindept.com</a></div>' : '') +
-      '<div class="bar gut lbl"><a href="../" style="text-decoration:none;font-weight:700">Locked In Dept.</a><span>Club Locked In / Member</span><nav aria-label="Portal">' + links + '</nav><span>' + who + ' / <a href="#" id="logout" style="text-decoration:none">Log out</a></span></div>';
+      (!live ? '<div class="preview lbl"><span>Preview mode. Progress is saved in this browser only.</span><a href="/">Back to lockedindept.com</a></div>' : '') +
+      '<div class="bar gut lbl"><a href="/" style="text-decoration:none;font-weight:700">Locked In Dept.</a><span>Club Locked In / Member</span><nav aria-label="Portal">' + links + '</nav><span>' + who + ' / <a href="#" id="logout" style="text-decoration:none">Log out</a></span></div>';
     var lo = document.getElementById("logout"); if (lo) lo.addEventListener("click", function (e) { e.preventDefault(); P.signOut(); });
     var foot = document.getElementById("foot");
     if (foot) foot.innerHTML = '<div class="bar gut lbl" style="border-bottom:0;border-top:1px solid var(--line)"><span>© 2026 Locked In Dept.</span><span>Independent culture / 001</span><a href="mailto:' + (C.SUPPORT_EMAIL || '') + '" style="text-decoration:none">' + (C.SUPPORT_EMAIL || '') + '</a></div>';
@@ -89,11 +89,11 @@
   async function boot() {
     if (live) {
       var s = await sb.auth.getSession(); P.user = s.data.session ? s.data.session.user : null;
-      if (!P.user && !isLogin) { location.href = "index.html"; return; }
-      if (P.user && isLogin) { location.href = "home.html"; return; }
+      if (!P.user && !isLogin) { location.href = "/portal/"; return; }
+      if (P.user && isLogin) { location.href = "/portal/home"; return; }
     } else {
       P.state = store.local();
-      if (!P.state.preview && !isLogin) { location.href = "index.html"; return; }
+      if (!P.state.preview && !isLogin) { location.href = "/portal/"; return; }
     }
     if (P.user) P.state = await store.load(P.user);
     if (!isLogin) chrome();
