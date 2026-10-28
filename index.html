@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Locked In Dept. Independent culture for ambitious creatives. Charge like the expert you already are, work less, be seen. Membership by application.">
+<title>Locked In Dept.</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&display=swap">
+<style>
+/* Layout: one-column editorial poster, full-bleed hairline sections, paper ground, no accent colour; the photos carry the colour. */
+:root{
+  --paper:#ECEBE7; --ink:#0B0B0B; --mute:#6B6A66; --ghost:#D2D0CA; --grey:#9A9993;
+  --orange:#E8742A; --red:#C8102E; --blue:#0E1A26;
+  --display:'Archivo','Helvetica Neue',Helvetica,Arial,sans-serif;
+  --body:'Archivo','Helvetica Neue',Helvetica,Arial,sans-serif;
+  --gl:max(16px, env(safe-area-inset-left, 0px)); --gr:max(16px, env(safe-area-inset-right, 0px));
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:var(--ink)}a:hover{color:#555}
+h1,h2,h3,p{margin:0}
+.lbl{font-size:11px;font-weight:500;letter-spacing:.04em;text-transform:uppercase}
+.big{font-weight:800;letter-spacing:-.045em;text-transform:uppercase;line-height:.9;text-wrap:balance}
+.gut{padding-left:var(--gl);padding-right:var(--gr)}
+.rule{border-top:1px solid var(--ink)}
+.btn{text-decoration:none;background:var(--ink);color:var(--paper);border:1px solid var(--ink);min-height:52px;display:inline-flex;align-items:center;gap:14px;padding:0 28px;font-size:13px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;transition:background .25s,color .25s}
+.btn:hover{background:var(--paper);color:var(--ink)}
+.btn svg,.arrow svg{transition:transform .3s cubic-bezier(.2,.7,.2,1)}.btn:hover svg,.arrow:hover svg{transform:translateX(6px)}
+.fig{position:relative;overflow:hidden;background:var(--ghost)}
+.fig.o{background:var(--orange)}.fig.r{background:var(--red)}.fig.b{background:var(--blue)}
+.fig .cap{position:absolute;left:16px;bottom:14px;color:var(--paper);opacity:.85}
+.fig.o .cap{color:var(--ink)}
+.grain{position:fixed;inset:0;pointer-events:none;z-index:30;opacity:.35;mix-blend-mode:multiply}
+header{border-bottom:1px solid var(--ink)}
+.bar{min-height:52px;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px 32px;padding-block:8px}
+nav{display:flex;flex-wrap:wrap;gap:24px}nav a{text-decoration:none;min-height:44px;display:inline-flex;align-items:center}
+.hero{padding-block:48px 64px;text-align:center}
+.hero h1{font-size:clamp(44px,9.6vw,148px)}
+.hero .mid{margin-block:40px;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:32px}
+.hero .mid p{flex:1 1 200px;max-width:240px;line-height:1.3}
+.hero .mid .fig{flex:0 1 340px;min-width:240px;max-width:100%;aspect-ratio:4/5;margin:0 auto}
+.hero .lines{font-size:clamp(38px,8.4vw,128px)}
+.mask{display:block;overflow:hidden;padding-bottom:.04em}.mask span{display:block}
+.door{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px 32px;padding-block:14px;border-top:1px solid var(--ink)}
+.door a{text-decoration:none;display:inline-flex;align-items:center;gap:10px;min-height:44px;font-weight:700}
+.split{display:flex;flex-wrap:wrap}
+.split>*{min-width:0}
+.cell{padding:32px var(--gr) 40px var(--gl);display:flex;flex-direction:column;gap:56px}
+.cellR{border-right:1px solid var(--ink)}
+.meta{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px 16px}
+.strip{padding-block:24px;border-bottom:1px solid var(--ink)}
+.sec{padding-block:96px;display:flex;flex-wrap:wrap;gap:40px}
+.sec .side{flex:1 1 260px;display:flex;flex-direction:column;gap:12px}
+.sec .main{flex:999 1 640px;min-width:0}
+.h2{font-size:clamp(36px,6vw,92px)}
+.row{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 24px;padding-block:20px;border-top:1px solid var(--ink)}
+.shift{padding-block:22px}
+.shift .b4{flex:1 1 260px;font-size:18px;line-height:1.35;color:var(--mute);text-decoration:line-through}
+.shift .af{flex:1 1 260px;font-size:22px;line-height:1.3;font-weight:700;letter-spacing:-.01em}
+.core{flex:1 1 300px;min-width:0;min-height:440px;padding:24px var(--gr) 32px var(--gl);display:flex;flex-direction:column;justify-content:space-between;gap:32px;border-bottom:1px solid var(--ink)}
+.core .ghost{font-size:clamp(110px,14vw,200px);line-height:.8;font-weight:800;letter-spacing:-.07em;color:var(--ghost)}
+.core h3{font-size:clamp(28px,2.6vw,38px);line-height:1;font-weight:800;letter-spacing:-.035em;text-transform:uppercase;margin-bottom:12px}
+.code{padding:18px 20px;background:var(--ink);color:var(--paper);font-family:'SF Mono',Menlo,Consolas,monospace;font-size:13px;overflow-x:auto;white-space:nowrap}
+.band{position:relative;height:clamp(180px,32vw,480px);overflow:hidden;border-top:1px solid var(--ink)}
+.band .crop{position:absolute;left:-.04em;right:0;bottom:-.2em;font-size:clamp(160px,40vw,620px);line-height:.8;font-weight:800;letter-spacing:-.06em;text-transform:uppercase;white-space:nowrap}
+.band .v1,.fin .v1{position:absolute;top:0;bottom:0;left:50%;width:2px;background:var(--paper)}
+.band .v2,.fin .v2{position:absolute;top:0;bottom:0;left:calc(50% + 2px);width:1px;background:var(--ink)}
+.fin{position:relative;height:clamp(240px,40vw,600px);overflow:hidden;border-top:1px solid var(--ink)}
+.fin .crop{position:absolute;left:-.04em;bottom:-.22em;font-size:clamp(200px,46vw,720px);line-height:.8;font-weight:800;letter-spacing:-.07em;text-transform:uppercase;white-space:nowrap}
+.fin .v1,.fin .v2{top:72px}
+.lead{font-size:17px;line-height:1.5;max-width:560px}
+.quote{font-size:clamp(24px,2.8vw,40px);line-height:1.18;font-weight:500;letter-spacing:-.025em;max-width:62ch}
+@keyframes up{from{transform:translateY(105%)}to{transform:none}}
+@keyframes fade{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+.js .up{animation:up 1.1s cubic-bezier(.7,0,.2,1) both}
+.js .in{animation:fade 1s cubic-bezier(.2,.7,.2,1) both}
+.js .rv{opacity:0;transform:translateY(24px);transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1)}
+.js .rv.on{opacity:1;transform:none}
+.js .wp{clip-path:inset(100% 0 0 0);transition:clip-path 1.2s cubic-bezier(.7,0,.2,1)}
+.js .wp.on{clip-path:inset(0 0 0 0)}
+.js .rs{transform:translateY(45%);transition:transform 1.4s cubic-bezier(.2,.7,.2,1)}
+.js .rs.on{transform:none}
+.js .rl{transform:scaleX(0);transform-origin:left center;transition:transform 1.2s cubic-bezier(.2,.7,.2,1)}
+.js .rl.on{transform:scaleX(1)}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.js .rv,.js .wp,.js .rs,.js .rl{opacity:1;transform:none;clip-path:none}}
+@media (max-width:640px){.cellR{border-right:0;border-bottom:1px solid var(--ink)}.hero .mid{flex-direction:column;align-items:stretch}.hero .mid p{max-width:none;text-align:left!important;margin:0!important}}
+img{max-width:100%}
+</style>
+</head>
+<body>
+
+<svg class="grain" aria-hidden="true"><filter id="g"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" stitchTiles="stitch"></feTurbulence><feColorMatrix values="0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 0.18 0"></feColorMatrix></filter><rect width="100%" height="100%" filter="url(#g)"></rect></svg>
+
+<header>
+<div class="bar gut lbl">
+<span style="font-weight:700">Locked In Dept.</span>
+<span>Independent culture / 001</span>
+<span>Est. 2026</span>
+<span>Global</span>
+<nav aria-label="Main"><a href="#method">Method</a><a href="#agents">Agents</a><a href="/90-days/">The 90 days</a><a href="#founder">About</a></nav>
+</div>
+</header>
+
+<section class="hero gut" id="top">
+<h1 class="big"><span class="mask"><span class="up" style="animation-delay:.05s">Locked In</span></span><span class="mask"><span class="up" style="animation-delay:.15s">Dept.© Est.26</span></span></h1>
+<div class="mid">
+<p class="lbl in" style="animation-delay:.9s;text-align:left">A private club for creatives ready to raise their prices, step out from behind the work and build the business they actually want.</p>
+<div class="fig o in" style="animation-delay:.5s"><span class="cap lbl">Fig. 00 / Motion</span></div>
+<p class="lbl in" style="animation-delay:1s;text-align:right;margin-left:auto">Scale your income, not your hours. Membership by application. Places limited.</p>
+</div>
+<p class="big lines"><span class="mask"><span class="up" style="animation-delay:1.1s">Charge more</span></span><span class="mask"><span class="up" style="animation-delay:1.2s">Work less</span></span><span class="mask"><span class="up" style="animation-delay:1.3s">Be seen®</span></span><span class="mask"><span class="up" style="animation-delay:1.4s">By application</span></span></p>
+<p class="in" style="animation-delay:1.7s;margin-top:48px"><a class="btn" href="/90-days/">Apply to join <svg aria-hidden="true" width="22" height="12" viewBox="0 0 22 12" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M0 6h20M15 1l5 5-5 5"></path></svg></a></p>
+</section>
+
+<div class="door gut lbl">
+<span>Now enrolling</span>
+<span>Founding cohort / Starts January 2027 / Ten places</span>
+<span>Applications close 30 November</span>
+<a class="arrow" href="/90-days/">The 90 days <svg aria-hidden="true" width="22" height="12" viewBox="0 0 22 12" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M0 6h20M15 1l5 5-5 5"></path></svg></a>
+</div>
+
+<section class="rule split" aria-label="Club Locked In">
+<div class="cell cellR" style="flex:1 1 520px">
+<div class="meta lbl"><span>Club Locked In</span><span>No. 001</span></div>
+<div>
+<h2 class="rv" style="font-size:clamp(32px,4vw,56px);line-height:1;font-weight:500;letter-spacing:-.03em;text-transform:uppercase">Charge like<br>the expert<sup style="font-size:.3em;vertical-align:top;margin-left:4px">™</sup></h2>
+<div style="display:flex;justify-content:flex-end;margin-top:8px"><svg aria-hidden="true" width="44" height="14" viewBox="0 0 44 14" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M0 7h42M36 1l6 6-6 6"></path></svg></div>
+<div class="rl" style="height:1px;background:var(--ink);margin-top:12px"></div>
+<div class="meta lbl" style="margin-top:16px"><span>Method:</span><span>Clarity / Price / Visibility / Systems</span></div>
+</div>
+<div style="display:flex;flex-wrap:wrap;gap:24px;align-items:flex-end">
+<div class="fig r wp" style="flex:0 1 240px;min-width:180px;aspect-ratio:4/5;max-width:100%"><span class="cap lbl">Fig. 01</span></div>
+<p class="rv" style="flex:1 1 200px;font-size:17px;line-height:1.45;max-width:340px">You're good at what you do. Your clients know it. But you're still pricing like you're proving yourself. That's a positioning, pricing and confidence problem. All three are fixable.</p>
+</div>
+<div class="meta lbl"><span>Reviewed weekly</span><span>GMT</span></div>
+</div>
+<div class="fig r wp" style="flex:1 1 420px;min-height:520px"><span class="cap lbl">The way out isn't more hours</span></div>
+</section>
+
+<section class="band" aria-hidden="true">
+<p class="crop rs">Dept.</p>
+<div class="v1"></div><div class="v2"></div>
+<p class="lbl" style="position:absolute;left:var(--gl);bottom:16px;color:var(--paper);mix-blend-mode:difference">Josh Pearson</p>
+</section>
+
+<section class="rule sec gut" id="shift" aria-label="The shift">
+<div class="side lbl"><span>02 / The shift</span><span>Before / After</span></div>
+<div class="main">
+<h2 class="big h2 rv" style="margin-bottom:48px">Same talent.<br>Different business.</h2>
+<div class="row shift rv"><span class="lbl" style="flex:0 0 40px">01</span><span class="b4">Quoting what you think they'll pay</span><span class="af">Pricing what the work is worth</span></div>
+<div class="row shift rv"><span class="lbl" style="flex:0 0 40px">02</span><span class="b4">Posting the work, hiding yourself</span><span class="af">Known for your point of view</span></div>
+<div class="row shift rv"><span class="lbl" style="flex:0 0 40px">03</span><span class="b4">Saying yes to whoever asks</span><span class="af">Choosing who you work with</span></div>
+<div class="row shift rv"><span class="lbl" style="flex:0 0 40px">04</span><span class="b4">Keeping the big idea for one day</span><span class="af">A plan, and the first move this month</span></div>
+<div class="row shift rv" style="border-bottom:1px solid var(--ink)"><span class="lbl" style="flex:0 0 40px">05</span><span class="b4">Admin at midnight</span><span class="af">Agents on it while you sleep</span></div>
+</div>
+</section>
+
+<section class="rule" id="method" aria-label="The method">
+<div class="strip gut meta lbl"><span>03 / The method</span><span>Four parts. In this order.</span></div>
+<div class="split">
+<div class="core cellR"><span class="lbl">01</span><p class="ghost">01</p><div><h3>Clarity</h3><p style="font-size:15px;line-height:1.5">What you're really selling, who it's for, and the bigger vision you've been putting off saying out loud.</p></div></div>
+<div class="core cellR"><span class="lbl">02</span><p class="ghost">02</p><div><h3>Price</h3><p style="font-size:15px;line-height:1.5">Offers and pricing rebuilt around value, plus the words for the conversation that makes you nervous.</p></div></div>
+<div class="core cellR"><span class="lbl">03</span><p class="ghost">03</p><div><h3>Visibility</h3><p style="font-size:15px;line-height:1.5">Stop hiding behind the work. Show how you think and become the name people refer.</p></div></div>
+<div class="core"><span class="lbl">04</span><p class="ghost">04</p><div><h3>Systems</h3><p style="font-size:15px;line-height:1.5">AI agents for the inbox, outreach, content and onboarding, so growth stops costing you hours.</p></div></div>
+</div>
+</section>
+
+<section class="rule split" aria-label="Before">
+<div class="fig b wp" style="flex:999 1 640px;min-height:480px"><span class="cap lbl">Fig. 02 / Before</span></div>
+<div class="cell" style="flex:1 1 280px;border-left:1px solid var(--ink);justify-content:space-between;gap:40px;padding-top:32px;padding-bottom:32px">
+<span class="lbl">Fig. 02 / Before</span>
+<p class="big rv" style="font-size:clamp(30px,3vw,44px);line-height:.95;letter-spacing:-.04em">Out of hours.<br>Not out of talent.</p>
+<span class="lbl">Admin at midnight is not a strategy</span>
+</div>
+</section>
+
+<section class="rule sec gut" id="agents" aria-label="Agent library">
+<div class="side lbl"><span>04 / Agent library</span><span>Install into your own Claude setup</span></div>
+<div class="main">
+<h2 class="big h2 rv" style="margin-bottom:20px">Charge more.<br>Let the agents<br>carry the rest.</h2>
+<p class="lead rv" style="margin-bottom:48px">Every agent comes set up and documented. Install it, add your details, and it starts working.</p>
+<div class="meta lbl" style="justify-content:flex-start;gap:8px 24px;padding-bottom:12px"><span style="flex:0 0 40px">No.</span><span style="flex:1 1 180px">Agent</span><span style="flex:2 1 260px">Does</span><span style="flex:0 0 120px">Code</span></div>
+<div class="row rv"><span class="lbl" style="flex:0 0 40px">01</span><span style="flex:1 1 180px;font-size:20px;font-weight:700">Inbox agent</span><span style="flex:2 1 260px;font-size:15px;line-height:1.45">Sorts enquiries and drafts replies in your voice. You read and hit send.</span><span class="lbl" style="flex:0 0 120px">LID-INB-01</span></div>
+<div class="row rv"><span class="lbl" style="flex:0 0 40px">02</span><span style="flex:1 1 180px;font-size:20px;font-weight:700">Proposal builder</span><span style="flex:2 1 260px;font-size:15px;line-height:1.45">Turns a discovery call into a priced proposal built around value.</span><span class="lbl" style="flex:0 0 120px">LID-PRO-02</span></div>
+<div class="row rv"><span class="lbl" style="flex:0 0 40px">03</span><span style="flex:1 1 180px;font-size:20px;font-weight:700">Outreach agent</span><span style="flex:2 1 260px;font-size:15px;line-height:1.45">Finds the clients you actually want, writes the first email, follows up.</span><span class="lbl" style="flex:0 0 120px">LID-OUT-03</span></div>
+<div class="row rv"><span class="lbl" style="flex:0 0 40px">04</span><span style="flex:1 1 180px;font-size:20px;font-weight:700">Content scheduler</span><span style="flex:2 1 260px;font-size:15px;line-height:1.45">Turns your ideas into a week of posts and loads your queue.</span><span class="lbl" style="flex:0 0 120px">LID-CON-04</span></div>
+<div class="row rv"><span class="lbl" style="flex:0 0 40px">05</span><span style="flex:1 1 180px;font-size:20px;font-weight:700">Client onboarding</span><span style="flex:2 1 260px;font-size:15px;line-height:1.45">Sends the welcome, collects the brief, books the kickoff.</span><span class="lbl" style="flex:0 0 120px">LID-ONB-05</span></div>
+<p class="code rv" style="margin-top:32px">$ claude plugin install inbox-agent@lockedin-dept</p>
+</div>
+</section>
+
+<section class="rule" id="enrol" aria-label="Now enrolling">
+<div class="strip gut meta lbl"><span>05 / Now enrolling</span><span>Founding cohort / Jan 2027</span></div>
+<div class="split">
+<div class="cell cellR" style="flex:1 1 520px;justify-content:space-between;gap:64px;padding-bottom:48px">
+<h2 class="big rv" style="font-size:clamp(40px,6.4vw,100px);line-height:.88;letter-spacing:-.05em">Get locked in<br>for 90 days.</h2>
+<p class="lbl">Ten places / In person in December / Applications close 30 November</p>
+</div>
+<div class="cell" style="flex:1 1 420px;justify-content:space-between;gap:40px;padding-bottom:48px">
+<p class="lead rv">Ninety days to rebuild your pricing, your positioning and your belief, with the agents to run the business without hiring a team. One cohort, ten creatives, starting January. The full detail is on its own page.</p>
+<a class="btn" href="/90-days/" style="justify-content:space-between;min-height:60px;padding:0 24px">The 90 days <svg aria-hidden="true" width="22" height="12" viewBox="0 0 22 12" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M0 6h20M15 1l5 5-5 5"></path></svg></a>
+</div>
+</div>
+</section>
+
+<section class="rule sec gut" id="founder" aria-label="Founder">
+<div class="side lbl"><span>06 / Who's behind it</span><span>Josh Pearson, founder</span></div>
+<p class="quote rv main" style="font-size:clamp(24px,3vw,42px);line-height:1.15">A decade in creative production taught me the work is rarely what holds a creative back. It's what they believe they can charge, how loudly they say what they think, and how much of the business still runs through their own hands. The Dept. fixes all three.</p>
+</section>
+
+<section class="fin" aria-label="Finale">
+<div class="gut meta lbl" style="position:absolute;top:24px;left:0;right:0"><span>You're already the expert</span><a class="arrow" href="/90-days/" style="text-decoration:none;display:inline-flex;align-items:center;gap:10px;min-height:44px;margin-top:-14px">Get locked in <svg aria-hidden="true" width="22" height="12" viewBox="0 0 22 12" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M0 6h20M15 1l5 5-5 5"></path></svg></a></div>
+<p class="crop rs" aria-hidden="true">Lock</p>
+<div class="v1" aria-hidden="true"></div><div class="v2" aria-hidden="true"></div>
+</section>
+
+<footer class="rule">
+<div class="bar gut lbl">
+<span>© 2026 Locked In Dept.</span>
+<a href="https://www.instagram.com/lockedin.dept" target="_blank" rel="noopener" style="text-decoration:none;min-height:44px;display:inline-flex;align-items:center">@lockedin.dept</a>
+<span>lockedindept.com</span>
+<span style="display:flex;gap:24px"><a href="#privacy" style="text-decoration:none">Privacy</a><a href="#terms" style="text-decoration:none">Terms</a></span>
+</div>
+</footer>
+
+<script>
+document.documentElement.classList.add('js');
+(function(){
+  var els=document.querySelectorAll('.rv,.wp,.rs,.rl');
+  if(!('IntersectionObserver' in window)){els.forEach(function(e){e.classList.add('on')});return}
+  var io=new IntersectionObserver(function(entries){entries.forEach(function(en){if(en.isIntersecting){en.target.classList.add('on');io.unobserve(en.target)}})},{rootMargin:'0px 0px -12% 0px',threshold:0.05});
+  els.forEach(function(e){io.observe(e)});
+})();
+</script>
+
+</body>
+</html>

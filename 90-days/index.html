@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="The founding cohort of Locked In Dept. Ninety days to charge more, work less and build a creative business that runs without hiring a team. Starts January 2027.">
+<title>The 90 Days / Locked In Dept.</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&display=swap">
+<style>
+/* Layout: one-column editorial poster, full-bleed hairline sections, paper ground, no accent colour; the photos carry the colour. */
+:root{
+  --paper:#ECEBE7; --ink:#0B0B0B; --mute:#6B6A66; --ghost:#D2D0CA; --grey:#9A9993;
+  --orange:#E8742A; --red:#C8102E; --blue:#0E1A26;
+  --display:'Archivo','Helvetica Neue',Helvetica,Arial,sans-serif;
+  --body:'Archivo','Helvetica Neue',Helvetica,Arial,sans-serif;
+  --gl:max(16px, env(safe-area-inset-left, 0px)); --gr:max(16px, env(safe-area-inset-right, 0px));
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:var(--ink)}a:hover{color:#555}
+h1,h2,h3,p{margin:0}
+.lbl{font-size:11px;font-weight:500;letter-spacing:.04em;text-transform:uppercase}
+.big{font-weight:800;letter-spacing:-.045em;text-transform:uppercase;line-height:.9;text-wrap:balance}
+.gut{padding-left:var(--gl);padding-right:var(--gr)}
+.rule{border-top:1px solid var(--ink)}
+.btn{text-decoration:none;background:var(--ink);color:var(--paper);border:1px solid var(--ink);min-height:52px;display:inline-flex;align-items:center;gap:14px;padding:0 28px;font-size:13px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;transition:background .25s,color .25s}
+.btn:hover{background:var(--paper);color:var(--ink)}
+.btn svg,.arrow svg{transition:transform .3s cubic-bezier(.2,.7,.2,1)}.btn:hover svg,.arrow:hover svg{transform:translateX(6px)}
+.fig{position:relative;overflow:hidden;background:var(--ghost)}
+.fig.o{background:var(--orange)}.fig.r{background:var(--red)}.fig.b{background:var(--blue)}
+.fig .cap{position:absolute;left:16px;bottom:14px;color:var(--paper);opacity:.85}
+.fig.o .cap{color:var(--ink)}
+.grain{position:fixed;inset:0;pointer-events:none;z-index:30;opacity:.35;mix-blend-mode:multiply}
+header{border-bottom:1px solid var(--ink)}
+.bar{min-height:52px;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px 32px;padding-block:8px}
+nav{display:flex;flex-wrap:wrap;gap:24px}nav a{text-decoration:none;min-height:44px;display:inline-flex;align-items:center}
+.hero{padding-block:48px 64px;text-align:center}
+.hero h1{font-size:clamp(44px,9.6vw,148px)}
+.hero .mid{margin-block:40px;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:32px}
+.hero .mid p{flex:1 1 200px;max-width:240px;line-height:1.3}
+.hero .mid .fig{flex:0 1 340px;min-width:240px;max-width:100%;aspect-ratio:4/5;margin:0 auto}
+.hero .lines{font-size:clamp(38px,8.4vw,128px)}
+.mask{display:block;overflow:hidden;padding-bottom:.04em}.mask span{display:block}
+.marq{overflow:hidden;padding-block:14px}
+.marq div{display:flex;width:max-content;white-space:nowrap;animation:marquee 40s linear infinite}
+.marq span{padding-right:48px}
+.split{display:flex;flex-wrap:wrap}
+.split>*{min-width:0}
+.cell{padding:32px var(--gr) 40px var(--gl);display:flex;flex-direction:column;gap:56px}
+.cellR{border-right:1px solid var(--ink)}
+.meta{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px 16px}
+.strip{padding-block:24px;border-bottom:1px solid var(--ink)}
+.sec{padding-block:96px;display:flex;flex-wrap:wrap;gap:40px}
+.sec .side{flex:1 1 260px;display:flex;flex-direction:column;gap:12px}
+.sec .main{flex:999 1 640px;min-width:0}
+.h2{font-size:clamp(36px,6vw,92px)}
+.row{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 24px;padding-block:20px;border-top:1px solid var(--ink)}
+.stat{flex:1 1 300px;min-width:0;padding:24px var(--gr) 40px var(--gl);border-bottom:1px solid var(--ink);min-height:320px;display:flex;flex-direction:column;justify-content:space-between;gap:24px}
+.stat .n{font-size:clamp(52px,6.4vw,100px);line-height:.85;font-weight:800;letter-spacing:-.06em}
+.core{flex:1 1 300px;min-width:0;min-height:440px;padding:24px var(--gr) 32px var(--gl);display:flex;flex-direction:column;justify-content:space-between;gap:32px;border-bottom:1px solid var(--ink)}
+.core .ghost{font-size:clamp(110px,14vw,200px);line-height:.8;font-weight:800;letter-spacing:-.07em;color:var(--ghost)}
+.core h3{font-size:clamp(28px,2.6vw,38px);line-height:1;font-weight:800;letter-spacing:-.035em;text-transform:uppercase;margin-bottom:12px}
+.code{padding:18px 20px;background:var(--ink);color:var(--paper);font-family:'SF Mono',Menlo,Consolas,monospace;font-size:13px;overflow-x:auto;white-space:nowrap}
+.list{list-style:none;margin:0;padding:0}
+.list li{display:flex;gap:24px;padding-block:18px;border-bottom:1px solid var(--ink);font-size:17px;line-height:1.4}
+.list li .lbl{flex:0 0 32px;padding-top:5px}
+.fin{position:relative;height:clamp(240px,40vw,600px);overflow:hidden;border-top:1px solid var(--ink)}
+.fin .crop{position:absolute;left:-.04em;bottom:-.22em;font-size:clamp(200px,46vw,720px);line-height:.8;font-weight:800;letter-spacing:-.07em;text-transform:uppercase;white-space:nowrap}
+.fin .v1{position:absolute;top:72px;bottom:0;left:50%;width:2px;background:var(--paper)}
+.fin .v2{position:absolute;top:72px;bottom:0;left:calc(50% + 2px);width:1px;background:var(--ink)}
+.lead{font-size:17px;line-height:1.5;max-width:560px}
+.quote{font-size:clamp(24px,2.8vw,40px);line-height:1.18;font-weight:500;letter-spacing:-.025em;max-width:62ch}
+@keyframes up{from{transform:translateY(105%)}to{transform:none}}
+@keyframes fade{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+@keyframes wipe{from{clip-path:inset(100% 0 0 0)}to{clip-path:inset(0 0 0 0)}}
+@keyframes rise{from{transform:translateY(45%)}to{transform:none}}
+@keyframes marquee{to{transform:translateX(-50%)}}
+.js .up{animation:up 1.1s cubic-bezier(.7,0,.2,1) both}
+.js .in{animation:fade 1s cubic-bezier(.2,.7,.2,1) both}
+.js .rv{opacity:0;transform:translateY(24px);transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1)}
+.js .rv.on{opacity:1;transform:none}
+.js .wp{clip-path:inset(100% 0 0 0);transition:clip-path 1.2s cubic-bezier(.7,0,.2,1)}
+.js .wp.on{clip-path:inset(0 0 0 0)}
+.js .rs{transform:translateY(45%);transition:transform 1.4s cubic-bezier(.2,.7,.2,1)}
+.js .rs.on{transform:none}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.js .rv,.js .wp,.js .rs{opacity:1;transform:none;clip-path:none}}
+@media (max-width:640px){.cellR{border-right:0;border-bottom:1px solid var(--ink)}.hero .mid{flex-direction:column;align-items:stretch}.hero .mid p{max-width:none;text-align:left!important;margin:0!important}}
+img{max-width:100%}
+</style>
+</head>
+<body>
+
+<svg class="grain" aria-hidden="true"><filter id="g"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" stitchTiles="stitch"></feTurbulence><feColorMatrix values="0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 0.18 0"></feColorMatrix></filter><rect width="100%" height="100%" filter="url(#g)"></rect></svg>
+
+<header>
+<div class="bar gut lbl">
+<span style="font-weight:700">Locked In Dept.</span>
+<span>Founding cohort / 001</span>
+<span>Applications close 30 Nov</span>
+<span>Starts Jan 2027</span>
+<nav aria-label="Main"><a href="/">Home</a><a href="#method">Method</a><a href="#agents">Agents</a><a href="#programme">The 90 days</a><a href="#apply">Apply</a></nav>
+</div>
+</header>
+
+<section class="hero gut" id="top">
+<h1 class="big"><span class="mask"><span class="up" style="animation-delay:.05s">Locked In</span></span><span class="mask"><span class="up" style="animation-delay:.15s">Dept.© Est.26</span></span></h1>
+<div class="mid">
+<p class="lbl in" style="animation-delay:.9s;text-align:left">90 days locked in. Fewer clients paying you more every month. A business that runs without hiring a team.</p>
+<div class="fig o in" style="animation-delay:.5s"><span class="cap lbl">Fig. 00 / Motion</span></div>
+<p class="lbl in" style="animation-delay:1s;text-align:right;margin-left:auto">Founding cohort of ten. In-person event, first week of December. Programme starts January.</p>
+</div>
+<p class="big lines"><span class="mask"><span class="up" style="animation-delay:1.1s">Get locked in</span></span><span class="mask"><span class="up" style="animation-delay:1.2s">For 90 days®</span></span><span class="mask"><span class="up" style="animation-delay:1.3s">Make more</span></span><span class="mask"><span class="up" style="animation-delay:1.4s">Work less</span></span></p>
+<p class="in" style="animation-delay:1.7s;margin-top:48px"><a class="btn" href="#apply">Apply for January <svg aria-hidden="true" width="22" height="12" viewBox="0 0 22 12" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M0 6h20M15 1l5 5-5 5"></path></svg></a></p>
+</section>
+
+<div class="marq rule lbl" aria-hidden="true"><div>
+<span>Not a course</span><span>/</span><span>Not weeks building a website</span><span>/</span><span>Not late nights</span><span>/</span><span>Not a hired tripod</span><span>/</span><span>Not another team to manage</span><span>/</span>
+<span>Not a course</span><span>/</span><span>Not weeks building a website</span><span>/</span><span>Not late nights</span><span>/</span><span>Not a hired tripod</span><span>/</span><span>Not another team to manage</span><span>/</span>
+</div></div>
+
+<section class="rule split" aria-label="Sound familiar">
+<div class="cell cellR" style="flex:1 1 520px">
+<div class="meta lbl"><span>01 / Sound familiar</span><span>The hamster wheel</span></div>
+<div>
+<h2 class="rv" style="font-size:clamp(32px,4vw,56px);line-height:1;font-weight:500;letter-spacing:-.03em;text-transform:uppercase">You're not<br>a hired tripod<sup style="font-size:.3em;vertical-align:top;margin-left:4px">™</sup></h2>
+<div style="display:flex;justify-content:flex-end;margin-top:8px"><svg aria-hidden="true" width="44" height="14" viewBox="0 0 44 14" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M0 7h42M36 1l6 6-6 6"></path></svg></div>
+<div style="height:1px;background:var(--ink);margin-top:12px"></div>
+<div class="meta lbl" style="margin-top:16px"><span>Status:</span><span>Project to project / Around £5k months</span></div>
+</div>
+<div style="display:flex;flex-wrap:wrap;gap:24px;align-items:flex-end">
+<div class="fig r wp" style="flex:0 1 240px;min-width:180px;aspect-ratio:4/5;max-width:100%"><span class="cap lbl">Fig. 01</span></div>
+<p class="rv" style="flex:1 1 200px;font-size:17px;line-height:1.45;max-width:340px">You've done £10k months. Most months you're nearer five, made up of small-budget clients who treat you like a camera operator. You're tired of chasing the next project before the last one's paid. You'd rather have fewer clients paying you more, every month, and be valued for what you actually know.</p>
+</div>
+<div class="meta lbl"><span>Skill isn't the problem</span><span>Belief and leverage are</span></div>
+</div>
+<div class="fig r wp" style="flex:1 1 420px;min-height:520px"><span class="cap lbl">The way out isn't more hours</span></div>
+</section>
+
+<section class="rule" aria-label="The real work">
+<div class="strip gut meta lbl"><span>02 / The real work</span><span>What you want / What changes it</span></div>
+<h2 class="big gut rv" style="padding-block:64px;font-size:clamp(40px,7.4vw,116px);line-height:.88;letter-spacing:-.05em;border-bottom:1px solid var(--ink)">You want freedom.<br><span style="color:var(--grey)">You need to back yourself.</span></h2>
+<div class="split">
+<div class="cell cellR" style="flex:1 1 420px;gap:40px;padding-bottom:40px;padding-top:24px"><span class="lbl">What you came for</span><p class="rv" style="font-size:clamp(22px,2.2vw,30px);line-height:1.25;font-weight:500;letter-spacing:-.02em">More money, fewer clients. Time back. Room to travel, to be present with the people you love, to build the life you keep putting off until the business calms down.</p></div>
+<div class="cell" style="flex:1 1 420px;gap:40px;padding-bottom:40px;padding-top:24px"><span class="lbl">What actually gets you there</span><p class="rv" style="font-size:clamp(22px,2.2vw,30px);line-height:1.25;font-weight:700;letter-spacing:-.02em">A goal that scares you, and becoming the person who hits it. We get into how you think, find where you get in your own way, and push until charging like the expert is just what you do. Then we give you the leverage to grow without hiring a team.</p></div>
+</div>
+</section>
+
+<section class="rule" aria-label="Case 001">
+<div class="strip gut meta lbl"><span>Case 001</span><span>Josh Gore / Filmmaker</span></div>
+<div class="split">
+<div class="stat cellR"><span class="lbl">Rate</span><p class="n rv">£500<br>→ £5K</p><span style="font-size:15px;line-height:1.4">From £500 shoots to £5,000 a month retainers.</span></div>
+<div class="stat cellR"><span class="lbl">Stage</span><p class="n rv">100</p><span style="font-size:15px;line-height:1.4">Booked to speak to a room of 100 of his ideal clients.</span></div>
+<div class="stat"><span class="lbl">Vision</span><p class="n rv">30K<br>→ 100K</p><span style="font-size:15px;line-height:1.4">His monthly goal, reset in Bali. Now he's building the business that hits it.</span></div>
+</div>
+<div class="gut" style="padding-block:48px 24px;display:flex;flex-wrap:wrap;gap:24px 40px">
+<span class="lbl" style="flex:1 1 260px">The shift</span>
+<p class="quote rv" style="flex:999 1 640px;min-width:0">He didn't get better at filming. He stopped thinking like a freelancer and started acting like the expert he already was. The pricing, the retainers and the stage followed.</p>
+</div>
+<p class="gut lbl" style="padding-bottom:24px;color:var(--mute)">Individual result over several years of work together. Yours depends on your work, your market and your effort.</p>
+</section>
+
+<section class="rule" id="method" aria-label="The method">
+<div class="strip gut meta lbl"><span>03 / The method</span><span>The Core Four / Scored out of ten</span></div>
+<div class="gut" style="padding-block:64px;display:flex;flex-wrap:wrap;gap:24px 40px;border-bottom:1px solid var(--ink)">
+<h2 class="big h2 rv" style="flex:1 1 400px;min-width:0">You can't build a thriving business on a body that's running on empty.</h2>
+<p class="lead rv" style="flex:1 1 320px;min-width:0;max-width:440px;align-self:flex-end">Day one, you score four areas out of ten. That shows us where you're bleeding energy. You can be a six in business and a three in health. Get the three to a seven and the business moves too. Business leads. The rest holds it up.</p>
+</div>
+<div class="split">
+<div class="core cellR"><div class="meta lbl"><span>01</span><span>/ 10</span></div><p class="ghost">01</p><div><h3>Wealth</h3><p style="font-size:15px;line-height:1.5">Offers, pricing and selling. Fewer clients paying more every month. This leads.</p></div></div>
+<div class="core cellR"><div class="meta lbl"><span>02</span><span>/ 10</span></div><p class="ghost">02</p><div><h3>Self</h3><p style="font-size:15px;line-height:1.5">Belief. The goal that scares you, and the identity that goes with it. Where most people quietly cap themselves.</p></div></div>
+<div class="core cellR"><div class="meta lbl"><span>03</span><span>/ 10</span></div><p class="ghost">03</p><div><h3>Health</h3><p style="font-size:15px;line-height:1.5">Energy, training, sleep. A three here drags everything else down with it.</p></div></div>
+<div class="core"><div class="meta lbl"><span>04</span><span>/ 10</span></div><p class="ghost">04</p><div><h3>Relationships</h3><p style="font-size:15px;line-height:1.5">The people you are doing this for. Business that costs you them was never the point.</p></div></div>
+</div>
+</section>
+
+<section class="rule sec gut" id="agents" aria-label="Leverage">
+<div class="side lbl"><span>04 / Leverage</span><span>Your team, without hiring one</span></div>
+<div class="main">
+<h2 class="big h2 rv" style="margin-bottom:20px">Scale without<br>the payroll.</h2>
+<p class="lead rv" style="margin-bottom:48px">Hiring costs money, takes months to train and gives you people to manage. Every member gets a library of working AI agents instead. Install one in a single line and it starts doing the work you've been doing at midnight. Including the content you keep not posting.</p>
+<div class="meta lbl" style="justify-content:flex-start;gap:8px 24px;padding-bottom:12px"><span style="flex:0 0 40px">No.</span><span style="flex:1 1 180px">Agent</span><span style="flex:2 1 260px">Replaces</span><span style="flex:0 0 120px">Code</span></div>
+<div class="row rv"><span class="lbl" style="flex:0 0 40px">01</span><span style="flex:1 1 180px;font-size:20px;font-weight:700">Edit assistant</span><span style="flex:2 1 260px;font-size:15px;line-height:1.45">Logs footage, pulls selects and cuts first drafts, so your own content actually goes out.</span><span class="lbl" style="flex:0 0 120px">LID-EDT-01</span></div>
+<div class="row rv"><span class="lbl" style="flex:0 0 40px">02</span><span style="flex:1 1 180px;font-size:20px;font-weight:700">Content scheduler</span><span style="flex:2 1 260px;font-size:15px;line-height:1.45">Turns your ideas and voice notes into a week of posts, queued by Monday.</span><span class="lbl" style="flex:0 0 120px">LID-CON-02</span></div>
+<div class="row rv"><span class="lbl" style="flex:0 0 40px">03</span><span style="flex:1 1 180px;font-size:20px;font-weight:700">Inbox agent</span><span style="flex:2 1 260px;font-size:15px;line-height:1.45">Sorts enquiries and drafts replies in your voice. You read and hit send.</span><span class="lbl" style="flex:0 0 120px">LID-INB-03</span></div>
+<div class="row rv"><span class="lbl" style="flex:0 0 40px">04</span><span style="flex:1 1 180px;font-size:20px;font-weight:700">Proposal builder</span><span style="flex:2 1 260px;font-size:15px;line-height:1.45">Turns a discovery call into a priced proposal built around value, not hours.</span><span class="lbl" style="flex:0 0 120px">LID-PRO-04</span></div>
+<div class="row rv"><span class="lbl" style="flex:0 0 40px">05</span><span style="flex:1 1 180px;font-size:20px;font-weight:700">Outreach agent</span><span style="flex:2 1 260px;font-size:15px;line-height:1.45">Finds the clients you actually want, writes the first email, follows up.</span><span class="lbl" style="flex:0 0 120px">LID-OUT-05</span></div>
+<div class="row rv"><span class="lbl" style="flex:0 0 40px">06</span><span style="flex:1 1 180px;font-size:20px;font-weight:700">Client onboarding</span><span style="flex:2 1 260px;font-size:15px;line-height:1.45">Sends the welcome, collects the brief, books the kickoff.</span><span class="lbl" style="flex:0 0 120px">LID-ONB-06</span></div>
+<p class="code rv" style="margin-top:32px">$ claude plugin install edit-assistant@lockedin-dept</p>
+</div>
+</section>
+
+<section class="rule split" aria-label="Before">
+<div class="fig b wp" style="flex:999 1 640px;min-height:480px"><span class="cap lbl">Fig. 02 / Before</span></div>
+<div class="cell" style="flex:1 1 280px;border-left:1px solid var(--ink);justify-content:space-between;gap:40px;padding-top:32px;padding-bottom:32px">
+<span class="lbl">Fig. 02 / Before</span>
+<p class="big rv" style="font-size:clamp(30px,3vw,44px);line-height:.95;letter-spacing:-.04em">Burnt out<br>at £5k a month<br>is a choice.</p>
+<span class="lbl">So is the next 90 days</span>
+</div>
+</section>
+
+<section class="rule" id="programme" aria-label="The 90 days">
+<div class="strip gut meta lbl"><span>05 / The 90 days</span><span>Founding cohort / Jan to Mar 2027</span></div>
+<div class="split">
+<div class="cell cellR" style="flex:1 1 520px;justify-content:space-between;gap:64px;padding-bottom:48px">
+<h2 class="big rv" style="font-size:clamp(40px,6.4vw,100px);line-height:.88;letter-spacing:-.05em">Lock in.<br>Come out<br>different.</h2>
+<div><p class="rv" style="font-size:clamp(44px,6vw,92px);line-height:.88;font-weight:800;letter-spacing:-.05em">£3,000</p><p class="lbl" style="margin-top:12px">Founding price / Ten places / Rises for cohort two</p></div>
+</div>
+<div class="cell" style="flex:1 1 420px;justify-content:space-between;gap:40px;padding-bottom:48px">
+<ul class="list">
+<li class="rv"><span class="lbl">A</span><span><strong>The December event, in person.</strong> First week of December, UK. Walk out with offers ready to send and sales before January. Filmed, with a workbook and a live Q&amp;A if you can't be in the room.</span></li>
+<li class="rv"><span class="lbl">B</span><span><strong>Weekly group calls for 90 days.</strong> Pricing, selling, going to market, and the psychology underneath all of it.</span></li>
+<li class="rv"><span class="lbl">C</span><span><strong>The Core Four, scored and tracked.</strong> Health, self, wealth, relationships, from day one to day ninety.</span></li>
+<li class="rv"><span class="lbl">D</span><span><strong>The agent library.</strong> Every agent, set up and documented, plus new ones as the cohort asks.</span></li>
+<li class="rv"><span class="lbl">E</span><span><strong>The portal.</strong> Short lessons, the AI assistant trained on all of it, and the cohort in one place.</span></li>
+<li class="rv"><span class="lbl">F</span><span><strong>Want it 1:1?</strong> Same 90 days with Josh directly, at £6,000. We decide which fits on the call.</span></li>
+</ul>
+<a class="btn" href="#apply" style="justify-content:space-between;min-height:60px;padding:0 24px">Apply for January <svg aria-hidden="true" width="22" height="12" viewBox="0 0 22 12" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M0 6h20M15 1l5 5-5 5"></path></svg></a>
+</div>
+</div>
+</section>
+
+<section class="rule" aria-label="After the 90 days">
+<div class="strip gut meta lbl"><span>06 / After the 90 days</span><span>Two doors</span></div>
+<div class="split">
+<div class="cell cellR" style="flex:1 1 420px;gap:32px;padding-top:24px;padding-bottom:40px"><span class="lbl">Club Locked In / The mastermind</span><p class="big rv" style="font-size:clamp(26px,2.8vw,40px);line-height:.95;letter-spacing:-.04em">Four events a year.<br>Bali, Thailand,<br>wherever we go next.</p><p style="font-size:15px;line-height:1.5;max-width:420px">For the ones going from creative founder to leader. Three to four days in a room, four times a year, plus 1:1 with Josh in between. By invitation.</p></div>
+<div class="cell" style="flex:1 1 420px;gap:32px;padding-top:24px;padding-bottom:40px"><span class="lbl">Stay locked in / Ongoing</span><p class="big rv" style="font-size:clamp(26px,2.8vw,40px);line-height:.95;letter-spacing:-.04em">Keep the portal,<br>the agents and<br>the room.</p><p style="font-size:15px;line-height:1.5;max-width:420px">Monthly access to the community, the library and every new agent, so the momentum doesn't stop when the 90 days do.</p></div>
+</div>
+</section>
+
+<section class="rule sec gut" aria-label="Founder">
+<div class="side lbl"><span>07 / Who's behind it</span><span>Josh Pearson, founder</span></div>
+<p class="quote rv main" style="font-size:clamp(24px,3vw,42px);line-height:1.15">I've taken creatives from burning out at £5k months to their first £20k, £25k and £30k months. The work was never what held them back. It was what they believed they were allowed to charge, how big they let themselves think, and whether they backed themselves. I get into that. Then I push. And I'm locked in myself right now: four months into my own transformation, building this while moving my family to Bali.</p>
+</section>
+
+<section class="rule" id="apply" aria-label="Apply">
+<div class="strip gut meta lbl"><span>08 / Apply</span><span>Founding cohort / Closes 30 November</span></div>
+<div class="split">
+<div class="cell cellR" style="flex:1 1 480px;gap:32px;padding-bottom:48px">
+<h2 class="big rv" style="font-size:clamp(40px,6vw,92px);line-height:.88;letter-spacing:-.05em">Ten places.<br>Apply in a DM.</h2>
+<p class="lead rv">Message <strong>LOCKED IN</strong> to @lockedin.dept on Instagram. You'll get three questions back, then a call with Josh if it's a fit. No forms, no funnels.</p>
+<p><a class="btn" href="https://ig.me/m/lockedin.dept" target="_blank" rel="noopener">DM "Locked In" <svg aria-hidden="true" width="22" height="12" viewBox="0 0 22 12" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M0 6h20M15 1l5 5-5 5"></path></svg></a></p>
+</div>
+<div class="cell" style="flex:1 1 360px;gap:0;padding-bottom:48px">
+<span class="lbl" style="margin-bottom:16px">What happens next</span>
+<ul class="list">
+<li><span class="lbl">01</span><span>You DM. Josh replies, not an assistant.</span></li>
+<li><span class="lbl">02</span><span>Three questions: what you do, where you are, where you want to be in 90 days.</span></li>
+<li><span class="lbl">03</span><span>A 30-minute call. Group or 1:1 decided together.</span></li>
+<li><span class="lbl">04</span><span>You're in. December event ticket lands the same day.</span></li>
+</ul>
+</div>
+</div>
+</section>
+
+<section class="fin" aria-label="Finale">
+<div class="gut meta lbl" style="position:absolute;top:24px;left:0;right:0"><span>Applications close 30 November</span><a class="arrow" href="#apply" style="text-decoration:none;display:inline-flex;align-items:center;gap:10px;min-height:44px;margin-top:-14px">Get locked in <svg aria-hidden="true" width="22" height="12" viewBox="0 0 22 12" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M0 6h20M15 1l5 5-5 5"></path></svg></a></div>
+<p class="crop rs" aria-hidden="true">Lock</p>
+<div class="v1" aria-hidden="true"></div><div class="v2" aria-hidden="true"></div>
+</section>
+
+<footer class="rule">
+<div class="bar gut lbl">
+<a href="/" style="text-decoration:none">© 2026 Locked In Dept.</a>
+<a href="https://www.instagram.com/lockedin.dept" target="_blank" rel="noopener" style="text-decoration:none;min-height:44px;display:inline-flex;align-items:center">@lockedin.dept</a>
+<span>lockedindept.com</span>
+<span style="display:flex;gap:24px"><a href="#privacy" style="text-decoration:none">Privacy</a><a href="#terms" style="text-decoration:none">Terms</a></span>
+</div>
+</footer>
+
+<script>
+document.documentElement.classList.add('js');
+(function(){
+  var els=document.querySelectorAll('.rv,.wp,.rs');
+  if(!('IntersectionObserver' in window)){els.forEach(function(e){e.classList.add('on')});return}
+  var io=new IntersectionObserver(function(entries){entries.forEach(function(en){if(en.isIntersecting){en.target.classList.add('on');io.unobserve(en.target)}})},{rootMargin:'0px 0px -12% 0px',threshold:0.05});
+  els.forEach(function(e){io.observe(e)});
+})();
+</script>
+
+</body>
+</html>
