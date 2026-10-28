@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Home / Locked In Dept.</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&display=swap">
+<link rel="stylesheet" href="portal.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script src="config.js"></script>
+<script src="data.js"></script>
+</head>
+<body data-page="home">
+<div id="chrome"></div>
+<main class="page">
+<section class="head gut">
+<div><p class="lbl" style="margin-bottom:12px" id="stageline">Club Locked In</p><h1 class="big" id="greet">Morning.</h1></div>
+<div style="display:flex;flex-direction:column;align-items:flex-end;gap:16px"><span class="lbl" id="cohort"></span><a class="btn" href="calls.html">Book a call <svg aria-hidden="true" width="22" height="12" viewBox="0 0 22 12" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M0 6h20M15 1l5 5-5 5"></path></svg></a></div>
+</section>
+
+<section class="split">
+<a id="continue" href="library.html" class="cellR" style="flex:2 1 560px;min-width:0;text-decoration:none;display:flex;flex-wrap:wrap;border-bottom:1px solid var(--line)">
+<div class="fig" style="flex:1 1 220px;min-height:300px"><img src="/img/red-blur.jpg" alt="" style="object-position:center 30%"></div>
+<div style="flex:2 1 280px;min-width:0;padding:24px;display:flex;flex-direction:column;justify-content:space-between;gap:32px">
+<div class="meta lbl"><span>Continue</span><span id="lessoncount"></span></div>
+<div><p class="lbl" style="margin-bottom:10px" id="nextmod"></p><h2 class="big" id="nexttitle" style="font-size:clamp(32px,3.4vw,52px)"></h2></div>
+<div style="display:flex;flex-direction:column;gap:12px"><div class="prog" role="img" aria-label="Progress"><i id="progbar" style="width:0"></i></div><span class="lbl" style="display:flex;justify-content:space-between;font-weight:700"><span>Resume lesson →</span><span id="pct" style="font-weight:500"></span></span></div>
+</div>
+</a>
+<div class="cell" style="flex:1 1 320px">
+<div class="meta lbl"><span>Your method</span><span id="stagecount"></span></div>
+<ol class="list" id="methodlist"></ol>
+</div>
+</section>
+
+<section class="split">
+<div class="cell cellR" style="flex:1 1 320px;justify-content:space-between;min-height:240px"><span class="lbl">Next 1:1</span><div><p class="big" id="next11" style="font-size:32px">Not booked</p><p style="font-size:15px;margin-top:6px">Book your next session with Josh.</p></div><a class="link" href="calls.html">Book →</a></div>
+<div class="cell cellR" style="flex:1 1 320px;justify-content:space-between;min-height:240px"><span class="lbl">Live group session</span><div><p class="big" id="grouptitle" style="font-size:32px"></p><p style="font-size:15px;margin-top:6px" id="groupdate"></p></div><a class="link" href="calls.html">Details →</a></div>
+<div class="cell" style="flex:1 1 320px;justify-content:space-between;min-height:240px"><span class="meta lbl"><span>Core Four</span><span id="cfdate"></span></span><div id="cfsummary" style="display:flex;gap:16px;flex-wrap:wrap"></div><a class="link" href="core-four.html" id="cflink">Score yourself →</a></div>
+</section>
+
+<section class="gut" style="padding-block:40px 56px;display:flex;flex-wrap:wrap;gap:24px 40px">
+<span class="lbl" style="flex:1 1 200px">Ask the Dept.</span>
+<div style="flex:999 1 640px;min-width:0">
+<label for="ask" class="big" style="display:block;margin-bottom:8px;font-size:clamp(28px,3vw,44px)">Ask anything.</label>
+<form id="askform" style="display:flex;flex-wrap:wrap;align-items:flex-end;gap:16px"><input id="ask" class="input" type="text" placeholder="A client wants my day rate for a 30 second film. What do I say?" style="flex:1 1 360px"><button class="btn" type="submit">Ask</button></form>
+</div>
+</section>
+<script>
+document.addEventListener("lid:ready", function () {
+  var D = LID.data, S = LID.state;
+  document.getElementById("greet").textContent = LID.greeting();
+  document.getElementById("cohort").textContent = D.cohort.name + " / Starts " + D.cohort.starts;
+  var st = LID.stage(); if (st) document.getElementById("stageline").textContent = "Stage " + st.n + " / " + st.title;
+  var nl = LID.nextLesson(), pr = LID.progress();
+  document.getElementById("continue").href = "lesson.html?n=" + nl.n;
+  document.getElementById("lessoncount").textContent = "Lesson " + nl.n + " / " + pr.total;
+  var mod = D.method.find(function (m) { return m.key === nl.module; });
+  document.getElementById("nextmod").textContent = (mod ? mod.n + " / " + mod.title : "");
+  document.getElementById("nexttitle").textContent = nl.title;
+  document.getElementById("progbar").style.width = pr.pct + "%";
+  document.getElementById("pct").textContent = pr.pct + "%";
+  var done = S.done || {};
+  var stagesDone = 0;
+  document.getElementById("methodlist").innerHTML = D.method.map(function (m) {
+    var ls = D.lessons.filter(function (l) { return l.module === m.key; });
+    var all = ls.length && ls.every(function (l) { return done[l.n]; }); if (all) stagesDone++;
+    var now = st && st.key === m.key;
+    return '<li style="text-transform:uppercase;font-weight:' + (now ? 800 : 700) + ';letter-spacing:-.02em;font-size:20px;' + (all ? 'color:var(--grey);text-decoration:line-through' : '') + '"><span class="lbl" style="text-decoration:none">' + m.n + '</span>' + m.title + '<span style="margin-left:auto;text-decoration:none">' + (all ? '<span class="lbl">Done</span>' : now ? '<span class="badge">Now</span>' : '') + '</span></li>';
+  }).join("");
+  document.getElementById("stagecount").textContent = stagesDone + " / " + D.method.length;
+  var g = (D.calls || [])[0];
+  document.getElementById("grouptitle").textContent = g ? g.title : "Coming soon";
+  document.getElementById("groupdate").textContent = g && g.date ? LID.fmtDate(g.date) : "Date to be confirmed";
+  if (S.next11) document.getElementById("next11").textContent = LID.fmtDate(S.next11);
+  var cf = (S.coreFour || []); var last = cf[cf.length - 1];
+  if (last) {
+    document.getElementById("cfdate").textContent = new Date(last.at).toLocaleDateString("en-GB", { day: "numeric", month: "short" });
+    document.getElementById("cfsummary").innerHTML = D.coreFour.map(function (c) { return '<span style="display:flex;flex-direction:column;gap:4px"><span class="big" style="font-size:40px">' + (last.scores[c.key] || 0) + '</span><span class="lbl">' + c.title + '</span></span>'; }).join("");
+    document.getElementById("cflink").textContent = "Score again →";
+  } else { document.getElementById("cfsummary").innerHTML = '<p style="font-size:15px;line-height:1.5">Four areas, scored out of ten. Takes two minutes and shows where you\'re bleeding energy.</p>'; }
+  document.getElementById("askform").addEventListener("submit", function (e) { e.preventDefault(); var q = document.getElementById("ask").value.trim(); location.href = "assistant.html" + (q ? "?q=" + encodeURIComponent(q) : ""); });
+});
+</script>
+</main>
+<footer id="foot"></footer>
+<div id="toast" class="toast" role="status"></div>
+<script src="portal.js"></script>
+</body>
+</html>

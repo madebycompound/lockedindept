@@ -1,0 +1,43 @@
+<section class="head gut">
+<div><p class="lbl" style="margin-bottom:12px">1:1 and live group sessions</p><h1 class="big">Calls</h1></div>
+<span class="lbl" id="tz"></span>
+</section>
+<section class="split">
+<div class="cell cellR" style="flex:1 1 420px;justify-content:space-between;min-height:320px">
+<span class="lbl">Your next 1:1</span>
+<div><p class="big" id="next11" style="font-size:clamp(28px,3vw,44px)">Not booked</p><p style="font-size:15px;line-height:1.5;margin-top:10px">Thirty minutes with Josh. Bring the quote you're scared to send, the client you want to drop, or the goal you haven't said out loud.</p></div>
+<div style="display:flex;flex-wrap:wrap;gap:12px"><a class="btn" id="book" href="#" target="_blank" rel="noopener">Book a 1:1</a><a class="link" id="clear" href="#" hidden>Clear →</a></div>
+</div>
+<div class="cell" style="flex:1 1 420px;justify-content:space-between;min-height:320px">
+<span class="lbl">Live group session</span>
+<div><p class="big" id="gtitle" style="font-size:clamp(28px,3vw,44px)"></p><p style="font-size:15px;line-height:1.5;margin-top:10px" id="gdate"></p></div>
+<div style="display:flex;flex-wrap:wrap;gap:12px"><a class="btn ghost" id="gjoin" href="#" target="_blank" rel="noopener">Join link</a><a class="link" id="gcal" href="#" download="locked-in-session.ics">Add to calendar →</a></div>
+</div>
+</section>
+<section class="gut" style="padding-block:40px 56px;display:flex;flex-wrap:wrap;gap:24px 40px">
+<span class="lbl" style="flex:1 1 200px">How calls work</span>
+<ul class="list" style="flex:999 1 640px;min-width:0">
+<li><span class="lbl">01</span><span>Group sessions run weekly for the 90 days. Same slot each week, recorded if you miss one.</span></li>
+<li><span class="lbl">02</span><span>1:1 calls are booked through the link, up to your monthly allowance. Reschedule with 24 hours notice.</span></li>
+<li><span class="lbl">03</span><span>Come with one thing you want to leave with. Vague calls get vague answers.</span></li>
+</ul>
+</section>
+<script>
+document.addEventListener("lid:ready", function () {
+  var C = LID.config, D = LID.data, S = LID.state;
+  document.getElementById("tz").textContent = "Times shown in " + Intl.DateTimeFormat().resolvedOptions().timeZone.replace("_", " ");
+  var b = document.getElementById("book");
+  if (C.CAL_LINK) { b.href = C.CAL_LINK; } else { b.removeAttribute("target"); b.addEventListener("click", function (e) { e.preventDefault(); LID.toast("Booking link coming soon"); }); }
+  if (S.next11) { document.getElementById("next11").textContent = LID.fmtDate(S.next11); var cl = document.getElementById("clear"); cl.hidden = false; cl.addEventListener("click", async function (e) { e.preventDefault(); await LID.set({ next11: "" }); location.reload(); }); }
+  var g = (D.calls || [])[0], gj = document.getElementById("gjoin"), gc = document.getElementById("gcal");
+  document.getElementById("gtitle").textContent = g ? g.title : "Coming soon";
+  document.getElementById("gdate").textContent = g && g.date ? LID.fmtDate(g.date) : "Dates land once the cohort is confirmed.";
+  var link = (g && g.link) || C.GROUP_CALL_LINK;
+  if (link) gj.href = link; else { gj.removeAttribute("target"); gj.addEventListener("click", function (e) { e.preventDefault(); LID.toast("Join link shared before the session"); }); }
+  if (g && g.date) {
+    var s = new Date(g.date), e = new Date(s.getTime() + 60 * 60000), f = function (d) { return d.toISOString().replace(/[-:]/g, "").split(".")[0] + "Z"; };
+    var ics = "BEGIN:VCALENDAR\nVERSION:2.0\nBEGIN:VEVENT\nDTSTART:" + f(s) + "\nDTEND:" + f(e) + "\nSUMMARY:Locked In Dept. / " + g.title + "\nDESCRIPTION:" + (link || "") + "\nEND:VEVENT\nEND:VCALENDAR";
+    gc.href = "data:text/calendar;charset=utf-8," + encodeURIComponent(ics);
+  } else gc.hidden = true;
+});
+</script>

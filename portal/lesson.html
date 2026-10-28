@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Lesson / Locked In Dept.</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&display=swap">
+<link rel="stylesheet" href="portal.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script src="config.js"></script>
+<script src="data.js"></script>
+</head>
+<body data-page="lesson">
+<div id="chrome"></div>
+<main class="page">
+<section class="gut" style="padding-block:24px 0;display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px"><a class="link" href="library.html">← Library</a><span class="lbl" id="crumb"></span></section>
+<section class="gut" style="padding-block:24px 32px;border-bottom:1px solid var(--line)">
+<p class="lbl" style="margin-bottom:12px" id="mod"></p>
+<h1 class="big" id="title" style="font-size:clamp(36px,6vw,92px)"></h1>
+</section>
+<section class="split">
+<div class="cellR" style="flex:2 1 600px;min-width:0;border-bottom:1px solid var(--line)">
+<div id="player" style="position:relative;aspect-ratio:16/9;background:var(--ink);color:var(--paper);display:flex;align-items:flex-end;padding:24px"></div>
+</div>
+<div class="cell" style="flex:1 1 320px;justify-content:space-between">
+<div style="display:flex;flex-direction:column;gap:24px"><span class="lbl" id="mins"></span><p id="summary" style="font-size:17px;line-height:1.5"></p></div>
+<div style="display:flex;flex-direction:column;gap:12px">
+<button class="btn" id="done" type="button" style="justify-content:space-between">Mark as watched <svg aria-hidden="true" width="22" height="12" viewBox="0 0 22 12" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M0 6h20M15 1l5 5-5 5"></path></svg></button>
+<a class="link" id="next" href="library.html">Next lesson →</a>
+<a class="link" href="assistant.html" id="askabout">Ask the assistant about this →</a>
+</div>
+</div>
+</section>
+<script>
+document.addEventListener("lid:ready", async function () {
+  var D = LID.data, n = new URLSearchParams(location.search).get("n") || "01";
+  var i = D.lessons.findIndex(function (l) { return l.n === n; }); if (i < 0) i = 0;
+  var l = D.lessons[i], m = D.method.find(function (x) { return x.key === l.module; });
+  document.title = l.title + " / Locked In Dept.";
+  document.getElementById("crumb").textContent = "Lesson " + l.n + " / " + D.lessons.length;
+  document.getElementById("mod").textContent = m ? m.n + " / " + m.title : "";
+  document.getElementById("title").textContent = l.title;
+  document.getElementById("mins").textContent = l.mins + " min";
+  document.getElementById("summary").textContent = l.summary;
+  document.getElementById("askabout").href = "assistant.html?q=" + encodeURIComponent("Help me apply lesson " + l.n + ", " + l.title + ", to my business.");
+  var nx = D.lessons[i + 1]; document.getElementById("next").href = nx ? "lesson.html?n=" + nx.n : "library.html"; if (!nx) document.getElementById("next").textContent = "Back to library →";
+  var p = document.getElementById("player");
+  if (l.video) {
+    var src = l.video.indexOf("vimeo.com") >= 0 && l.video.indexOf("player.vimeo.com") < 0 ? "https://player.vimeo.com/video/" + l.video.split("/").pop() : l.video;
+    p.style.padding = 0; p.innerHTML = '<iframe src="' + src + '" title="' + l.title + '" style="position:absolute;inset:0;width:100%;height:100%;border:0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>';
+  } else { p.innerHTML = '<span class="lbl">Video coming soon / Recorded before the cohort starts</span>'; }
+  var b = document.getElementById("done"), done = LID.state.done || {};
+  function paint() { b.firstChild.textContent = done[l.n] ? "Watched " : "Mark as watched "; }
+  paint();
+  b.addEventListener("click", async function () { done[l.n] = !done[l.n]; await LID.set({ done: done }); paint(); LID.toast(done[l.n] ? "Marked as watched" : "Marked as unwatched"); });
+});
+</script>
+</main>
+<footer id="foot"></footer>
+<div id="toast" class="toast" role="status"></div>
+<script src="portal.js"></script>
+</body>
+</html>

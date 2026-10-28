@@ -1,0 +1,52 @@
+<div class="split" style="min-height:calc(100vh - 120px)">
+<aside class="cellR" style="flex:1 1 260px;min-width:0;padding:24px var(--gr) 24px var(--gl);display:flex;flex-direction:column;gap:24px;border-bottom:1px solid var(--line)">
+<div class="meta lbl"><span>Conversations</span><button type="button" id="new" class="link" style="background:none;border:0;padding:0;cursor:pointer;min-height:auto">New +</button></div>
+<div id="threads"></div>
+<div style="margin-top:auto;padding-top:24px;display:flex;flex-direction:column;gap:12px"><p class="lbl">Want a human on this?</p><p style="font-size:15px;line-height:1.45">Bring it to your next 1:1 and we'll go through it together.</p><a class="link" href="calls.html">Book a call →</a></div>
+</aside>
+<section style="flex:999 1 640px;min-width:0;padding:32px var(--gr) 24px var(--gl);display:flex;flex-direction:column;gap:32px">
+<div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:16px;padding-bottom:20px;border-bottom:1px solid var(--line)"><h1 class="big" style="font-size:clamp(40px,6vw,96px)">Assistant</h1><span class="lbl">Trained on the Dept. method</span></div>
+<div id="msgs" style="display:flex;flex-direction:column;gap:28px;flex:1"></div>
+<form id="f" style="display:flex;flex-direction:column;gap:12px;margin-top:auto">
+<label for="msg" class="lbl">Ask</label>
+<div style="display:flex;flex-wrap:wrap;align-items:flex-end;gap:16px"><textarea id="msg" class="input" rows="2" placeholder="Ask a follow up, or paste a quote you're about to send" style="flex:1 1 360px;min-width:0"></textarea><button class="btn" type="submit" id="send">Send</button></div>
+<div style="display:flex;flex-wrap:wrap;gap:8px 24px"><button type="button" class="link sug" style="background:none;border:0;padding:0;cursor:pointer;font:inherit;font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase">Pressure test my new price →</button><button type="button" class="link sug" style="background:none;border:0;padding:0;cursor:pointer;font:inherit;font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase">Write a post on how I think →</button><button type="button" class="link sug" style="background:none;border:0;padding:0;cursor:pointer;font:inherit;font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase">Which agent should I set up first? →</button></div>
+<p class="note">The assistant can get things wrong. Check anything important before you send it.</p>
+</form>
+</section>
+</div>
+<script>
+document.addEventListener("lid:ready", function () {
+  var S = LID.state, threads = S.threads || [], cur = null;
+  var msgs = document.getElementById("msgs"), f = document.getElementById("f"), ta = document.getElementById("msg"), send = document.getElementById("send");
+  function row(role, text) {
+    return '<div style="display:flex;flex-wrap:wrap;gap:8px 32px' + (role === "assistant" ? ';padding-top:28px;border-top:1px solid var(--line)' : '') + '"><span class="lbl" style="flex:0 0 120px;padding-top:' + (role === "user" ? 6 : 4) + 'px;font-weight:' + (role === "user" ? 500 : 700) + '">' + (role === "user" ? "You" : "The Dept.") + '</span><div style="flex:1 1 400px;min-width:0;max-width:720px;' + (role === "user" ? 'font-size:22px;line-height:1.25;font-weight:700;letter-spacing:-.02em' : 'font-size:17px;line-height:1.6;white-space:pre-wrap') + '">' + esc(text) + '</div></div>';
+  }
+  function esc(s) { return s.replace(/[&<>]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]; }); }
+  function paint() {
+    msgs.innerHTML = cur ? cur.messages.map(function (m) { return row(m.role, m.content); }).join("") : '<p style="font-size:17px;line-height:1.6;max-width:600px">Ask about a price, a pitch, a client, a post, or which lesson to watch next. It knows the method and it will tell you straight.</p>';
+    document.getElementById("threads").innerHTML = threads.slice().reverse().map(function (t) { return '<a href="#" data-id="' + t.id + '" style="text-decoration:none;display:flex;justify-content:space-between;gap:12px;padding:14px 0;min-height:44px;border-top:1px solid var(--line);font-size:15px;font-weight:' + (cur && cur.id === t.id ? 700 : 500) + '"><span style="min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' + esc(t.title) + '</span><span class="lbl">' + new Date(t.at).toLocaleDateString("en-GB", { day: "numeric", month: "short" }) + '</span></a>'; }).join("") || '<p class="lbl">No conversations yet.</p>';
+    msgs.scrollTop = msgs.scrollHeight;
+  }
+  document.getElementById("threads").addEventListener("click", function (e) { var a = e.target.closest("a"); if (!a) return; e.preventDefault(); cur = threads.find(function (t) { return t.id === a.dataset.id; }); paint(); });
+  document.getElementById("new").addEventListener("click", function () { cur = null; paint(); ta.focus(); });
+  document.querySelectorAll(".sug").forEach(function (b) { b.addEventListener("click", function () { ta.value = b.textContent.replace(" →", ""); f.requestSubmit(); }); });
+  async function ask(q) {
+    if (!cur) { cur = { id: String(Date.now()), title: q.slice(0, 48), at: new Date().toISOString(), messages: [] }; threads.push(cur); }
+    cur.messages.push({ role: "user", content: q }); paint(); send.disabled = true; send.textContent = "Thinking";
+    var ctx = { progress: LID.progress(), stage: LID.stage(), coreFour: (S.coreFour || []).slice(-1)[0] || null, name: LID.first() };
+    try {
+      var r = await fetch("/api/assistant", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ messages: cur.messages.slice(-12), context: ctx }) });
+      var j = await r.json(); if (!r.ok) throw new Error(j.error || "Assistant unavailable");
+      cur.messages.push({ role: "assistant", content: j.reply });
+    } catch (err) {
+      cur.messages.push({ role: "assistant", content: "The assistant isn't switched on yet. It goes live once the cohort starts and the lessons are in. Until then, bring this to your next 1:1 or the group call." });
+    }
+    await LID.set({ threads: threads.slice(-30) }); paint(); send.disabled = false; send.textContent = "Send";
+  }
+  f.addEventListener("submit", function (e) { e.preventDefault(); var q = ta.value.trim(); if (!q) return; ta.value = ""; ask(q); });
+  ta.addEventListener("keydown", function (e) { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); f.requestSubmit(); } });
+  paint();
+  var q0 = new URLSearchParams(location.search).get("q"); if (q0) { history.replaceState(null, "", "assistant.html"); ask(q0); }
+});
+</script>

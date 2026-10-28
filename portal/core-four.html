@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Core Four / Locked In Dept.</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&display=swap">
+<link rel="stylesheet" href="portal.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script src="config.js"></script>
+<script src="data.js"></script>
+</head>
+<body data-page="core-four">
+<div id="chrome"></div>
+<main class="page">
+<section class="head gut">
+<div><p class="lbl" style="margin-bottom:12px">The method / Scored out of ten</p><h1 class="big">Core Four</h1></div>
+<p style="flex:0 1 420px;font-size:17px;line-height:1.5">Score four areas honestly. Not where you want to be, where you are today. We do this on day one and every two weeks, and the line tells us where to push.</p>
+</section>
+<form id="cf" class="split"></form>
+<section class="gut" style="padding-block:24px 32px;border-bottom:1px solid var(--line);display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:16px">
+<span class="lbl" id="total">Total / 40</span>
+<button class="btn" type="submit" form="cf">Save today's scores <svg aria-hidden="true" width="22" height="12" viewBox="0 0 22 12" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M0 6h20M15 1l5 5-5 5"></path></svg></button>
+</section>
+<section id="history" class="gut" style="padding-block:40px 56px"></section>
+<script>
+document.addEventListener("lid:ready", function () {
+  var D = LID.data, hist = LID.state.coreFour || [], last = hist[hist.length - 1];
+  var f = document.getElementById("cf");
+  f.innerHTML = D.coreFour.map(function (c, i) {
+    var v = last ? (last.scores[c.key] || 5) : 5;
+    return '<div class="cell' + (i < D.coreFour.length - 1 ? ' cellR' : '') + '" style="flex:1 1 300px;justify-content:space-between;min-height:320px">' +
+      '<div class="meta lbl"><span>0' + (i + 1) + '</span><span>/ 10</span></div>' +
+      '<div><label for="s-' + c.key + '" class="big" style="display:block;font-size:clamp(28px,2.6vw,38px);margin-bottom:12px">' + c.title + '</label><p style="font-size:15px;line-height:1.5">' + c.q + '</p></div>' +
+      '<div style="display:flex;align-items:center;gap:16px"><input id="s-' + c.key + '" name="' + c.key + '" type="range" min="1" max="10" value="' + v + '" style="flex:1;accent-color:#0B0B0B"><output class="big" style="font-size:48px;min-width:2ch;text-align:right" for="s-' + c.key + '">' + v + '</output></div></div>';
+  }).join("");
+  function total() { var t = 0; D.coreFour.forEach(function (c) { t += +f.elements[c.key].value; }); document.getElementById("total").textContent = "Total " + t + " / 40"; }
+  f.addEventListener("input", function (e) { if (e.target.type === "range") { e.target.nextElementSibling.value = e.target.value; total(); } });
+  total();
+  f.addEventListener("submit", async function (e) {
+    e.preventDefault(); var scores = {}; D.coreFour.forEach(function (c) { scores[c.key] = +f.elements[c.key].value; });
+    hist.push({ at: new Date().toISOString(), scores: scores }); await LID.set({ coreFour: hist }); LID.toast("Saved"); history_();
+  });
+  function history_() {
+    var h = document.getElementById("history");
+    if (!hist.length) { h.innerHTML = '<p class="lbl">No scores yet. Your first set becomes the baseline.</p>'; return; }
+    var rows = hist.slice().reverse().slice(0, 8);
+    h.innerHTML = '<div class="meta lbl" style="padding-bottom:12px;border-bottom:1px solid var(--line)"><span>History</span><span>Newest first</span></div>' + rows.map(function (r, idx) {
+      var prev = hist[hist.length - 2 - idx];
+      var cells = D.coreFour.map(function (c) { var v = r.scores[c.key]; var d = prev ? v - prev.scores[c.key] : 0; return '<span style="flex:1 1 90px"><span class="big" style="font-size:32px">' + v + '</span> <span class="lbl" style="color:' + (d > 0 ? 'var(--ink)' : 'var(--mute)') + '">' + (d > 0 ? '+' + d : d < 0 ? d : '') + '</span><br><span class="lbl">' + c.title + '</span></span>'; }).join("");
+      return '<div style="display:flex;flex-wrap:wrap;gap:12px 24px;padding-block:18px;border-bottom:1px solid var(--line);align-items:baseline"><span class="lbl" style="flex:0 0 120px">' + new Date(r.at).toLocaleDateString("en-GB", { day: "numeric", month: "short" }) + '</span>' + cells + '</div>';
+    }).join("");
+  }
+  history_();
+});
+</script>
+</main>
+<footer id="foot"></footer>
+<div id="toast" class="toast" role="status"></div>
+<script src="portal.js"></script>
+</body>
+</html>
