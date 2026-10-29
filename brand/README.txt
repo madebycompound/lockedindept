@@ -1,11 +1,8 @@
-LOCKED IN DEPT. wordmark
+Locked In Dept. brand pack
 
-Font: Archivo Extra Bold (800), all caps, tracking -5%, line height 0.9
-Colours: Ink #0B0B0B  /  Paper #ECEBE7
+Wordmark, single line: lockedindept-wordmark-*.svg / .png
+Wordmark, stacked with ©: lockedindept-stacked-*.svg / .png
+Colours: black #0B0B0B, paper #ECEBE7, yellow #E8FF2A (one-colour use only, not over photography), orange #E8742A (accent, used sparingly)
+Font: Archivo ExtraBold (included), letter-spacing -4.5%, all caps
 
-Files
-- *.svg  vector, text outlined (no font needed). Use these for sign makers, vinyl, laser cut, print.
-- *.png  4000px wide, transparent where no background.
-- Archivo-ExtraBold.ttf  the font, if you need to set other words in the same style. Free to use (SIL Open Font License).
-
-For a sign maker send: lockedindept-wordmark-black.svg (or -paper.svg for a dark wall).
+Use over photography in paper (white). Use yellow or black on flat backgrounds and for signs, stickers and print.
