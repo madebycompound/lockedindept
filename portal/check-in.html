@@ -28,6 +28,7 @@
 <section id="v-today" class="gut" style="padding-block:40px 64px;max-width:720px">
 <div class="meta lbl" style="margin-bottom:20px"><span id="today"></span><span id="todayscore"></span></div>
 <div id="rituals" style="display:flex;flex-direction:column;gap:10px"></div>
+<button type="button" id="logday" class="btn" style="width:100%;justify-content:space-between;min-height:60px;margin-top:16px">Log today <svg aria-hidden="true" width="22" height="12" viewBox="0 0 22 12" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M0 6h20M15 1l5 5-5 5"></path></svg></button>
 <div style="display:flex;justify-content:space-between;align-items:center;gap:16px;margin-top:28px">
 <div id="dots" style="display:flex;gap:6px" aria-label="Last seven days"></div>
 <a href="#" id="editrituals" class="link" style="min-height:auto">Edit rituals →</a>
@@ -111,7 +112,8 @@ document.addEventListener("lid:ready", function () {
     var dots = ""; for (var i = 6; i >= 0; i--) { var d = new Date(today); d.setDate(d.getDate() - i); var dd = S.days[key(d)] || {}; var c = S.rituals.filter(function (r) { return dd[r]; }).length; var full = c === S.rituals.length && c > 0; dots += '<span title="' + key(d) + '" style="width:28px;height:28px;border:1px solid var(--line);background:' + (full ? 'var(--ink)' : c ? 'var(--ghost)' : 'transparent') + '"></span>'; }
     document.getElementById("dots").innerHTML = dots;
   }
-  document.getElementById("rituals").addEventListener("click", async function (e) { var b = e.target.closest("button"); if (!b) return; var r = b.dataset.r; S.days[tk] = S.days[tk] || {}; S.days[tk][r] = !S.days[tk][r]; await LID.set({ days: S.days }); paintToday(); });
+  document.getElementById("rituals").addEventListener("click", function (e) { var b = e.target.closest("button"); if (!b) return; var r = b.dataset.r; S.days[tk] = S.days[tk] || {}; S.days[tk][r] = !S.days[tk][r]; paintToday(); });
+  document.getElementById("logday").addEventListener("click", async function () { var b = this; b.disabled = true; var ok = await LID.set({ days: S.days }); b.disabled = false; if (ok) { var n = S.rituals.filter(function (r) { return (S.days[tk] || {})[r]; }).length; LID.toast("Logged. " + n + " of " + S.rituals.length + " today"); } });
   var rf = document.getElementById("ritualform");
   document.getElementById("editrituals").addEventListener("click", function (e) { e.preventDefault(); document.getElementById("ritualtext").value = S.rituals.join("\n"); rf.hidden = false; });
   document.getElementById("cancelrituals").addEventListener("click", function () { rf.hidden = true; });

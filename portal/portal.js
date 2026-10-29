@@ -16,9 +16,14 @@
       var r = await sb.from("member_state").select("state").eq("user_id", user.id).maybeSingle();
       return (r.data && r.data.state) || {};
     },
-    async save(user, s) {
+    async save(user, s, patch) {
       if (!live || !user) return this.saveLocal(s);
-      await sb.from("member_state").upsert({ user_id: user.id, email: user.email || null, state: s, updated_at: new Date().toISOString() });
+      // Merge the patch into the freshest copy so two devices never overwrite each other.
+      var r = await sb.from("member_state").select("state").eq("user_id", user.id).maybeSingle();
+      var fresh = Object.assign({}, (r.data && r.data.state) || {}, patch || s);
+      Object.assign(s, fresh);
+      var w = await sb.from("member_state").upsert({ user_id: user.id, email: user.email || null, state: fresh, updated_at: new Date().toISOString() });
+      if (w.error) throw w.error;
     }
   };
 
@@ -50,7 +55,9 @@
       t.textContent = msg; t.classList.add("on"); clearTimeout(t._h); t._h = setTimeout(function () { t.classList.remove("on"); }, 2200);
     },
     async set(patch) {
-      Object.assign(this.state, patch); await store.save(this.user, this.state);
+      Object.assign(this.state, patch);
+      try { await store.save(this.user, this.state, patch); return true; }
+      catch (e) { this.toast("Not saved. Check your connection and try again."); return false; }
     },
     progress: function () {
       var done = this.state.done || {}; var ls = D.lessons || [];
