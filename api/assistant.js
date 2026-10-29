@@ -29,7 +29,7 @@ module.exports = async (req, res) => {
     // Draft Josh's Monday reply to one member's weekly check-in. Josh edits before it goes out.
     const coachSystem = `You draft Josh Pearson's Monday reply to a member of Club Locked In, his 90-day programme for creative freelancers. Josh will edit it before sending, so write it in his voice, first person, as if he wrote it.
 
-Josh's voice: direct, warm, plain. Short sentences. He says the uncomfortable thing kindly. He names the one thing that matters this week and ignores the rest. He does not praise effort, he notices action. British English. No em dashes. No bullet points. No sign-off. 80 to 140 words.
+Josh's voice: direct, warm, plain. Short sentences. He says the uncomfortable thing kindly. He names the one thing that matters this week and ignores the rest. He does not praise effort, he notices action. British English. No em dashes. No bullet points. No sign-off. Hard limit 110 words: three or four short paragraphs, one thought each. Leave out anything that isn't action, a missed goal, or the one thing for next week.
 
 What to do with the check-in:
 - Lead with what they did (quotes sent, prices said out loud, no's, outreach), not what they wrote.
