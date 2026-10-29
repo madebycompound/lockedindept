@@ -1,5 +1,21 @@
 {
   "cleanUrls": true,
   "trailingSlash": false,
-  "headers": [{ "source": "/portal/(.*)", "headers": [{ "key": "X-Robots-Tag", "value": "noindex" }] }]
+  "headers": [
+    {
+      "source": "/portal/(.*)",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        }
+      ]
+    }
+  ],
+  "crons": [
+    {
+      "path": "/api/remind",
+      "schedule": "0 9 * * *"
+    }
+  ]
 }

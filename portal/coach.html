@@ -24,7 +24,9 @@
 .m summary{list-style:none;cursor:pointer;display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 24px;padding:22px var(--gr) 22px var(--gl)}
 .m summary::-webkit-details-marker{display:none}
 .m summary:hover{background:#E2E0DB}
-.m .who{flex:1 1 220px;font-size:24px;font-weight:800;letter-spacing:-.03em;text-transform:uppercase;line-height:1}
+.m summary::after{content:"+";font-size:22px;font-weight:500;line-height:1;margin-left:auto}
+.m[open] summary::after{content:"−"}
+.m .who{font-size:24px;font-weight:800;letter-spacing:-.03em;text-transform:uppercase;line-height:1}
 .m .body{display:flex;flex-wrap:wrap;border-top:1px solid var(--line)}
 .m .col{flex:1 1 320px;min-width:0;padding:24px var(--gr) 28px var(--gl);display:flex;flex-direction:column;gap:18px}
 .m .col+.col{border-left:1px solid var(--line)}
@@ -76,9 +78,12 @@ document.addEventListener("lid:ready", async function () {
       w && (w.goals || []).length ? "Goals for next week: " + w.goals.map(function (g) { return g.text; }).join("; ") : ""
     ].filter(Boolean).join("\n");
     var myNotes = notes.filter(function (n) { return n.user_id === m.user_id; });
-    return '<details class="m" data-id="' + m.user_id + '" data-week="' + (w ? w.week : wk) + '"' + (fl.length ? " open" : "") + '>' +
-      '<summary><span style="flex:1 1 220px;display:flex;flex-direction:column;gap:6px"><span class="who">' + name + '</span>' + (bio ? '<span class="note" style="text-transform:none;letter-spacing:0;font-size:12px">' + bio.replace(/</g, "&lt;") + '</span>' : '') + '</span>' + (N ? '<span class="lbl">' + LID.gbp(rate) + '/hr</span>' : '') + (w && w.reps ? '<span class="lbl">' + (reps.quotes || 0) + ' quotes / top ' + LID.gbp(reps.top) + '</span>' : '') + fl.map(function (f) { return '<span class="badge ' + (f === "Needs reply" ? "soft" : "flag") + '">' + f + '</span>'; }).join("") + '</summary>' +
-      '<div class="body"><div class="col">' +
+    var lastDay = Object.keys(S.days || {}).filter(function (d) { return Object.keys(S.days[d]).some(function (k) { return S.days[d][k]; }); }).sort().pop();
+    var ago = function (iso) { if (!iso) return null; var d = Math.floor((Date.now() - new Date(iso)) / 864e5); return d <= 0 ? "today" : d === 1 ? "yesterday" : d + " days ago"; };
+    var act = [cur ? "Checked in " + ago(cur.at) : "Never checked in", lastDay ? "rituals " + ago(lastDay) : "no rituals logged", (goalsPrev.length ? goalsPrev.filter(function (g) { return g.hit; }).length + "/" + goalsPrev.length + " goals hit" : null)].filter(Boolean).join(" · ");
+    return '<details class="m" data-id="' + m.user_id + '" data-email="' + (m.email || "") + '" data-name="' + name.replace(/"/g, "&quot;") + '" data-week="' + (w ? w.week : wk) + '">' +
+      '<summary><span style="flex:1 1 260px;display:flex;flex-direction:column;gap:6px"><span class="who">' + name + '</span><span class="note" style="text-transform:none;letter-spacing:0;font-size:12px">' + act + '</span></span>' + (N ? '<span class="lbl">' + LID.gbp(rate) + '/hr</span>' : '') + (w && w.reps ? '<span class="lbl">' + (reps.quotes || 0) + ' quotes / top ' + LID.gbp(reps.top) + '</span>' : '') + fl.map(function (f) { return '<span class="badge ' + (f === "Needs reply" ? "soft" : "flag") + '">' + f + '</span>'; }).join("") + '</summary>' +
+      '<div class="body"><div class="col">' + (bio ? '<span class="note" style="text-transform:none;letter-spacing:0;font-size:12px">' + bio.replace(/</g, "&lt;") + '</span>' : '') +
       (w ? '<div><span class="lbl">Week of ' + new Date(w.week).toLocaleDateString("en-GB", { day: "numeric", month: "short" }) + '</span>' +
         '<div class="kv"><span>Earned / hours</span><b>' + LID.gbp(reps.income) + ' / ' + (reps.hours || 0) + 'h</b></div>' +
         '<div class="kv"><span>Quotes sent</span><b>' + (reps.quotes || 0) + '</b></div>' +
@@ -113,7 +118,11 @@ document.addEventListener("lid:ready", async function () {
     }
     if (e.target.closest(".send")) {
       var t = d.querySelector(".reply").value.trim(); if (!t) return;
-      if (LID.live) { var ins = await LID.sb.from("coach_notes").insert({ user_id: d.dataset.id, week: d.dataset.week, note: t }); if (ins.error) { LID.toast("Didn't send: " + ins.error.message); return; } }
+      if (LID.live) {
+        var ins = await LID.sb.from("coach_notes").insert({ user_id: d.dataset.id, week: d.dataset.week, note: t }); if (ins.error) { LID.toast("Didn't send: " + ins.error.message); return; }
+        try { var ses = await LID.sb.auth.getSession(); var tok = ses.data.session && ses.data.session.access_token; var nr = await fetch("/api/notify", { method: "POST", headers: { "Content-Type": "application/json", "Authorization": "Bearer " + tok }, body: JSON.stringify({ to: d.dataset.email, name: d.dataset.name, note: t }) }); if (!nr.ok) LID.toast("Saved to portal. Email not sent (RESEND_API_KEY in Vercel?)"); else LID.toast("Sent and emailed"); } catch (e) { LID.toast("Saved to portal. Email not sent."); }
+        d.querySelector(".reply").value = ""; d.querySelector(".badge.soft") && d.querySelector(".badge.soft").remove(); return;
+      }
       LID.toast("Sent"); d.querySelector(".reply").value = ""; d.querySelector(".badge.soft") && d.querySelector(".badge.soft").remove();
     }
   });
