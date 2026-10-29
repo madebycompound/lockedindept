@@ -21,7 +21,7 @@
 <section class="split">
 <div class="cell cellR" style="flex:1 1 320px;justify-content:space-between;min-height:240px"><span class="lbl">Next 1:1</span><div><p class="big" id="next11" style="font-size:32px">Not booked</p><p style="font-size:15px;margin-top:6px">Book your next session with Josh.</p></div><a class="link" href="/portal/calls">Book →</a></div>
 <div class="cell cellR" style="flex:1 1 320px;justify-content:space-between;min-height:240px"><span class="lbl">Live group session</span><div><p class="big" id="grouptitle" style="font-size:32px"></p><p style="font-size:15px;margin-top:6px" id="groupdate"></p></div><a class="link" href="/portal/calls">Details →</a></div>
-<div class="cell" style="flex:1 1 320px;justify-content:space-between;min-height:240px"><span class="meta lbl"><span>Core Four</span><span id="cfdate"></span></span><div id="cfsummary" style="display:flex;gap:16px;flex-wrap:wrap"></div><a class="link" href="/portal/core-four" id="cflink">Score yourself →</a></div>
+<div class="cell" style="flex:1 1 320px;justify-content:space-between;min-height:240px"><span class="meta lbl"><span>Today's rituals</span><span id="ritscore"></span></span><div id="rituals" style="display:flex;flex-direction:column"></div><a class="link" href="/portal/check-in" id="cflink">Weekly check-in →</a></div>
 </section>
 
 <section class="gut" style="padding-block:40px 56px;display:flex;flex-wrap:wrap;gap:24px 40px">
@@ -58,12 +58,16 @@ document.addEventListener("lid:ready", function () {
   document.getElementById("grouptitle").textContent = g ? g.title : "Coming soon";
   document.getElementById("groupdate").textContent = g && g.date ? LID.fmtDate(g.date) : "Date to be confirmed";
   if (S.next11) document.getElementById("next11").textContent = LID.fmtDate(S.next11);
-  var cf = (S.coreFour || []); var last = cf[cf.length - 1];
-  if (last) {
-    document.getElementById("cfdate").textContent = new Date(last.at).toLocaleDateString("en-GB", { day: "numeric", month: "short" });
-    document.getElementById("cfsummary").innerHTML = D.coreFour.map(function (c) { return '<span style="display:flex;flex-direction:column;gap:4px"><span class="big" style="font-size:40px">' + (last.scores[c.key] || 0) + '</span><span class="lbl">' + c.title + '</span></span>'; }).join("");
-    document.getElementById("cflink").textContent = "Score again →";
-  } else { document.getElementById("cfsummary").innerHTML = '<p style="font-size:15px;line-height:1.5">Four areas, scored out of ten. Takes two minutes and shows where you\'re bleeding energy.</p>'; }
+  (function(){
+    var rit = S.rituals || ["Walk", "Train", "Meditate", "Sleep 7+ hours", "No phone first hour"]; S.days = S.days || {};
+    var tk = new Date().toISOString().slice(0,10); var done = S.days[tk] || {};
+    function paint(){ document.getElementById("rituals").innerHTML = rit.map(function(r){ return '<label style="display:flex;align-items:center;gap:12px;padding:9px 0;border-top:1px solid var(--line);font-size:15px;cursor:pointer;'+(done[r]?'color:var(--mute);text-decoration:line-through':'font-weight:700')+'"><input type="checkbox" data-r="'+r.replace(/"/g,"&quot;")+'" '+(done[r]?'checked':'')+' style="width:20px;height:20px;accent-color:#0B0B0B;margin:0"><span>'+r+'</span></label>'; }).join(""); document.getElementById("ritscore").textContent = rit.filter(function(r){return done[r]}).length + " / " + rit.length; }
+    document.getElementById("rituals").addEventListener("change", async function(e){ var r=e.target.dataset.r; if(!r) return; done[r]=e.target.checked; S.days[tk]=done; await LID.set({days:S.days}); paint(); });
+    var dow = new Date().getDay(); var wk = (function(d){ var x=new Date(d); x.setDate(x.getDate()-((x.getDay()+6)%7)); return x.toISOString().slice(0,10); })(new Date());
+    var has = (S.weeks||[]).some(function(w){return w.week===wk});
+    if ((dow===0||dow>=5) && !has) document.getElementById("cflink").textContent = "Weekly check-in due →";
+    paint();
+  })();
   document.getElementById("askform").addEventListener("submit", function (e) { e.preventDefault(); var q = document.getElementById("ask").value.trim(); location.href = "/portal/assistant" + (q ? "?q=" + encodeURIComponent(q) : ""); });
 });
 </script>

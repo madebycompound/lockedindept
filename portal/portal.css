@@ -58,3 +58,5 @@ textarea.input{height:auto;min-height:56px;padding:8px 0;resize:none;line-height
 .fig img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 @media (max-width:640px){.cellR{border-right:0}.card{border-right:0}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+[hidden]{display:none!important}
