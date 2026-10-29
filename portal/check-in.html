@@ -14,59 +14,58 @@
 <body data-page="check-in">
 <div id="chrome"></div>
 <main class="page">
-<section class="head gut">
-<div><p class="lbl" style="margin-bottom:12px" id="weeklbl">This week</p><h1 class="big">Check-in</h1></div>
-<p style="flex:0 1 420px;font-size:17px;line-height:1.5">Rituals every day, under a minute. The weekly on Sunday, under ten. This is the stuff we open your 1:1 with.</p>
+<section class="head gut" style="padding-bottom:0;border-bottom:0;align-items:flex-end">
+<div><p class="lbl" style="margin-bottom:12px" id="weeklbl"></p><h1 class="big">Check-in</h1></div>
+<nav aria-label="Check-in views" id="tabs" style="display:flex;gap:28px">
+<a href="#today" class="link" data-t="today">Today</a>
+<a href="#week" class="link" data-t="week">This week</a>
+<a href="#history" class="link" data-t="history">History</a>
+</nav>
 </section>
+<div class="rule"></div>
 
-<section class="split">
-<div class="cell cellR" style="flex:1 1 380px;gap:20px">
-<div class="meta lbl"><span>Daily rituals</span><span id="today"></span></div>
-<div id="rituals" style="display:flex;flex-direction:column"></div>
-<div class="meta lbl" style="margin-top:8px"><span id="todayscore"></span><a href="#" id="editrituals" class="link" style="min-height:auto">Edit rituals →</a></div>
-<form id="ritualform" hidden style="display:flex;flex-direction:column;gap:12px;padding-top:16px;border-top:1px solid var(--line)">
-<label for="ritualtext" class="lbl">One ritual per line</label>
+<!-- TODAY -->
+<section id="v-today" class="gut" style="padding-block:40px 64px;max-width:720px">
+<div class="meta lbl" style="margin-bottom:20px"><span id="today"></span><span id="todayscore"></span></div>
+<div id="rituals" style="display:flex;flex-direction:column;gap:10px"></div>
+<div style="display:flex;justify-content:space-between;align-items:center;gap:16px;margin-top:28px">
+<div id="dots" style="display:flex;gap:6px" aria-label="Last seven days"></div>
+<a href="#" id="editrituals" class="link" style="min-height:auto">Edit rituals →</a>
+</div>
+<form id="ritualform" hidden style="margin-top:24px;padding-top:24px;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:12px">
+<label for="ritualtext" class="lbl">One ritual per line, up to six</label>
 <textarea id="ritualtext" class="input" rows="6"></textarea>
-<div style="display:flex;gap:12px"><button class="btn" type="submit">Save rituals</button><button class="btn ghost" type="button" id="cancelrituals">Cancel</button></div>
+<div style="display:flex;gap:12px"><button class="btn" type="submit">Save</button><button class="btn ghost" type="button" id="cancelrituals">Cancel</button></div>
 </form>
-</div>
-<div class="cell" style="flex:1 1 380px;gap:20px">
-<div class="meta lbl"><span>Last 7 days</span><span id="weekscore"></span></div>
-<div id="heat" style="display:flex;flex-direction:column;gap:6px"></div>
-<p class="note" style="margin-top:8px">A full column is a full day. Streaks only count consecutive days.</p>
-</div>
 </section>
 
-<section class="strip gut meta lbl rule"><span>Weekly check-in</span><span id="weekstatus"></span></section>
-<form id="weekly" class="split">
-<div class="cell cellR" style="flex:1 1 420px;gap:28px">
-<div><label for="wins" class="big" style="display:block;font-size:clamp(26px,2.6vw,36px);margin-bottom:8px">Wins</label><p class="note" style="margin-bottom:10px">What moved. Money, clients, courage, anything.</p><textarea id="wins" class="input" rows="3" placeholder="Sent the £4k proposal. Posted my opinion for once."></textarea></div>
-<div><label for="insights" class="big" style="display:block;font-size:clamp(26px,2.6vw,36px);margin-bottom:8px">Insights</label><p class="note" style="margin-bottom:10px">What you noticed about yourself, your clients or the business.</p><textarea id="insights" class="input" rows="3" placeholder="I undercharge when I like the person."></textarea></div>
-<div><label for="honesty" class="big" style="display:block;font-size:clamp(26px,2.6vw,36px);margin-bottom:8px">Honesty</label><p class="note" style="margin-bottom:10px">Where could you have done better? No excuses, no beating yourself up either.</p><textarea id="honesty" class="input" rows="3" placeholder="Avoided the follow-up call all week."></textarea></div>
-</div>
-<div class="cell" style="flex:1 1 420px;gap:28px">
-<div>
-<div class="meta lbl" style="margin-bottom:12px"><span>Core Four</span><span id="cftotal">/ 40</span></div>
-<div id="cf" style="display:flex;flex-direction:column;gap:14px"></div>
-</div>
+<!-- THIS WEEK -->
+<form id="v-week" class="gut" hidden style="padding-block:40px 64px;max-width:720px;display:flex;flex-direction:column;gap:48px">
+<p class="lbl" id="weekstatus"></p>
 <div id="lastgoals" hidden>
-<p class="lbl" style="margin-bottom:10px">Last week's goals</p>
+<p class="lbl" style="margin-bottom:6px">Last week you said</p>
 <div id="lastgoalslist" style="display:flex;flex-direction:column"></div>
 </div>
+<div><label for="wins" class="big" style="display:block;font-size:34px;margin-bottom:12px">Wins</label><textarea id="wins" class="input" rows="2" placeholder="What moved this week"></textarea></div>
+<div><label for="insights" class="big" style="display:block;font-size:34px;margin-bottom:12px">Insights</label><textarea id="insights" class="input" rows="2" placeholder="What you noticed"></textarea></div>
+<div><label for="honesty" class="big" style="display:block;font-size:34px;margin-bottom:12px">Honesty</label><textarea id="honesty" class="input" rows="2" placeholder="Where could you have done better"></textarea></div>
 <div>
-<label class="big" style="display:block;font-size:clamp(26px,2.6vw,36px);margin-bottom:8px">Next week</label>
-<p class="note" style="margin-bottom:10px">Three goals. Specific enough that next Sunday you can say yes or no.</p>
-<div style="display:flex;flex-direction:column;gap:8px">
-<input id="g1" class="input" type="text" placeholder="1.">
-<input id="g2" class="input" type="text" placeholder="2.">
-<input id="g3" class="input" type="text" placeholder="3.">
+<div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:16px"><span class="big" style="font-size:34px">Core Four</span><span class="lbl" id="cftotal"></span></div>
+<div id="cf" style="display:flex;flex-direction:column"></div>
+</div>
+<div>
+<label class="big" style="display:block;font-size:34px;margin-bottom:12px">Next week</label>
+<div style="display:flex;flex-direction:column;gap:6px">
+<input id="g1" class="input" type="text" placeholder="Goal one">
+<input id="g2" class="input" type="text" placeholder="Goal two">
+<input id="g3" class="input" type="text" placeholder="Goal three">
 </div>
 </div>
-<button class="btn" type="submit" style="justify-content:space-between;min-height:60px">Save this week's check-in <svg aria-hidden="true" width="22" height="12" viewBox="0 0 22 12" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M0 6h20M15 1l5 5-5 5"></path></svg></button>
-</div>
+<button class="btn" type="submit" style="justify-content:space-between;min-height:60px">Save check-in <svg aria-hidden="true" width="22" height="12" viewBox="0 0 22 12" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M0 6h20M15 1l5 5-5 5"></path></svg></button>
 </form>
 
-<section id="history" class="gut" style="padding-block:40px 56px"></section>
+<!-- HISTORY -->
+<section id="v-history" class="gut" hidden style="padding-block:40px 64px;max-width:720px"></section>
 
 <script>
 document.addEventListener("lid:ready", function () {
@@ -76,68 +75,72 @@ document.addEventListener("lid:ready", function () {
   function key(d) { return d.toISOString().slice(0, 10); }
   function weekKey(d) { var x = new Date(d); x.setDate(x.getDate() - ((x.getDay() + 6) % 7)); return key(x); }
   var today = new Date(), tk = key(today), wk = weekKey(today);
-  document.getElementById("today").textContent = today.toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "short" });
+  document.getElementById("today").textContent = today.toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "long" });
   document.getElementById("weeklbl").textContent = "Week of " + new Date(wk).toLocaleDateString("en-GB", { day: "numeric", month: "long" });
 
-  function paintRituals() {
+  // tabs
+  var views = { today: "v-today", week: "v-week", history: "v-history" };
+  function show(t) { if (!views[t]) t = "today"; Object.keys(views).forEach(function (k) { document.getElementById(views[k]).hidden = k !== t; }); document.querySelectorAll("#tabs a").forEach(function (a) { a.style.boxShadow = a.dataset.t === t ? "inset 0 -2px 0 var(--ink)" : "none"; }); }
+  window.addEventListener("hashchange", function () { show(location.hash.slice(1)); });
+  var dow = today.getDay(), hasWeek = S.weeks.some(function (w) { return w.week === wk; });
+  show(location.hash.slice(1) || ((dow === 0 || dow >= 5) && !hasWeek ? "week" : "today"));
+
+  // today
+  function streak(r) { var n = 0; for (var i = 0; i < 400; i++) { var d = new Date(today); d.setDate(d.getDate() - i); var on = (S.days[key(d)] || {})[r]; if (on) n++; else if (i > 0) break; } return n; }
+  function paintToday() {
     var done = S.days[tk] || {};
-    document.getElementById("rituals").innerHTML = S.rituals.map(function (r, i) {
-      var streak = 0; for (var d = new Date(today); ; d.setDate(d.getDate() - 1)) { var k = key(d); if ((S.days[k] || {})[r]) streak++; else if (k !== tk) break; else continue; if (streak > 365) break; }
-      return '<label style="display:flex;align-items:center;gap:14px;padding:12px 0;border-top:1px solid var(--line);font-size:18px;font-weight:' + (done[r] ? 500 : 700) + ';cursor:pointer;' + (done[r] ? 'color:var(--mute);text-decoration:line-through' : '') + '"><input type="checkbox" data-r="' + r.replace(/"/g, "&quot;") + '" ' + (done[r] ? 'checked' : '') + ' style="width:22px;height:22px;accent-color:#0B0B0B;margin:0"><span style="flex:1">' + r + '</span><span class="lbl" style="text-decoration:none">' + (streak ? streak + 'd' : '') + '</span></label>';
+    document.getElementById("rituals").innerHTML = S.rituals.map(function (r) {
+      var on = !!done[r], st = streak(r);
+      return '<button type="button" data-r="' + r.replace(/"/g, "&quot;") + '" aria-pressed="' + on + '" style="display:flex;align-items:center;justify-content:space-between;gap:16px;width:100%;min-height:64px;padding:0 20px;border:1px solid var(--line);background:' + (on ? 'var(--ink)' : 'transparent') + ';color:' + (on ? 'var(--paper)' : 'var(--ink)') + ';font:inherit;font-size:19px;font-weight:700;letter-spacing:-.01em;text-align:left;cursor:pointer;transition:background .15s"><span>' + r + '</span><span class="lbl" style="font-weight:500;opacity:.8">' + (st ? st + (st === 1 ? ' day' : ' days') : '') + '</span></button>';
     }).join("");
     var n = S.rituals.filter(function (r) { return done[r]; }).length;
-    document.getElementById("todayscore").textContent = n + " / " + S.rituals.length + " today";
-    var rows = S.rituals.map(function (r) {
-      var cells = ""; for (var i = 6; i >= 0; i--) { var d = new Date(today); d.setDate(d.getDate() - i); var on = (S.days[key(d)] || {})[r]; cells += '<span title="' + key(d) + '" style="flex:1;height:22px;background:' + (on ? 'var(--ink)' : 'var(--ghost)') + '"></span>'; }
-      return '<div style="display:flex;align-items:center;gap:8px"><span class="lbl" style="flex:0 0 120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' + r + '</span><span style="flex:1;display:flex;gap:4px">' + cells + '</span></div>';
-    }).join("");
-    var days = ""; for (var i = 6; i >= 0; i--) { var d = new Date(today); d.setDate(d.getDate() - i); days += '<span style="flex:1;text-align:center" class="lbl">' + "MTWTFSS"[(d.getDay() + 6) % 7] + '</span>'; }
-    document.getElementById("heat").innerHTML = '<div style="display:flex;align-items:center;gap:8px"><span style="flex:0 0 120px"></span><span style="flex:1;display:flex;gap:4px">' + days + '</span></div>' + rows;
-    var tot = 0, poss = 0; for (var i = 6; i >= 0; i--) { var d = new Date(today); d.setDate(d.getDate() - i); S.rituals.forEach(function (r) { poss++; if ((S.days[key(d)] || {})[r]) tot++; }); }
-    document.getElementById("weekscore").textContent = (poss ? Math.round(100 * tot / poss) : 0) + "%";
+    document.getElementById("todayscore").textContent = n + " of " + S.rituals.length;
+    var dots = ""; for (var i = 6; i >= 0; i--) { var d = new Date(today); d.setDate(d.getDate() - i); var dd = S.days[key(d)] || {}; var c = S.rituals.filter(function (r) { return dd[r]; }).length; var full = c === S.rituals.length && c > 0; dots += '<span title="' + key(d) + '" style="width:28px;height:28px;border:1px solid var(--line);background:' + (full ? 'var(--ink)' : c ? 'var(--ghost)' : 'transparent') + '"></span>'; }
+    document.getElementById("dots").innerHTML = dots;
   }
-  document.getElementById("rituals").addEventListener("change", async function (e) {
-    var r = e.target.dataset.r; if (!r) return; S.days[tk] = S.days[tk] || {}; S.days[tk][r] = e.target.checked; await LID.set({ days: S.days }); paintRituals();
-  });
+  document.getElementById("rituals").addEventListener("click", async function (e) { var b = e.target.closest("button"); if (!b) return; var r = b.dataset.r; S.days[tk] = S.days[tk] || {}; S.days[tk][r] = !S.days[tk][r]; await LID.set({ days: S.days }); paintToday(); });
   var rf = document.getElementById("ritualform");
   document.getElementById("editrituals").addEventListener("click", function (e) { e.preventDefault(); document.getElementById("ritualtext").value = S.rituals.join("\n"); rf.hidden = false; });
   document.getElementById("cancelrituals").addEventListener("click", function () { rf.hidden = true; });
-  rf.addEventListener("submit", async function (e) { e.preventDefault(); var list = document.getElementById("ritualtext").value.split("\n").map(function (s) { return s.trim(); }).filter(Boolean).slice(0, 8); if (!list.length) return; S.rituals = list; await LID.set({ rituals: list }); rf.hidden = true; paintRituals(); LID.toast("Rituals saved"); });
+  rf.addEventListener("submit", async function (e) { e.preventDefault(); var list = document.getElementById("ritualtext").value.split("\n").map(function (s) { return s.trim(); }).filter(Boolean).slice(0, 6); if (!list.length) return; S.rituals = list; await LID.set({ rituals: list }); rf.hidden = true; paintToday(); LID.toast("Rituals saved"); });
 
-  // weekly
+  // week
   var thisWeek = S.weeks.find(function (w) { return w.week === wk; });
   var prev = S.weeks.filter(function (w) { return w.week < wk; }).sort(function (a, b) { return a.week < b.week ? 1 : -1; })[0];
-  document.getElementById("weekstatus").textContent = thisWeek ? "Saved " + new Date(thisWeek.at).toLocaleDateString("en-GB", { weekday: "short", day: "numeric", month: "short" }) + " / edit any time" : (today.getDay() === 0 || today.getDay() >= 5 ? "Due this weekend" : "Opens Friday, fill in any time");
-  var cfh = document.getElementById("cf"); var lastCF = (S.coreFour || []).slice(-1)[0];
-  cfh.innerHTML = D.coreFour.map(function (c) { var v = thisWeek ? thisWeek.scores[c.key] : (lastCF ? lastCF.scores[c.key] : 5); return '<div style="display:flex;align-items:center;gap:14px"><label for="cf-' + c.key + '" class="lbl" style="flex:0 0 110px">' + c.title + '</label><input id="cf-' + c.key + '" name="' + c.key + '" type="range" min="1" max="10" value="' + v + '" style="flex:1;accent-color:#0B0B0B"><output class="big" style="font-size:30px;min-width:2ch;text-align:right" for="cf-' + c.key + '">' + v + '</output></div>'; }).join("");
-  function cft() { var t = 0; D.coreFour.forEach(function (c) { t += +document.getElementById("cf-" + c.key).value; }); document.getElementById("cftotal").textContent = t + " / 40"; }
-  cfh.addEventListener("input", function (e) { if (e.target.type === "range") { e.target.nextElementSibling.value = e.target.value; cft(); } }); cft();
+  document.getElementById("weekstatus").textContent = thisWeek ? "Saved. Edit any time this week." : "Takes about ten minutes. Sunday is the habit, any day works.";
+  var lastCF = (S.coreFour || []).slice(-1)[0];
+  document.getElementById("cf").innerHTML = D.coreFour.map(function (c, i) { var v = thisWeek ? thisWeek.scores[c.key] : (lastCF ? lastCF.scores[c.key] : 5); return '<div style="display:flex;align-items:center;gap:16px;padding:14px 0;border-top:1px solid var(--line)' + (i === D.coreFour.length - 1 ? ';border-bottom:1px solid var(--line)' : '') + '"><span style="flex:1;font-size:19px;font-weight:700">' + c.title + '</span><button type="button" class="step" data-k="' + c.key + '" data-d="-1" aria-label="Lower ' + c.title + '" style="width:44px;height:44px;border:1px solid var(--line);background:transparent;font:inherit;font-size:22px;cursor:pointer">−</button><output id="cf-' + c.key + '" class="big" style="font-size:34px;min-width:2ch;text-align:center" data-v="' + v + '">' + v + '</output><button type="button" class="step" data-k="' + c.key + '" data-d="1" aria-label="Raise ' + c.title + '" style="width:44px;height:44px;border:1px solid var(--line);background:transparent;font:inherit;font-size:22px;cursor:pointer">+</button></div>'; }).join("");
+  function cfv(k) { return +document.getElementById("cf-" + k).dataset.v; }
+  function cft() { var t = 0; D.coreFour.forEach(function (c) { t += cfv(c.key); }); document.getElementById("cftotal").textContent = t + " / 40"; }
+  document.getElementById("cf").addEventListener("click", function (e) { var b = e.target.closest(".step"); if (!b) return; var o = document.getElementById("cf-" + b.dataset.k); var v = Math.min(10, Math.max(1, cfv(b.dataset.k) + +b.dataset.d)); o.dataset.v = v; o.textContent = v; cft(); });
+  cft();
   if (thisWeek) { ["wins", "insights", "honesty"].forEach(function (k) { document.getElementById(k).value = thisWeek[k] || ""; }); (thisWeek.goals || []).forEach(function (g, i) { document.getElementById("g" + (i + 1)).value = g.text || ""; }); }
   if (prev && (prev.goals || []).length) {
     document.getElementById("lastgoals").hidden = false;
-    document.getElementById("lastgoalslist").innerHTML = prev.goals.map(function (g, i) { return '<label style="display:flex;align-items:center;gap:14px;padding:12px 0;border-top:1px solid var(--line);font-size:16px;cursor:pointer"><input type="checkbox" data-i="' + i + '" ' + (g.hit ? 'checked' : '') + ' style="width:22px;height:22px;accent-color:#0B0B0B;margin:0"><span style="flex:1;' + (g.hit ? 'color:var(--mute);text-decoration:line-through' : '') + '">' + g.text + '</span><span class="lbl">' + (g.hit ? 'Hit' : 'Missed?') + '</span></label>'; }).join("");
+    document.getElementById("lastgoalslist").innerHTML = prev.goals.map(function (g, i) { return '<label style="display:flex;align-items:center;gap:14px;padding:12px 0;border-top:1px solid var(--line);font-size:17px;cursor:pointer"><input type="checkbox" data-i="' + i + '" ' + (g.hit ? 'checked' : '') + ' style="width:22px;height:22px;accent-color:#0B0B0B;margin:0"><span style="flex:1;' + (g.hit ? 'color:var(--mute);text-decoration:line-through' : '') + '">' + g.text + '</span></label>'; }).join("");
     document.getElementById("lastgoalslist").addEventListener("change", async function (e) { var i = +e.target.dataset.i; prev.goals[i].hit = e.target.checked; await LID.set({ weeks: S.weeks }); });
   }
-  document.getElementById("weekly").addEventListener("submit", async function (e) {
+  document.getElementById("v-week").addEventListener("submit", async function (e) {
     e.preventDefault();
-    var scores = {}; D.coreFour.forEach(function (c) { scores[c.key] = +document.getElementById("cf-" + c.key).value; });
+    var scores = {}; D.coreFour.forEach(function (c) { scores[c.key] = cfv(c.key); });
     var entry = thisWeek || { week: wk }; entry.at = new Date().toISOString();
     entry.wins = document.getElementById("wins").value.trim(); entry.insights = document.getElementById("insights").value.trim(); entry.honesty = document.getElementById("honesty").value.trim();
     entry.scores = scores; entry.goals = [1, 2, 3].map(function (i) { return document.getElementById("g" + i).value.trim(); }).filter(Boolean).map(function (t, i) { return { text: t, hit: (thisWeek && thisWeek.goals && thisWeek.goals[i] && thisWeek.goals[i].text === t) ? thisWeek.goals[i].hit : false }; });
     if (!thisWeek) { S.weeks.push(entry); thisWeek = entry; }
     var cf = S.coreFour || []; var same = cf.find(function (x) { return x.at && x.at.slice(0, 10) === tk; }); if (same) same.scores = scores; else cf.push({ at: entry.at, scores: scores });
-    await LID.set({ weeks: S.weeks, coreFour: cf }); LID.toast("Check-in saved"); paintHistory();
-    document.getElementById("weekstatus").textContent = "Saved just now / edit any time";
+    await LID.set({ weeks: S.weeks, coreFour: cf }); LID.toast("Saved"); document.getElementById("weekstatus").textContent = "Saved. Edit any time this week."; paintHistory();
   });
+
+  // history
   function paintHistory() {
-    var h = document.getElementById("history"); var ws = S.weeks.filter(function (w) { return w.week !== wk; }).sort(function (a, b) { return a.week < b.week ? 1 : -1; }).slice(0, 6);
-    if (!ws.length) { h.innerHTML = '<p class="lbl">Past check-ins show up here.</p>'; return; }
-    h.innerHTML = '<div class="meta lbl" style="padding-bottom:12px;border-bottom:1px solid var(--line)"><span>Past weeks</span><span>Newest first</span></div>' + ws.map(function (w) {
-      var tot = 0; Object.keys(w.scores || {}).forEach(function (k) { tot += w.scores[k]; }); var hit = (w.goals || []).filter(function (g) { return g.hit; }).length;
-      return '<details style="border-bottom:1px solid var(--line)"><summary style="display:flex;flex-wrap:wrap;gap:8px 24px;padding-block:18px;cursor:pointer;list-style:none;align-items:baseline"><span class="lbl" style="flex:0 0 140px">Week of ' + new Date(w.week).toLocaleDateString("en-GB", { day: "numeric", month: "short" }) + '</span><span class="big" style="font-size:28px">' + tot + '<span class="lbl" style="font-weight:500"> / 40</span></span><span class="lbl">' + hit + ' of ' + (w.goals || []).length + ' goals hit</span></summary><div style="padding:0 0 20px;display:flex;flex-direction:column;gap:12px;font-size:15px;line-height:1.5;max-width:720px">' + [["Wins", w.wins], ["Insights", w.insights], ["Honesty", w.honesty]].filter(function (p) { return p[1]; }).map(function (p) { return '<div><span class="lbl">' + p[0] + '</span><br>' + p[1].replace(/</g, "&lt;") + '</div>'; }).join("") + '</div></details>';
+    var h = document.getElementById("v-history"); var ws = S.weeks.slice().sort(function (a, b) { return a.week < b.week ? 1 : -1; });
+    if (!ws.length) { h.innerHTML = '<p style="font-size:17px;line-height:1.5;max-width:460px">Nothing yet. Your first weekly check-in becomes the baseline we measure the 90 days against.</p>'; return; }
+    h.innerHTML = ws.map(function (w) {
+      var tot = 0; Object.keys(w.scores || {}).forEach(function (k) { tot += w.scores[k]; }); var gs = w.goals || [], hit = gs.filter(function (g) { return g.hit; }).length;
+      return '<details style="border-bottom:1px solid var(--line)"><summary style="display:flex;flex-wrap:wrap;gap:8px 24px;padding-block:20px;cursor:pointer;list-style:none;align-items:baseline"><span style="flex:1;font-size:19px;font-weight:700">Week of ' + new Date(w.week).toLocaleDateString("en-GB", { day: "numeric", month: "short" }) + '</span><span class="lbl">Core Four ' + tot + '</span>' + (gs.length ? '<span class="lbl">' + hit + '/' + gs.length + ' goals</span>' : '') + '</summary><div style="padding:0 0 24px;display:flex;flex-direction:column;gap:14px;font-size:16px;line-height:1.5">' + [["Wins", w.wins], ["Insights", w.insights], ["Honesty", w.honesty]].filter(function (p) { return p[1]; }).map(function (p) { return '<div><span class="lbl">' + p[0] + '</span><br>' + p[1].replace(/</g, "&lt;") + '</div>'; }).join("") + (gs.length ? '<div><span class="lbl">Goals</span><br>' + gs.map(function (g) { return (g.hit ? "✓ " : "· ") + g.text.replace(/</g, "&lt;"); }).join("<br>") + '</div>' : '') + '</div></details>';
     }).join("");
   }
-  paintRituals(); paintHistory();
+  paintToday(); paintHistory();
 });
 </script>
 </main>
