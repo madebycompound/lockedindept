@@ -19,19 +19,45 @@
 <span class="lbl" id="cohort"></span>
 </section>
 
-<a id="continue" href="/portal/library" class="rule" style="text-decoration:none;display:flex;flex-wrap:wrap;border-bottom:1px solid var(--line)">
-<div class="fig" style="flex:1 1 320px;min-height:360px"><img src="/img/red-blur.jpg" alt="" style="object-position:center 30%"></div>
-<div style="flex:2 1 420px;min-width:0;padding:28px var(--gr) 32px 28px;display:flex;flex-direction:column;justify-content:space-between;gap:40px">
-<div class="meta lbl"><span>Continue</span><span id="lessoncount"></span></div>
-<div><p class="lbl" style="margin-bottom:12px" id="nextmod"></p><h2 class="big" id="nexttitle" style="font-size:clamp(36px,5vw,80px)"></h2></div>
-<div style="display:flex;flex-direction:column;gap:12px"><div class="prog" role="img" aria-label="Progress"><i id="progbar" style="width:0"></i></div><span class="lbl" style="display:flex;justify-content:space-between;font-weight:700"><span>Resume lesson →</span><span id="pct" style="font-weight:500"></span></span></div>
+<!-- Start here: no baseline yet -->
+<section id="start" hidden class="rule" style="display:flex;flex-wrap:wrap">
+<div class="cell cellR" style="flex:1 1 320px;justify-content:space-between;gap:32px">
+<span class="lbl">Before anything else</span>
+<h2 class="big" style="font-size:clamp(36px,5vw,72px)">Your numbers, as they are now.</h2>
+<p style="font-size:17px;line-height:1.5;max-width:420px">Honest, not aspirational. This is the line in the sand we measure the 90 days against. Nobody sees it but you and Josh.</p>
 </div>
-</a>
+<form id="startform" class="cell" style="flex:1 1 360px;gap:28px;justify-content:space-between">
+<div><label for="b-project" class="lbl" style="display:block;margin-bottom:6px">Average project value</label><div style="display:flex;align-items:baseline;gap:6px"><span class="big" style="font-size:28px">£</span><input id="b-project" class="input" type="number" inputmode="numeric" min="0" required placeholder="1500"></div></div>
+<div><label for="b-hours" class="lbl" style="display:block;margin-bottom:6px">Hours worked in a typical week</label><input id="b-hours" class="input" type="number" inputmode="numeric" min="1" max="120" required placeholder="50"></div>
+<div><label for="b-income" class="lbl" style="display:block;margin-bottom:6px">Monthly income, average of the last three</label><div style="display:flex;align-items:baseline;gap:6px"><span class="big" style="font-size:28px">£</span><input id="b-income" class="input" type="number" inputmode="numeric" min="0" required placeholder="4000"></div></div>
+<button class="btn" type="submit" style="justify-content:space-between;min-height:60px">Lock it in <svg aria-hidden="true" width="22" height="12" viewBox="0 0 22 12" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M0 6h20M15 1l5 5-5 5"></path></svg></button>
+</form>
+</section>
 
-<section class="split" id="rows">
+<!-- The number -->
+<section id="number" hidden class="rule" style="display:flex;flex-wrap:wrap">
+<div class="cell cellR" style="flex:2 1 460px;justify-content:space-between;min-height:360px;gap:32px">
+<div class="meta lbl"><span>Your number</span><span>Earned per hour worked</span></div>
+<div><p class="big" id="rate" style="font-size:clamp(72px,12vw,180px);line-height:.85"></p><p class="lbl" id="ratesub" style="margin-top:16px"></p></div>
+<p style="font-size:17px;line-height:1.5;max-width:460px" id="rateline"></p>
+</div>
+<div style="flex:1 1 280px;display:flex;flex-direction:column">
+<div class="cell" style="flex:1;justify-content:space-between;gap:16px"><span class="lbl">Monthly income</span><p class="big" id="n-income" style="font-size:40px"></p><span class="note" id="n-income-s"></span></div>
+<div class="cell" style="flex:1;justify-content:space-between;gap:16px"><span class="lbl">Hours a week</span><p class="big" id="n-hours" style="font-size:40px"></p><span class="note" id="n-hours-s"></span></div>
+<div class="cell" style="flex:1;justify-content:space-between;gap:16px;border-bottom:1px solid var(--line)"><span class="lbl">Highest price said out loud</span><p class="big" id="n-top" style="font-size:40px"></p><span class="note" id="n-top-s"></span></div>
+</div>
+</section>
+
+<!-- From Josh -->
+<section id="note" hidden class="gut" style="padding-block:40px;border-bottom:1px solid var(--line);background:var(--ink);color:var(--paper);display:flex;flex-wrap:wrap;gap:16px 40px">
+<span class="lbl" style="flex:1 1 180px" id="notewhen">From Josh</span>
+<p id="notetext" style="flex:999 1 520px;font-size:clamp(19px,2vw,24px);line-height:1.4;font-weight:500;max-width:760px;white-space:pre-line"></p>
+</section>
+
+<section class="split">
+<a id="continue" href="/portal/library" class="cell cellR row" style="flex:1 1 300px"><span class="meta lbl"><span>Continue</span><span id="lessoncount"></span></span><span class="rowtitle" id="nexttitle"></span><span class="link">Resume lesson →</span></a>
 <a href="/portal/check-in" class="cell cellR row" style="flex:1 1 300px"><span class="lbl">Today</span><span class="rowtitle" id="rittitle"></span><span class="link" id="cflink">Check in →</span></a>
-<a href="/portal/calls" class="cell cellR row" style="flex:1 1 300px"><span class="lbl">Next call</span><span class="rowtitle" id="calltitle"></span><span class="link" id="callsub"></span></a>
-<a href="/portal/assistant" class="cell row" style="flex:1 1 300px"><span class="lbl">Ask the Dept.</span><span class="rowtitle">Stuck on a quote, a client, a next step?</span><span class="link">Ask →</span></a>
+<a href="/portal/calls" class="cell row" style="flex:1 1 300px"><span class="lbl">Next call</span><span class="rowtitle" id="calltitle"></span><span class="link" id="callsub"></span></a>
 </section>
 <style>
 .row{text-decoration:none;gap:28px;justify-content:space-between;min-height:220px;transition:background .25s}
@@ -45,20 +71,43 @@ document.addEventListener("lid:ready", function () {
   document.getElementById("greet").textContent = LID.greeting();
   document.getElementById("cohort").textContent = D.cohort.name + " / Starts " + D.cohort.starts;
   var st = LID.stage(); if (st) document.getElementById("stageline").textContent = "Stage " + st.n + " / " + st.title;
+
+  function paintNumber() {
+    var N = LID.numbers();
+    document.getElementById("start").hidden = !!N; document.getElementById("number").hidden = !N;
+    if (!N) return;
+    var cur = N.now ? N.now.rate : N.base.rate;
+    document.getElementById("rate").textContent = LID.gbp(cur);
+    var diff = N.now ? Math.round(N.now.rate - N.base.rate) : 0;
+    document.getElementById("ratesub").textContent = N.now ? (diff >= 0 ? "Up " : "Down ") + LID.gbp(Math.abs(diff)) + " an hour since you started / last " + N.now.weeks + (N.now.weeks === 1 ? " week" : " weeks") : "Your starting line, " + new Date(N.at).toLocaleDateString("en-GB", { day: "numeric", month: "long" });
+    document.getElementById("rateline").textContent = N.now ? "Make more, work less is this number going up. Everything in here exists to move it." : "Log your income and hours in the weekly check-in and this starts moving.";
+    document.getElementById("n-income").textContent = LID.gbp(N.now ? N.now.income : N.base.income);
+    document.getElementById("n-income-s").textContent = N.now ? "Was " + LID.gbp(N.base.income) : "At the start";
+    document.getElementById("n-hours").textContent = Math.round(N.now ? N.now.hours : N.base.hours);
+    document.getElementById("n-hours-s").textContent = N.now ? "Was " + N.base.hours : "At the start";
+    document.getElementById("n-top").textContent = N.now && N.now.top ? LID.gbp(N.now.top) : LID.gbp(N.base.project);
+    document.getElementById("n-top-s").textContent = N.now && N.now.top ? "Average project at the start " + LID.gbp(N.base.project) : "Your average project at the start";
+  }
+  document.getElementById("startform").addEventListener("submit", async function (e) {
+    e.preventDefault();
+    var b = { project: +document.getElementById("b-project").value, hours: +document.getElementById("b-hours").value, income: +document.getElementById("b-income").value, at: new Date().toISOString() };
+    await LID.set({ baseline: b }); LID.toast("Locked in"); paintNumber();
+  });
+  paintNumber();
+
+  var note = (LID.notes || [])[0];
+  if (note) { document.getElementById("note").hidden = false; document.getElementById("notetext").textContent = note.note; document.getElementById("notewhen").textContent = "From Josh / " + new Date(note.created_at).toLocaleDateString("en-GB", { day: "numeric", month: "short" }); }
+
   var nl = LID.nextLesson(), pr = LID.progress();
   document.getElementById("continue").href = "/portal/lesson?n=" + nl.n;
   document.getElementById("lessoncount").textContent = "Lesson " + nl.n + " / " + pr.total;
-  var mod = D.method.find(function (m) { return m.key === nl.module; });
-  document.getElementById("nextmod").textContent = (mod ? mod.n + " / " + mod.title : "");
   document.getElementById("nexttitle").textContent = nl.title;
-  document.getElementById("progbar").style.width = pr.pct + "%";
-  document.getElementById("pct").textContent = pr.pct + "%";
 
   var rit = S.rituals || ["Walk", "Train", "Meditate", "Sleep 7+ hours", "No phone first hour"];
   var tk = new Date().toISOString().slice(0, 10), done = (S.days || {})[tk] || {};
   var n = rit.filter(function (r) { return done[r]; }).length;
   document.getElementById("rittitle").textContent = n + " of " + rit.length + " rituals done";
-  var dow = new Date().getDay(); var wk = (function (d) { var x = new Date(d); x.setDate(x.getDate() - ((x.getDay() + 6) % 7)); return x.toISOString().slice(0, 10); })(new Date());
+  var dow = new Date().getDay(), wk = LID.weekKey();
   var has = (S.weeks || []).some(function (w) { return w.week === wk; });
   document.getElementById("cflink").textContent = (dow === 0 || dow >= 5) && !has ? "Weekly check-in due →" : "Check in →";
 

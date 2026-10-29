@@ -18,13 +18,25 @@
     },
     async save(user, s) {
       if (!live || !user) return this.saveLocal(s);
-      await sb.from("member_state").upsert({ user_id: user.id, state: s, updated_at: new Date().toISOString() });
+      await sb.from("member_state").upsert({ user_id: user.id, email: user.email || null, state: s, updated_at: new Date().toISOString() });
     }
   };
 
   var P = window.LID = {
-    live: live, sb: sb, user: null, state: {},
+    live: live, sb: sb, user: null, state: {}, notes: [],
     data: D, config: C,
+    isCoach: function () { if (!live) return true; var e = (this.user && this.user.email || "").toLowerCase(); return (C.COACH_EMAILS || []).map(function (x) { return x.toLowerCase(); }).indexOf(e) >= 0; },
+    gbp: function (n) { n = Math.round(+n || 0); return "£" + n.toLocaleString("en-GB"); },
+    weekKey: function (d) { var x = new Date(d || Date.now()); x.setDate(x.getDate() - ((x.getDay() + 6) % 7)); return x.toISOString().slice(0, 10); },
+    // Their number: earnings per hour worked, now vs the start. Uses the last four weeks with hours logged.
+    numbers: function (state) {
+      var S = state || this.state, b = S.baseline; if (!b) return null;
+      var base = { rate: b.hours ? (b.income / 4.33) / b.hours : 0, project: +b.project || 0, hours: +b.hours || 0, income: +b.income || 0 };
+      var ws = (S.weeks || []).filter(function (w) { return w.reps && +w.reps.hours > 0; }).sort(function (a, b) { return a.week < b.week ? 1 : -1; }).slice(0, 4);
+      var inc = 0, hrs = 0, top = 0; ws.forEach(function (w) { inc += +w.reps.income || 0; hrs += +w.reps.hours || 0; top = Math.max(top, +w.reps.top || 0); });
+      var now = ws.length ? { rate: inc / hrs, weeks: ws.length, income: inc / ws.length * 4.33, hours: hrs / ws.length, top: top } : null;
+      return { base: base, now: now, at: b.at };
+    },
     first: function () {
       var n = (this.state.name || (this.user && (this.user.user_metadata || {}).name) || "").trim();
       return n ? n.split(" ")[0] : "";
@@ -73,6 +85,7 @@
   // ---- shared chrome ----
   function chrome() {
     var nav = [["/portal/home", "Home"], ["/portal/library", "Library"], ["/portal/check-in", "Check-in"], ["/portal/calls", "Calls"], ["/portal/agents", "Agents"], ["/portal/assistant", "Assistant"]];
+    if (P.isCoach()) nav.push(["/portal/coach", "Coach"]);
     var cur = "/portal/" + ((location.pathname.split("/").pop() || "home").replace(/\.html$/, "") || "home");
     var links = nav.map(function (n) { return '<a href="' + n[0] + '"' + (n[0] === cur ? ' aria-current="page"' : '') + '>' + n[1] + '</a>'; }).join("");
     var who = P.first() || "Member";
@@ -95,7 +108,10 @@
       P.state = store.local();
       if (!P.state.preview && !isLogin) { location.href = "/portal/"; return; }
     }
-    if (P.user) P.state = await store.load(P.user);
+    if (P.user) {
+      P.state = await store.load(P.user);
+      try { var n = await sb.from("coach_notes").select("week,note,created_at").eq("user_id", P.user.id).order("created_at", { ascending: false }).limit(20); P.notes = n.data || []; } catch (e) {}
+    }
     if (!isLogin) chrome();
     document.dispatchEvent(new CustomEvent("lid:ready"));
   }

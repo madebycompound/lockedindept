@@ -30,6 +30,19 @@
 <p class="lbl" style="margin-bottom:6px">Last week you said</p>
 <div id="lastgoalslist" style="display:flex;flex-direction:column"></div>
 </div>
+<div id="joshnote" hidden style="background:var(--ink);color:var(--paper);padding:24px"><p class="lbl" style="margin-bottom:10px" id="joshwhen">From Josh</p><p id="joshtext" style="font-size:19px;line-height:1.4;font-weight:500;white-space:pre-line"></p></div>
+<div>
+<div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px"><span class="big" style="font-size:34px">The numbers</span><span class="lbl">This week, honest</span></div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:0 32px">
+<div style="padding:14px 0;border-top:1px solid var(--line)"><label for="r-income" class="lbl" style="display:block;margin-bottom:4px">Earned (£)</label><input id="r-income" class="input" type="number" inputmode="numeric" min="0" placeholder="0" style="height:44px;border:0;font-size:28px;font-weight:800;letter-spacing:-.03em"></div>
+<div style="padding:14px 0;border-top:1px solid var(--line)"><label for="r-hours" class="lbl" style="display:block;margin-bottom:4px">Hours worked</label><input id="r-hours" class="input" type="number" inputmode="numeric" min="0" max="120" placeholder="0" style="height:44px;border:0;font-size:28px;font-weight:800;letter-spacing:-.03em"></div>
+<div style="padding:14px 0;border-top:1px solid var(--line)"><label for="r-quotes" class="lbl" style="display:block;margin-bottom:4px">Quotes sent</label><input id="r-quotes" class="input" type="number" inputmode="numeric" min="0" placeholder="0" style="height:44px;border:0;font-size:28px;font-weight:800;letter-spacing:-.03em"></div>
+<div style="padding:14px 0;border-top:1px solid var(--line)"><label for="r-top" class="lbl" style="display:block;margin-bottom:4px">Highest price said out loud (£)</label><input id="r-top" class="input" type="number" inputmode="numeric" min="0" placeholder="0" style="height:44px;border:0;font-size:28px;font-weight:800;letter-spacing:-.03em"></div>
+<div style="padding:14px 0;border-top:1px solid var(--line)"><label for="r-nos" class="lbl" style="display:block;margin-bottom:4px">Times you said no</label><input id="r-nos" class="input" type="number" inputmode="numeric" min="0" placeholder="0" style="height:44px;border:0;font-size:28px;font-weight:800;letter-spacing:-.03em"></div>
+<div style="padding:14px 0;border-top:1px solid var(--line)"><label for="r-outreach" class="lbl" style="display:block;margin-bottom:4px">People you reached out to</label><input id="r-outreach" class="input" type="number" inputmode="numeric" min="0" placeholder="0" style="height:44px;border:0;font-size:28px;font-weight:800;letter-spacing:-.03em"></div>
+</div>
+<p class="note" style="margin-top:12px;border-top:1px solid var(--line);padding-top:12px">Earned and hours move your number on the home page. The rest are the reps that build belief.</p>
+</div>
 <div><label for="wins" class="big" style="display:block;font-size:34px;margin-bottom:12px">Wins</label><textarea id="wins" class="input" rows="2" placeholder="What moved this week"></textarea></div>
 <div><label for="insights" class="big" style="display:block;font-size:34px;margin-bottom:12px">Insights</label><textarea id="insights" class="input" rows="2" placeholder="What you noticed"></textarea></div>
 <div><label for="honesty" class="big" style="display:block;font-size:34px;margin-bottom:12px">Honesty</label><textarea id="honesty" class="input" rows="2" placeholder="Where could you have done better"></textarea></div>
@@ -98,6 +111,10 @@ document.addEventListener("lid:ready", function () {
   function cft() { var t = 0; D.coreFour.forEach(function (c) { t += cfv(c.key); }); document.getElementById("cftotal").textContent = t + " / 40"; }
   document.getElementById("cf").addEventListener("click", function (e) { var b = e.target.closest(".step"); if (!b) return; var o = document.getElementById("cf-" + b.dataset.k); var v = Math.min(10, Math.max(1, cfv(b.dataset.k) + +b.dataset.d)); o.dataset.v = v; o.textContent = v; cft(); });
   cft();
+  var REPS = ["income", "hours", "quotes", "top", "nos", "outreach"];
+  if (thisWeek && thisWeek.reps) REPS.forEach(function (k) { document.getElementById("r-" + k).value = thisWeek.reps[k] == null ? "" : thisWeek.reps[k]; });
+  var jn = (LID.notes || []).find(function (n) { return n.week === wk; }) || (LID.notes || [])[0];
+  if (jn) { document.getElementById("joshnote").hidden = false; document.getElementById("joshtext").textContent = jn.note; document.getElementById("joshwhen").textContent = "From Josh / " + new Date(jn.created_at).toLocaleDateString("en-GB", { day: "numeric", month: "short" }); }
   if (thisWeek) { ["wins", "insights", "honesty"].forEach(function (k) { document.getElementById(k).value = thisWeek[k] || ""; }); (thisWeek.goals || []).forEach(function (g, i) { document.getElementById("g" + (i + 1)).value = g.text || ""; }); }
   if (prev && (prev.goals || []).length) {
     document.getElementById("lastgoals").hidden = false;
@@ -109,6 +126,7 @@ document.addEventListener("lid:ready", function () {
     var scores = {}; D.coreFour.forEach(function (c) { scores[c.key] = cfv(c.key); });
     var entry = thisWeek || { week: wk }; entry.at = new Date().toISOString();
     entry.wins = document.getElementById("wins").value.trim(); entry.insights = document.getElementById("insights").value.trim(); entry.honesty = document.getElementById("honesty").value.trim();
+    entry.reps = {}; REPS.forEach(function (k) { var v = document.getElementById("r-" + k).value; entry.reps[k] = v === "" ? null : +v; });
     entry.scores = scores; entry.goals = [1, 2, 3].map(function (i) { return document.getElementById("g" + i).value.trim(); }).filter(Boolean).map(function (t, i) { return { text: t, hit: (thisWeek && thisWeek.goals && thisWeek.goals[i] && thisWeek.goals[i].text === t) ? thisWeek.goals[i].hit : false }; });
     if (!thisWeek) { S.weeks.push(entry); thisWeek = entry; }
     var cf = S.coreFour || []; var same = cf.find(function (x) { return x.at && x.at.slice(0, 10) === tk; }); if (same) same.scores = scores; else cf.push({ at: entry.at, scores: scores });
@@ -121,7 +139,7 @@ document.addEventListener("lid:ready", function () {
     if (!ws.length) { h.innerHTML = '<p style="font-size:17px;line-height:1.5;max-width:460px">Nothing yet. Your first weekly check-in becomes the baseline we measure the 90 days against.</p>'; return; }
     h.innerHTML = ws.map(function (w) {
       var tot = 0; Object.keys(w.scores || {}).forEach(function (k) { tot += w.scores[k]; }); var gs = w.goals || [], hit = gs.filter(function (g) { return g.hit; }).length;
-      return '<details style="border-bottom:1px solid var(--line)"><summary style="display:flex;flex-wrap:wrap;gap:8px 24px;padding-block:20px;cursor:pointer;list-style:none;align-items:baseline"><span style="flex:1;font-size:19px;font-weight:700">Week of ' + new Date(w.week).toLocaleDateString("en-GB", { day: "numeric", month: "short" }) + '</span><span class="lbl">Core Four ' + tot + '</span>' + (gs.length ? '<span class="lbl">' + hit + '/' + gs.length + ' goals</span>' : '') + '</summary><div style="padding:0 0 24px;display:flex;flex-direction:column;gap:14px;font-size:16px;line-height:1.5">' + [["Wins", w.wins], ["Insights", w.insights], ["Honesty", w.honesty]].filter(function (p) { return p[1]; }).map(function (p) { return '<div><span class="lbl">' + p[0] + '</span><br>' + p[1].replace(/</g, "&lt;") + '</div>'; }).join("") + (gs.length ? '<div><span class="lbl">Goals</span><br>' + gs.map(function (g) { return (g.hit ? "✓ " : "· ") + g.text.replace(/</g, "&lt;"); }).join("<br>") + '</div>' : '') + '</div></details>';
+      return '<details style="border-bottom:1px solid var(--line)"><summary style="display:flex;flex-wrap:wrap;gap:8px 24px;padding-block:20px;cursor:pointer;list-style:none;align-items:baseline"><span style="flex:1;font-size:19px;font-weight:700">Week of ' + new Date(w.week).toLocaleDateString("en-GB", { day: "numeric", month: "short" }) + '</span>' + (w.reps && w.reps.hours ? '<span class="lbl">' + LID.gbp((w.reps.income || 0) / w.reps.hours) + '/hr</span>' : '') + (w.reps ? '<span class="lbl">' + (w.reps.quotes || 0) + ' quotes</span>' : '') + '<span class="lbl">Core Four ' + tot + '</span>' + (gs.length ? '<span class="lbl">' + hit + '/' + gs.length + ' goals</span>' : '') + '</summary><div style="padding:0 0 24px;display:flex;flex-direction:column;gap:14px;font-size:16px;line-height:1.5">' + [["Wins", w.wins], ["Insights", w.insights], ["Honesty", w.honesty]].filter(function (p) { return p[1]; }).map(function (p) { return '<div><span class="lbl">' + p[0] + '</span><br>' + p[1].replace(/</g, "&lt;") + '</div>'; }).join("") + (gs.length ? '<div><span class="lbl">Goals</span><br>' + gs.map(function (g) { return (g.hit ? "✓ " : "· ") + g.text.replace(/</g, "&lt;"); }).join("<br>") + '</div>' : '') + '</div></details>';
     }).join("");
   }
   paintToday(); paintHistory();

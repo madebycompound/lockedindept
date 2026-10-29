@@ -1,0 +1,103 @@
+<section class="head gut">
+<div><p class="lbl" style="margin-bottom:12px" id="cweek"></p><h1 class="big">Monday</h1></div>
+<div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px"><span class="lbl" id="ccount"></span><span class="note" id="cflags"></span></div>
+</section>
+<section id="members" style="display:flex;flex-direction:column"></section>
+<style>
+.m{border-bottom:1px solid var(--line)}
+.m summary{list-style:none;cursor:pointer;display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 24px;padding:22px var(--gr) 22px var(--gl)}
+.m summary::-webkit-details-marker{display:none}
+.m summary:hover{background:#E2E0DB}
+.m .who{flex:1 1 220px;font-size:24px;font-weight:800;letter-spacing:-.03em;text-transform:uppercase;line-height:1}
+.m .body{display:flex;flex-wrap:wrap;border-top:1px solid var(--line)}
+.m .col{flex:1 1 320px;min-width:0;padding:24px var(--gr) 28px var(--gl);display:flex;flex-direction:column;gap:18px}
+.m .col+.col{border-left:1px solid var(--line)}
+.kv{display:flex;justify-content:space-between;gap:16px;padding:8px 0;border-top:1px solid var(--line);font-size:15px}
+.kv b{font-weight:800}
+.txt{font-size:15px;line-height:1.45;white-space:pre-line}
+.flag{background:var(--red);color:#fff}
+@media (max-width:640px){.m .col+.col{border-left:0;border-top:1px solid var(--line)}}
+</style>
+<script>
+document.addEventListener("lid:ready", async function () {
+  if (!LID.isCoach()) { location.href = "/portal/home"; return; }
+  var D = LID.data, wk = LID.weekKey(), lastwk = LID.weekKey(new Date(Date.now() - 7 * 864e5));
+  document.getElementById("cweek").textContent = "Week of " + new Date(wk).toLocaleDateString("en-GB", { day: "numeric", month: "long" });
+  var rows = [], notes = [];
+  if (LID.live) {
+    var r = await LID.sb.from("member_state").select("user_id,email,state,updated_at"); rows = r.data || [];
+    var n = await LID.sb.from("coach_notes").select("user_id,week,note,created_at").order("created_at", { ascending: false }); notes = n.data || [];
+  } else {
+    var t = new Date().toISOString();
+    rows = [
+      { user_id: "a", email: "sam@example.com", updated_at: t, state: { name: "Sam Reed", baseline: { project: 1200, hours: 55, income: 3800, at: "2026-10-01" }, weeks: [{ week: lastwk, at: t, reps: { income: 1400, hours: 48, quotes: 2, top: 2500, nos: 1, outreach: 4 }, wins: "Quoted £2,500 for the brand film and they didn't flinch.", insights: "The number felt huge to me and normal to them.", honesty: "Still took a £300 job out of fear.", scores: { wealth: 5, self: 6, health: 7, relationships: 6 }, goals: [{ text: "Send three proposals", hit: false }, { text: "Raise day rate to £600", hit: true }] }] } },
+      { user_id: "b", email: "priya@example.com", updated_at: t, state: { name: "Priya Nair", baseline: { project: 900, hours: 60, income: 3000, at: "2026-10-01" }, weeks: [] } }
+    ];
+    notes = [];
+  }
+  rows.sort(function (a, b) { return (a.state.name || a.email || "").localeCompare(b.state.name || b.email || ""); });
+  var flags = 0;
+  document.getElementById("members").innerHTML = rows.map(function (m) {
+    var S = m.state || {}, name = S.name || (m.email || "").split("@")[0], N = LID.numbers(S);
+    var ws = (S.weeks || []).slice().sort(function (a, b) { return a.week < b.week ? 1 : -1; });
+    var w = ws.find(function (x) { return x.week === wk; }) || ws.find(function (x) { return x.week === lastwk; }); var cur = ws[0];
+    var replied = notes.some(function (n) { return n.user_id === m.user_id && w && n.week === w.week; });
+    var fl = [];
+    if (!N) fl.push("No baseline"); if (!w) fl.push("No check-in"); if (w && w.reps && !(w.reps.quotes > 0)) fl.push("Zero quotes"); if (w && !replied) fl.push("Needs reply");
+    if (fl.length) flags++;
+    var reps = w && w.reps ? w.reps : {};
+    var rate = N ? (N.now ? N.now.rate : N.base.rate) : 0;
+    var goalsPrev = (function () { var p = ws.filter(function (x) { return w && x.week < w.week; })[0]; return p ? p.goals || [] : []; })();
+    var summary = [
+      "Name: " + name,
+      N ? "Number: £" + Math.round(rate) + "/hr now, started at £" + Math.round(N.base.rate) + "/hr. Starting average project £" + N.base.project + "." : "No starting numbers entered.",
+      w ? "This week's reps: earned £" + (reps.income || 0) + ", " + (reps.hours || 0) + " hours, " + (reps.quotes || 0) + " quotes sent, highest price said £" + (reps.top || 0) + ", said no " + (reps.nos || 0) + " times, reached out to " + (reps.outreach || 0) + "." : "No check-in this week.",
+      w ? "Wins: " + (w.wins || "none written") : "", w ? "Insights: " + (w.insights || "none written") : "", w ? "Honesty: " + (w.honesty || "none written") : "",
+      w ? "Core Four: " + Object.keys(w.scores || {}).map(function (k) { return k + " " + w.scores[k]; }).join(", ") : "",
+      goalsPrev.length ? "Last week's goals: " + goalsPrev.map(function (g) { return (g.hit ? "HIT " : "MISSED ") + g.text; }).join("; ") : "",
+      w && (w.goals || []).length ? "Goals for next week: " + w.goals.map(function (g) { return g.text; }).join("; ") : ""
+    ].filter(Boolean).join("\n");
+    var myNotes = notes.filter(function (n) { return n.user_id === m.user_id; });
+    return '<details class="m" data-id="' + m.user_id + '" data-week="' + (w ? w.week : wk) + '"' + (fl.length ? " open" : "") + '>' +
+      '<summary><span class="who">' + name + '</span>' + (N ? '<span class="lbl">' + LID.gbp(rate) + '/hr</span>' : '') + (w && w.reps ? '<span class="lbl">' + (reps.quotes || 0) + ' quotes / top ' + LID.gbp(reps.top) + '</span>' : '') + fl.map(function (f) { return '<span class="badge ' + (f === "Needs reply" ? "soft" : "flag") + '">' + f + '</span>'; }).join("") + '</summary>' +
+      '<div class="body"><div class="col">' +
+      (w ? '<div><span class="lbl">Week of ' + new Date(w.week).toLocaleDateString("en-GB", { day: "numeric", month: "short" }) + '</span>' +
+        '<div class="kv"><span>Earned / hours</span><b>' + LID.gbp(reps.income) + ' / ' + (reps.hours || 0) + 'h</b></div>' +
+        '<div class="kv"><span>Quotes sent</span><b>' + (reps.quotes || 0) + '</b></div>' +
+        '<div class="kv"><span>Highest price said out loud</span><b>' + LID.gbp(reps.top) + '</b></div>' +
+        '<div class="kv"><span>Said no / reached out</span><b>' + (reps.nos || 0) + ' / ' + (reps.outreach || 0) + '</b></div>' +
+        '<div class="kv"><span>Core Four</span><b>' + Object.keys(w.scores || {}).reduce(function (t, k) { return t + w.scores[k]; }, 0) + ' / 40</b></div></div>' +
+        [["Wins", w.wins], ["Insights", w.insights], ["Honesty", w.honesty]].filter(function (p) { return p[1]; }).map(function (p) { return '<div><span class="lbl">' + p[0] + '</span><p class="txt">' + String(p[1]).replace(/</g, "&lt;") + '</p></div>'; }).join("") +
+        (goalsPrev.length ? '<div><span class="lbl">Said they would</span><p class="txt">' + goalsPrev.map(function (g) { return (g.hit ? "✓ " : "✗ ") + g.text; }).join("\n").replace(/</g, "&lt;") + '</p></div>' : '') +
+        ((w.goals || []).length ? '<div><span class="lbl">Next week</span><p class="txt">' + w.goals.map(function (g) { return "· " + g.text; }).join("\n").replace(/</g, "&lt;") + '</p></div>' : '')
+      : '<p class="txt">No check-in yet this week. ' + (N ? '' : 'They haven\'t entered their starting numbers either.') + '</p>') +
+      '</div><div class="col">' +
+      '<div class="meta lbl"><span>Your reply</span><button type="button" class="link draft" style="background:none;border:0;padding:0;font:inherit;font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;cursor:pointer;min-height:auto">Draft it for me →</button></div>' +
+      '<textarea class="input reply" rows="7" placeholder="Three lines. What they did, what they dodged, the one thing before Sunday."></textarea>' +
+      '<textarea class="summary" hidden>' + summary.replace(/</g, "&lt;") + '</textarea>' +
+      '<button type="button" class="btn send" style="justify-content:space-between">Send to ' + name.split(" ")[0] + ' <svg aria-hidden="true" width="22" height="12" viewBox="0 0 22 12" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M0 6h20M15 1l5 5-5 5"></path></svg></button>' +
+      (myNotes.length ? '<div><span class="lbl">Sent</span>' + myNotes.slice(0, 3).map(function (n) { return '<p class="txt" style="padding:10px 0;border-top:1px solid var(--line);color:var(--mute)"><span class="lbl">' + new Date(n.created_at).toLocaleDateString("en-GB", { day: "numeric", month: "short" }) + '</span><br>' + n.note.replace(/</g, "&lt;") + '</p>'; }).join("") + '</div>' : '') +
+      '</div></div></details>';
+  }).join("") || '<p class="gut" style="padding-block:40px;font-size:17px">No members yet. Invite them in Supabase and they appear here once they log in.</p>';
+  document.getElementById("ccount").textContent = rows.length + (rows.length === 1 ? " member" : " members");
+  document.getElementById("cflags").textContent = flags ? flags + " need you" : "All caught up";
+
+  document.getElementById("members").addEventListener("click", async function (e) {
+    var d = e.target.closest("details"); if (!d) return;
+    if (e.target.closest(".draft")) {
+      var b = e.target.closest(".draft"); b.textContent = "Drafting…";
+      try {
+        var r = await fetch("/api/assistant", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ mode: "coach", context: { summary: d.querySelector(".summary").value } }) });
+        var j = await r.json(); if (!r.ok) throw new Error(j.error || "failed");
+        d.querySelector(".reply").value = j.reply;
+      } catch (err) { LID.toast(LID.live ? "Draft failed. Is ANTHROPIC_API_KEY set in Vercel?" : "Drafting needs the live site"); }
+      b.textContent = "Draft it for me →";
+    }
+    if (e.target.closest(".send")) {
+      var t = d.querySelector(".reply").value.trim(); if (!t) return;
+      if (LID.live) { var ins = await LID.sb.from("coach_notes").insert({ user_id: d.dataset.id, week: d.dataset.week, note: t }); if (ins.error) { LID.toast("Didn't send: " + ins.error.message); return; } }
+      LID.toast("Sent"); d.querySelector(".reply").value = ""; d.querySelector(".badge.soft") && d.querySelector(".badge.soft").remove();
+    }
+  });
+});
+</script>

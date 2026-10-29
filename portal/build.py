@@ -4,7 +4,7 @@ import os, re
 here = os.path.dirname(os.path.abspath(__file__))
 head = open(os.path.join(here, "_head.html")).read()
 foot = open(os.path.join(here, "_foot.html")).read()
-titles = {"index": "Login", "home": "Home", "library": "Library", "lesson": "Lesson", "core-four": "Core Four", "check-in": "Check-in", "calls": "Calls", "agents": "Agents", "assistant": "Assistant"}
+titles = {"index": "Login", "home": "Home", "library": "Library", "lesson": "Lesson", "core-four": "Core Four", "check-in": "Check-in", "calls": "Calls", "agents": "Agents", "assistant": "Assistant", "coach": "Coach"}
 for f in sorted(os.listdir(os.path.join(here, "_src"))):
     if not f.endswith(".body.html"): continue
     page = f[:-len(".body.html")]

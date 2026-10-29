@@ -7,5 +7,6 @@ window.LID_CONFIG = {
   CAL_LINK: "",                 // e.g. https://cal.com/joshpearson/locked-in-1-1
   GROUP_CALL_LINK: "",          // Zoom / Meet link for the weekly group call
   COMMUNITY_LINK: "",           // WhatsApp / Slack / Circle link
+  COACH_EMAILS: ["info@madebycompound.com"],   // who sees the Coach view (must also be invited members)
   SUPPORT_EMAIL: "hello@lockedindept.com"
 };
