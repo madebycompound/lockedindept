@@ -111,9 +111,11 @@ document.addEventListener("lid:ready", async function () {
       var b = e.target.closest(".draft"); b.textContent = "Drafting…";
       try {
         var r = await fetch("/api/assistant", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ mode: "coach", context: { summary: d.querySelector(".summary").value } }) });
-        var j = await r.json(); if (!r.ok) throw new Error(j.error || "failed");
-        d.querySelector(".reply").value = j.reply;
-      } catch (err) { LID.toast(LID.live ? "Draft failed. Is ANTHROPIC_API_KEY set in Vercel?" : "Drafting needs the live site"); }
+        var j = null; try { j = await r.json(); } catch (x) {}
+        if (!r.ok) throw new Error((j && j.error) || ("HTTP " + r.status));
+        if (!j || !j.reply) throw new Error("empty reply");
+        d.querySelector(".reply").value = j.reply; LID.toast("Drafted. Edit it, then send.");
+      } catch (err) { LID.toast(LID.live ? "Draft failed: " + err.message : "Drafting needs the live site"); }
       b.textContent = "Draft it for me →";
     }
     if (e.target.closest(".send")) {
