@@ -1,0 +1,13 @@
+{
+  "name": "lockedin-dept",
+  "owner": { "name": "Josh Pearson" },
+  "metadata": { "description": "Locked In Dept. agent library. Working AI agents for creative businesses, built for Club Locked In members." },
+  "plugins": [
+    {
+      "name": "inbox-agent",
+      "source": "./plugins/inbox-agent",
+      "description": "Sorts your inbox and drafts replies in your voice. You read and hit send. LID-INB-03",
+      "version": "0.1.0"
+    }
+  ]
+}

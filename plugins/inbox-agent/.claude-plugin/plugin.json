@@ -1,0 +1,8 @@
+{
+  "name": "inbox-agent",
+  "version": "0.1.0",
+  "description": "Locked In Dept. inbox agent (LID-INB-03). Sorts enquiries, drafts replies in your voice, saves them as drafts. Nothing sends without you.",
+  "author": { "name": "Josh Pearson", "url": "https://lockedindept.com" },
+  "homepage": "https://lockedindept.com/portal/agents",
+  "keywords": ["email", "inbox", "clients", "creative business"]
+}

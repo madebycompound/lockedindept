@@ -36,7 +36,7 @@ window.LID_DATA = {
   agents: [
     { n: "01", code: "LID-EDT-01", slug: "edit-assistant", name: "Edit assistant", desc: "Logs footage, pulls selects and cuts first drafts, so your own content actually goes out.", needs: "Claude Code, your footage folder", download: "", guide: "" },
     { n: "02", code: "LID-CON-02", slug: "content-scheduler", name: "Content scheduler", desc: "Turns your ideas and voice notes into a week of posts, queued by Monday.", needs: "Buffer", download: "", guide: "" },
-    { n: "03", code: "LID-INB-03", slug: "inbox-agent", name: "Inbox agent", desc: "Sorts enquiries and drafts replies in your voice. You read and hit send.", needs: "Gmail or Outlook", download: "", guide: "" },
+    { n: "03", code: "LID-INB-03", slug: "inbox-agent", name: "Inbox agent", desc: "Sorts enquiries and drafts replies in your voice. You read and hit send.", needs: "Gmail or Outlook", download: "https://github.com/madebycompound/lockedindept/tree/main/plugins/inbox-agent", guide: "https://github.com/madebycompound/lockedindept/blob/main/plugins/inbox-agent/README.md" },
     { n: "04", code: "LID-PRO-04", slug: "proposal-builder", name: "Proposal builder", desc: "Turns a discovery call into a priced proposal built around value, not hours.", needs: "Your rate card", download: "", guide: "" },
     { n: "05", code: "LID-OUT-05", slug: "outreach-agent", name: "Outreach agent", desc: "Finds the clients you actually want, writes the first email, follows up.", needs: "Gmail, a sending domain", download: "", guide: "" },
     { n: "06", code: "LID-ONB-06", slug: "client-onboarding", name: "Client onboarding", desc: "Sends the welcome, collects the brief, books the kickoff.", needs: "Gmail, your booking link", download: "", guide: "" }
