@@ -46,7 +46,7 @@ document.addEventListener("lid:ready", async function () {
   } else {
     var t = new Date().toISOString();
     rows = [
-      { user_id: "a", email: "sam@example.com", updated_at: t, state: { name: "Sam Reed", baseline: { project: 1200, hours: 55, income: 3800, at: "2026-10-01" }, weeks: [{ week: lastwk, at: t, reps: { income: 1400, hours: 48, quotes: 2, top: 2500, nos: 1, outreach: 4 }, wins: "Quoted £2,500 for the brand film and they didn't flinch.", insights: "The number felt huge to me and normal to them.", honesty: "Still took a £300 job out of fear.", scores: { wealth: 5, self: 6, health: 7, relationships: 6 }, goals: [{ text: "Send three proposals", hit: false }, { text: "Raise day rate to £600", hit: true }] }] } },
+      { user_id: "a", email: "sam@example.com", updated_at: t, state: { name: "Sam Reed", profile: { business: "Reed Films", dob: "1994-03-12", site: "@reedfilms" }, baseline: { project: 1200, hours: 55, income: 3800, at: "2026-10-01" }, weeks: [{ week: lastwk, at: t, reps: { income: 1400, hours: 48, quotes: 2, top: 2500, nos: 1, outreach: 4 }, wins: "Quoted £2,500 for the brand film and they didn't flinch.", insights: "The number felt huge to me and normal to them.", honesty: "Still took a £300 job out of fear.", scores: { wealth: 5, self: 6, health: 7, relationships: 6 }, goals: [{ text: "Send three proposals", hit: false }, { text: "Raise day rate to £600", hit: true }] }] } },
       { user_id: "b", email: "priya@example.com", updated_at: t, state: { name: "Priya Nair", baseline: { project: 900, hours: 60, income: 3000, at: "2026-10-01" }, weeks: [] } }
     ];
     notes = [];
@@ -54,7 +54,9 @@ document.addEventListener("lid:ready", async function () {
   rows.sort(function (a, b) { return (a.state.name || a.email || "").localeCompare(b.state.name || b.email || ""); });
   var flags = 0;
   document.getElementById("members").innerHTML = rows.map(function (m) {
-    var S = m.state || {}, name = S.name || (m.email || "").split("@")[0], N = LID.numbers(S);
+    var S = m.state || {}, name = S.name || (m.email || "").split("@")[0], N = LID.numbers(S), PF = S.profile || {};
+    var age = PF.dob ? Math.floor((Date.now() - new Date(PF.dob)) / 31557600000) : null;
+    var bio = [PF.business, m.email, age ? age + "" : null, PF.site].filter(Boolean).join(" / ");
     var ws = (S.weeks || []).slice().sort(function (a, b) { return a.week < b.week ? 1 : -1; });
     var w = ws.find(function (x) { return x.week === wk; }) || ws.find(function (x) { return x.week === lastwk; }); var cur = ws[0];
     var replied = notes.some(function (n) { return n.user_id === m.user_id && w && n.week === w.week; });
@@ -65,7 +67,7 @@ document.addEventListener("lid:ready", async function () {
     var rate = N ? (N.now ? N.now.rate : N.base.rate) : 0;
     var goalsPrev = (function () { var p = ws.filter(function (x) { return w && x.week < w.week; })[0]; return p ? p.goals || [] : []; })();
     var summary = [
-      "Name: " + name,
+      "Name: " + name + (PF.business ? ", runs " + PF.business : "") + (age ? ", " + age : ""),
       N ? "Number: £" + Math.round(rate) + "/hr now, started at £" + Math.round(N.base.rate) + "/hr. Starting average project £" + N.base.project + "." : "No starting numbers entered.",
       w ? "This week's reps: earned £" + (reps.income || 0) + ", " + (reps.hours || 0) + " hours, " + (reps.quotes || 0) + " quotes sent, highest price said £" + (reps.top || 0) + ", said no " + (reps.nos || 0) + " times, reached out to " + (reps.outreach || 0) + "." : "No check-in this week.",
       w ? "Wins: " + (w.wins || "none written") : "", w ? "Insights: " + (w.insights || "none written") : "", w ? "Honesty: " + (w.honesty || "none written") : "",
@@ -75,7 +77,7 @@ document.addEventListener("lid:ready", async function () {
     ].filter(Boolean).join("\n");
     var myNotes = notes.filter(function (n) { return n.user_id === m.user_id; });
     return '<details class="m" data-id="' + m.user_id + '" data-week="' + (w ? w.week : wk) + '"' + (fl.length ? " open" : "") + '>' +
-      '<summary><span class="who">' + name + '</span>' + (N ? '<span class="lbl">' + LID.gbp(rate) + '/hr</span>' : '') + (w && w.reps ? '<span class="lbl">' + (reps.quotes || 0) + ' quotes / top ' + LID.gbp(reps.top) + '</span>' : '') + fl.map(function (f) { return '<span class="badge ' + (f === "Needs reply" ? "soft" : "flag") + '">' + f + '</span>'; }).join("") + '</summary>' +
+      '<summary><span style="flex:1 1 220px;display:flex;flex-direction:column;gap:6px"><span class="who">' + name + '</span>' + (bio ? '<span class="note" style="text-transform:none;letter-spacing:0;font-size:12px">' + bio.replace(/</g, "&lt;") + '</span>' : '') + '</span>' + (N ? '<span class="lbl">' + LID.gbp(rate) + '/hr</span>' : '') + (w && w.reps ? '<span class="lbl">' + (reps.quotes || 0) + ' quotes / top ' + LID.gbp(reps.top) + '</span>' : '') + fl.map(function (f) { return '<span class="badge ' + (f === "Needs reply" ? "soft" : "flag") + '">' + f + '</span>'; }).join("") + '</summary>' +
       '<div class="body"><div class="col">' +
       (w ? '<div><span class="lbl">Week of ' + new Date(w.week).toLocaleDateString("en-GB", { day: "numeric", month: "short" }) + '</span>' +
         '<div class="kv"><span>Earned / hours</span><b>' + LID.gbp(reps.income) + ' / ' + (reps.hours || 0) + 'h</b></div>' +

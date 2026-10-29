@@ -92,7 +92,7 @@
     var top = document.getElementById("chrome");
     if (top) top.innerHTML =
       (!live ? '<div class="preview lbl"><span>Preview mode. Progress is saved in this browser only.</span><a href="/">Back to lockedindept.com</a></div>' : '') +
-      '<div class="bar gut lbl"><a href="/" style="text-decoration:none;font-weight:700">Locked In Dept.</a><span>Club Locked In / Member</span><nav aria-label="Portal">' + links + '</nav><span>' + who + ' / <a href="#" id="logout" style="text-decoration:none">Log out</a></span></div>';
+      '<div class="bar gut lbl"><a href="/" style="text-decoration:none;font-weight:700">Locked In Dept.</a><span>Club Locked In / Member</span><nav aria-label="Portal">' + links + '</nav><span><a href="/portal/profile" style="text-decoration:none">' + who + '</a> / <a href="#" id="logout" style="text-decoration:none">Log out</a></span></div>';
     var lo = document.getElementById("logout"); if (lo) lo.addEventListener("click", function (e) { e.preventDefault(); P.signOut(); });
     var foot = document.getElementById("foot");
     if (foot) foot.innerHTML = '<div class="bar gut lbl" style="border-bottom:0;border-top:1px solid var(--line)"><span>© 2026 Locked In Dept.</span><span>Independent culture / 001</span><a href="mailto:' + (C.SUPPORT_EMAIL || '') + '" style="text-decoration:none">' + (C.SUPPORT_EMAIL || '') + '</a></div>';

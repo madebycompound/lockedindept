@@ -11,7 +11,7 @@
 <p style="font-size:17px;line-height:1.5;max-width:420px">Honest, not aspirational. This is the line in the sand we measure the 90 days against. Nobody sees it but you and Josh.</p>
 </div>
 <form id="startform" class="cell" style="flex:1 1 360px;gap:28px;justify-content:space-between">
-<div><label for="b-name" class="lbl" style="display:block;margin-bottom:6px">Your name</label><input id="b-name" class="input" type="text" autocomplete="name" required placeholder="First and last"></div>
+<div style="display:flex;flex-wrap:wrap;gap:16px 24px"><div style="flex:1 1 200px"><label for="b-name" class="lbl" style="display:block;margin-bottom:6px">Your name</label><input id="b-name" class="input" type="text" autocomplete="name" required placeholder="First and last"></div><div style="flex:1 1 200px"><label for="b-business" class="lbl" style="display:block;margin-bottom:6px">Business or studio</label><input id="b-business" class="input" type="text" autocomplete="organization" placeholder="Your studio"></div></div>
 <div><label for="b-project" class="lbl" style="display:block;margin-bottom:6px">Average project value</label><div style="display:flex;align-items:baseline;gap:6px"><span class="big" style="font-size:28px">£</span><input id="b-project" class="input" type="number" inputmode="numeric" min="0" required placeholder="1500"></div></div>
 <div><label for="b-hours" class="lbl" style="display:block;margin-bottom:6px">Hours worked in a typical week</label><input id="b-hours" class="input" type="number" inputmode="numeric" min="1" max="120" required placeholder="50"></div>
 <div><label for="b-income" class="lbl" style="display:block;margin-bottom:6px">Monthly income, average of the last three</label><div style="display:flex;align-items:baseline;gap:6px"><span class="big" style="font-size:28px">£</span><input id="b-income" class="input" type="number" inputmode="numeric" min="0" required placeholder="4000"></div></div>
@@ -54,7 +54,7 @@
 document.addEventListener("lid:ready", function () {
   var D = LID.data, S = LID.state;
   document.getElementById("greet").textContent = LID.greeting();
-  if (S.name) document.getElementById("b-name").value = S.name;
+  if (S.name) document.getElementById("b-name").value = S.name; if (S.profile && S.profile.business) document.getElementById("b-business").value = S.profile.business;
   document.getElementById("cohort").textContent = D.cohort.name + " / Starts " + D.cohort.starts;
   var st = LID.stage(); if (st) document.getElementById("stageline").textContent = "Stage " + st.n + " / " + st.title;
 
@@ -78,8 +78,9 @@ document.addEventListener("lid:ready", function () {
     e.preventDefault();
     var b = { project: +document.getElementById("b-project").value, hours: +document.getElementById("b-hours").value, income: +document.getElementById("b-income").value, at: new Date().toISOString() };
     var nm = document.getElementById("b-name").value.trim();
-    await LID.set({ baseline: b, name: nm || S.name }); LID.toast("Locked in"); paintNumber();
-    document.getElementById("greet").textContent = LID.greeting(); var who = document.querySelector("#chrome .bar > span:last-child"); if (who && LID.first()) who.firstChild.textContent = LID.first() + " / ";
+    var pf = S.profile || {}; pf.business = document.getElementById("b-business").value.trim() || pf.business || "";
+    await LID.set({ baseline: b, name: nm || S.name, profile: pf }); LID.toast("Locked in"); paintNumber();
+    document.getElementById("greet").textContent = LID.greeting(); var who = document.querySelector("#chrome .bar > span:last-child a"); if (who && LID.first()) who.textContent = LID.first();
   });
   paintNumber();
 

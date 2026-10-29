@@ -1,0 +1,29 @@
+<section class="head gut">
+<div><p class="lbl" style="margin-bottom:12px">Member</p><h1 class="big">Profile</h1></div>
+<span class="lbl" id="since"></span>
+</section>
+<form id="pf" class="gut" style="padding-block:40px 64px;max-width:640px;display:flex;flex-direction:column;gap:32px">
+<div><label for="p-name" class="lbl" style="display:block;margin-bottom:6px">Name</label><input id="p-name" class="input" type="text" autocomplete="name" required placeholder="First and last"></div>
+<div><label for="p-business" class="lbl" style="display:block;margin-bottom:6px">Business or studio name</label><input id="p-business" class="input" type="text" autocomplete="organization" placeholder="Your studio"></div>
+<div><label for="p-email" class="lbl" style="display:block;margin-bottom:6px">Email</label><input id="p-email" class="input" type="email" readonly style="color:var(--mute)"><p class="note" style="margin-top:8px">This is the address your sign-in link goes to. Email hello@lockedindept.com to change it.</p></div>
+<div><label for="p-dob" class="lbl" style="display:block;margin-bottom:6px">Date of birth</label><input id="p-dob" class="input" type="date" autocomplete="bday" max="2015-01-01"></div>
+<div><label for="p-site" class="lbl" style="display:block;margin-bottom:6px">Website or Instagram</label><input id="p-site" class="input" type="text" placeholder="yourstudio.com or @handle"></div>
+<button class="btn" type="submit" style="justify-content:space-between;min-height:60px">Save <svg aria-hidden="true" width="22" height="12" viewBox="0 0 22 12" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M0 6h20M15 1l5 5-5 5"></path></svg></button>
+</form>
+<script>
+document.addEventListener("lid:ready", function () {
+  var S = LID.state, P = S.profile || {};
+  document.getElementById("p-name").value = S.name || "";
+  document.getElementById("p-business").value = P.business || "";
+  document.getElementById("p-email").value = (LID.user && LID.user.email) || (LID.live ? "" : "preview@lockedindept.com");
+  document.getElementById("p-dob").value = P.dob || "";
+  document.getElementById("p-site").value = P.site || "";
+  if (S.baseline) document.getElementById("since").textContent = "Member since " + new Date(S.baseline.at).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
+  document.getElementById("pf").addEventListener("submit", async function (e) {
+    e.preventDefault();
+    var p = { business: document.getElementById("p-business").value.trim(), dob: document.getElementById("p-dob").value, site: document.getElementById("p-site").value.trim() };
+    await LID.set({ name: document.getElementById("p-name").value.trim(), profile: p });
+    LID.toast("Saved"); var who = document.querySelector("#chrome .bar > span:last-child a"); if (who && LID.first()) who.textContent = LID.first();
+  });
+});
+</script>
