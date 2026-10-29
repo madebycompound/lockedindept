@@ -4,19 +4,21 @@ const { send, weekKey } = require("./_mail");
 const SITE = "https://lockedindept.com";
 
 module.exports = async (req, res) => {
-  const auth = req.headers.authorization || "";
-  if (process.env.CRON_SECRET && auth !== "Bearer " + process.env.CRON_SECRET) return res.status(401).json({ error: "no" });
+  const auth = req.headers.authorization || "", q = req.query || {};
+  // Vercel cron sends the secret as a bearer header. To run it by hand: /api/remind?force=1&key=<CRON_SECRET>&to=<your email>
+  if (process.env.CRON_SECRET && auth !== "Bearer " + process.env.CRON_SECRET && q.key !== process.env.CRON_SECRET) return res.status(401).json({ error: "no" });
   const url = process.env.SUPABASE_URL || "https://pqsgymxddtrmzpcawzxi.supabase.co", key = process.env.SUPABASE_SERVICE_ROLE_KEY;
   if (!key) return res.status(503).json({ error: "SUPABASE_SERVICE_ROLE_KEY not set" });
   const day = new Date().getUTCDay(); // 0 Sun, 1 Mon
-  const force = req.query && req.query.force === "1";
+  const force = q.force === "1", only = (q.to || "").toLowerCase();
   if (!force && day !== 0 && day !== 1) return res.status(200).json({ skipped: "not Sunday or Monday" });
 
   const r = await fetch(url + "/rest/v1/member_state?select=user_id,email,state", { headers: { apikey: key, authorization: "Bearer " + key } });
   const rows = await r.json(); const wk = weekKey(); const sent = [];
   for (const m of rows) {
     const S = m.state || {}; if (!m.email) continue;
-    if ((S.weeks || []).some(w => w.week === wk)) continue;
+    if (only && m.email.toLowerCase() !== only) continue;
+    if (!force && (S.weeks || []).some(w => w.week === wk)) continue;
     if (S.unsubscribed) continue;
     const first = (S.name || "").split(" ")[0] || "there";
     const second = day === 1;
