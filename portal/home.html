@@ -14,39 +14,31 @@
 <body data-page="home">
 <div id="chrome"></div>
 <main class="page">
-<section class="head gut">
+<section class="head gut" style="border-bottom:0;padding-bottom:36px">
 <div><p class="lbl" style="margin-bottom:12px" id="stageline">Club Locked In</p><h1 class="big" id="greet">Morning.</h1></div>
-<div style="display:flex;flex-direction:column;align-items:flex-end;gap:16px"><span class="lbl" id="cohort"></span><a class="btn" href="/portal/calls">Book a call <svg aria-hidden="true" width="22" height="12" viewBox="0 0 22 12" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M0 6h20M15 1l5 5-5 5"></path></svg></a></div>
+<span class="lbl" id="cohort"></span>
 </section>
 
-<section class="split">
-<a id="continue" href="/portal/library" class="cellR" style="flex:2 1 560px;min-width:0;text-decoration:none;display:flex;flex-wrap:wrap;border-bottom:1px solid var(--line)">
-<div class="fig" style="flex:1 1 220px;min-height:300px"><img src="/img/red-blur.jpg" alt="" style="object-position:center 30%"></div>
-<div style="flex:2 1 280px;min-width:0;padding:24px;display:flex;flex-direction:column;justify-content:space-between;gap:32px">
+<a id="continue" href="/portal/library" class="rule" style="text-decoration:none;display:flex;flex-wrap:wrap;border-bottom:1px solid var(--line)">
+<div class="fig" style="flex:1 1 320px;min-height:360px"><img src="/img/red-blur.jpg" alt="" style="object-position:center 30%"></div>
+<div style="flex:2 1 420px;min-width:0;padding:28px var(--gr) 32px 28px;display:flex;flex-direction:column;justify-content:space-between;gap:40px">
 <div class="meta lbl"><span>Continue</span><span id="lessoncount"></span></div>
-<div><p class="lbl" style="margin-bottom:10px" id="nextmod"></p><h2 class="big" id="nexttitle" style="font-size:clamp(32px,3.4vw,52px)"></h2></div>
+<div><p class="lbl" style="margin-bottom:12px" id="nextmod"></p><h2 class="big" id="nexttitle" style="font-size:clamp(36px,5vw,80px)"></h2></div>
 <div style="display:flex;flex-direction:column;gap:12px"><div class="prog" role="img" aria-label="Progress"><i id="progbar" style="width:0"></i></div><span class="lbl" style="display:flex;justify-content:space-between;font-weight:700"><span>Resume lesson →</span><span id="pct" style="font-weight:500"></span></span></div>
 </div>
 </a>
-<div class="cell" style="flex:1 1 320px">
-<div class="meta lbl"><span>Your method</span><span id="stagecount"></span></div>
-<ol class="list" id="methodlist"></ol>
-</div>
-</section>
 
-<section class="split">
-<div class="cell cellR" style="flex:1 1 320px;justify-content:space-between;min-height:240px"><span class="lbl">Next 1:1</span><div><p class="big" id="next11" style="font-size:32px">Not booked</p><p style="font-size:15px;margin-top:6px">Book your next session with Josh.</p></div><a class="link" href="/portal/calls">Book →</a></div>
-<div class="cell cellR" style="flex:1 1 320px;justify-content:space-between;min-height:240px"><span class="lbl">Live group session</span><div><p class="big" id="grouptitle" style="font-size:32px"></p><p style="font-size:15px;margin-top:6px" id="groupdate"></p></div><a class="link" href="/portal/calls">Details →</a></div>
-<div class="cell" style="flex:1 1 320px;justify-content:space-between;min-height:240px"><span class="meta lbl"><span>Today's rituals</span><span id="ritscore"></span></span><div id="rituals" style="display:flex;flex-direction:column"></div><a class="link" href="/portal/check-in" id="cflink">Weekly check-in →</a></div>
+<section class="split" id="rows">
+<a href="/portal/check-in" class="cell cellR row" style="flex:1 1 300px"><span class="lbl">Today</span><span class="rowtitle" id="rittitle"></span><span class="link" id="cflink">Check in →</span></a>
+<a href="/portal/calls" class="cell cellR row" style="flex:1 1 300px"><span class="lbl">Next call</span><span class="rowtitle" id="calltitle"></span><span class="link" id="callsub"></span></a>
+<a href="/portal/assistant" class="cell row" style="flex:1 1 300px"><span class="lbl">Ask the Dept.</span><span class="rowtitle">Stuck on a quote, a client, a next step?</span><span class="link">Ask →</span></a>
 </section>
-
-<section class="gut" style="padding-block:40px 56px;display:flex;flex-wrap:wrap;gap:24px 40px">
-<span class="lbl" style="flex:1 1 200px">Ask the Dept.</span>
-<div style="flex:999 1 640px;min-width:0">
-<label for="ask" class="big" style="display:block;margin-bottom:8px;font-size:clamp(28px,3vw,44px)">Ask anything.</label>
-<form id="askform" style="display:flex;flex-wrap:wrap;align-items:flex-end;gap:16px"><input id="ask" class="input" type="text" placeholder="A client wants my day rate for a 30 second film. What do I say?" style="flex:1 1 360px"><button class="btn" type="submit">Ask</button></form>
-</div>
-</section>
+<style>
+.row{text-decoration:none;gap:28px;justify-content:space-between;min-height:220px;transition:background .25s}
+.row:hover{background:#E2E0DB}
+.rowtitle{font-size:24px;font-weight:800;letter-spacing:-.03em;text-transform:uppercase;line-height:1}
+.row .link{min-height:auto}
+</style>
 <script>
 document.addEventListener("lid:ready", function () {
   var D = LID.data, S = LID.state;
@@ -61,30 +53,19 @@ document.addEventListener("lid:ready", function () {
   document.getElementById("nexttitle").textContent = nl.title;
   document.getElementById("progbar").style.width = pr.pct + "%";
   document.getElementById("pct").textContent = pr.pct + "%";
-  var done = S.done || {};
-  var stagesDone = 0;
-  document.getElementById("methodlist").innerHTML = D.method.map(function (m) {
-    var ls = D.lessons.filter(function (l) { return l.module === m.key; });
-    var all = ls.length && ls.every(function (l) { return done[l.n]; }); if (all) stagesDone++;
-    var now = st && st.key === m.key;
-    return '<li style="text-transform:uppercase;font-weight:' + (now ? 800 : 700) + ';letter-spacing:-.02em;font-size:20px;' + (all ? 'color:var(--grey);text-decoration:line-through' : '') + '"><span class="lbl" style="text-decoration:none">' + m.n + '</span>' + m.title + '<span style="margin-left:auto;text-decoration:none">' + (all ? '<span class="lbl">Done</span>' : now ? '<span class="badge">Now</span>' : '') + '</span></li>';
-  }).join("");
-  document.getElementById("stagecount").textContent = stagesDone + " / " + D.method.length;
+
+  var rit = S.rituals || ["Walk", "Train", "Meditate", "Sleep 7+ hours", "No phone first hour"];
+  var tk = new Date().toISOString().slice(0, 10), done = (S.days || {})[tk] || {};
+  var n = rit.filter(function (r) { return done[r]; }).length;
+  document.getElementById("rittitle").textContent = n + " of " + rit.length + " rituals done";
+  var dow = new Date().getDay(); var wk = (function (d) { var x = new Date(d); x.setDate(x.getDate() - ((x.getDay() + 6) % 7)); return x.toISOString().slice(0, 10); })(new Date());
+  var has = (S.weeks || []).some(function (w) { return w.week === wk; });
+  document.getElementById("cflink").textContent = (dow === 0 || dow >= 5) && !has ? "Weekly check-in due →" : "Check in →";
+
   var g = (D.calls || [])[0];
-  document.getElementById("grouptitle").textContent = g ? g.title : "Coming soon";
-  document.getElementById("groupdate").textContent = g && g.date ? LID.fmtDate(g.date) : "Date to be confirmed";
-  if (S.next11) document.getElementById("next11").textContent = LID.fmtDate(S.next11);
-  (function(){
-    var rit = S.rituals || ["Walk", "Train", "Meditate", "Sleep 7+ hours", "No phone first hour"]; S.days = S.days || {};
-    var tk = new Date().toISOString().slice(0,10); var done = S.days[tk] || {};
-    function paint(){ document.getElementById("rituals").innerHTML = rit.map(function(r){ return '<label style="display:flex;align-items:center;gap:12px;padding:9px 0;border-top:1px solid var(--line);font-size:15px;cursor:pointer;'+(done[r]?'color:var(--mute);text-decoration:line-through':'font-weight:700')+'"><input type="checkbox" data-r="'+r.replace(/"/g,"&quot;")+'" '+(done[r]?'checked':'')+' style="width:20px;height:20px;accent-color:#0B0B0B;margin:0"><span>'+r+'</span></label>'; }).join(""); document.getElementById("ritscore").textContent = rit.filter(function(r){return done[r]}).length + " / " + rit.length; }
-    document.getElementById("rituals").addEventListener("change", async function(e){ var r=e.target.dataset.r; if(!r) return; done[r]=e.target.checked; S.days[tk]=done; await LID.set({days:S.days}); paint(); });
-    var dow = new Date().getDay(); var wk = (function(d){ var x=new Date(d); x.setDate(x.getDate()-((x.getDay()+6)%7)); return x.toISOString().slice(0,10); })(new Date());
-    var has = (S.weeks||[]).some(function(w){return w.week===wk});
-    if ((dow===0||dow>=5) && !has) document.getElementById("cflink").textContent = "Weekly check-in due →";
-    paint();
-  })();
-  document.getElementById("askform").addEventListener("submit", function (e) { e.preventDefault(); var q = document.getElementById("ask").value.trim(); location.href = "/portal/assistant" + (q ? "?q=" + encodeURIComponent(q) : ""); });
+  if (S.next11) { document.getElementById("calltitle").textContent = "1:1 with Josh"; document.getElementById("callsub").textContent = LID.fmtDate(S.next11) + " →"; }
+  else if (g) { document.getElementById("calltitle").textContent = g.title; document.getElementById("callsub").textContent = (g.date ? LID.fmtDate(g.date) : "Date to be confirmed") + " →"; }
+  else { document.getElementById("calltitle").textContent = "Nothing booked"; document.getElementById("callsub").textContent = "Book a 1:1 →"; }
 });
 </script>
 </main>
