@@ -43,7 +43,7 @@ What to do with the check-in:
       const r = await fetch("https://api.anthropic.com/v1/messages", {
         method: "POST",
         headers: { "content-type": "application/json", "x-api-key": key, "anthropic-version": "2023-06-01" },
-        body: JSON.stringify({ model: process.env.ASSISTANT_MODEL || "claude-sonnet-5-5", max_tokens: 1000, thinking: { type: "disabled" }, system: coachSystem, messages: [{ role: "user", content: "Member's week:\n" + summary }] })
+        body: JSON.stringify({ model: process.env.ASSISTANT_MODEL || "claude-sonnet-5-5", max_tokens: 1000, thinking: { type: "between_tools" }, system: coachSystem, messages: [{ role: "user", content: "Member's week:\n" + summary }] })
       });
       const j = await r.json();
       if (!r.ok) return res.status(502).json({ error: (j.error && j.error.message) || "Model error" });
@@ -87,7 +87,7 @@ How to answer:
       body: JSON.stringify({
         model: process.env.ASSISTANT_MODEL || "claude-sonnet-5-5",
         max_tokens: 1500,
-        thinking: { type: "disabled" },
+        thinking: { type: "between_tools" },
         system,
         messages: messages.filter(m => m && (m.role === "user" || m.role === "assistant") && typeof m.content === "string").map(m => ({ role: m.role, content: m.content }))
       })
