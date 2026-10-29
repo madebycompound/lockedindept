@@ -47,7 +47,9 @@ What to do with the check-in:
       });
       const j = await r.json();
       if (!r.ok) return res.status(502).json({ error: (j.error && j.error.message) || "Model error" });
-      return res.status(200).json({ reply: (j.content || []).filter(c => c.type === "text").map(c => c.text).join("\n").trim() });
+      const reply = (j.content || []).filter(c => c.type === "text").map(c => c.text).join("\n").trim();
+      if (!reply) return res.status(502).json({ error: "empty: stop=" + j.stop_reason + " types=" + (j.content || []).map(c => c.type).join(",") + " model=" + j.model });
+      return res.status(200).json({ reply });
     } catch (e) { return res.status(500).json({ error: "Draft failed" }); }
   }
   const method = (data.method || []).map(m => `${m.n} ${m.title}: ${m.desc}`).join("\n");
@@ -92,6 +94,7 @@ How to answer:
     const j = await r.json();
     if (!r.ok) return res.status(502).json({ error: (j.error && j.error.message) || "Model error" });
     const reply = (j.content || []).filter(c => c.type === "text").map(c => c.text).join("\n").trim();
+    if (!reply) return res.status(502).json({ error: "empty: stop=" + j.stop_reason + " types=" + (j.content || []).map(c => c.type).join(",") + " model=" + j.model });
     return res.status(200).json({ reply });
   } catch (e) {
     return res.status(500).json({ error: "Assistant failed" });
