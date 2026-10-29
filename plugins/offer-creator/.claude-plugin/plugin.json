@@ -1,0 +1,17 @@
+{
+  "name": "offer-creator",
+  "version": "0.1.0",
+  "description": "Locked In Dept. offer creator (LID-OFR-00). Vision and the person who creates it, who you are the expert for, the problem you solve, what it is worth, your pitch angle, your offer and how to sell it consultatively. Writes it all into documents your other agents build on.",
+  "author": {
+    "name": "Josh Pearson",
+    "url": "https://lockedindept.com"
+  },
+  "homepage": "https://lockedindept.com/portal/agents",
+  "keywords": [
+    "offer",
+    "positioning",
+    "pricing",
+    "pitch",
+    "creative business"
+  ]
+}

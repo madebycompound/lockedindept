@@ -1,8 +1,18 @@
 {
   "name": "lockedin-dept",
-  "owner": { "name": "Josh Pearson" },
-  "metadata": { "description": "Locked In Dept. agent library. Working AI agents for creative businesses, built for Club Locked In members." },
+  "owner": {
+    "name": "Josh Pearson"
+  },
+  "metadata": {
+    "description": "Locked In Dept. agent library. Working AI agents for creative businesses, built for Club Locked In members."
+  },
   "plugins": [
+    {
+      "name": "offer-creator",
+      "source": "./plugins/offer-creator",
+      "description": "The method in one place: your vision and the person who creates it, who you are the expert for, the problem you solve, your offer and how to sell it. Run this first. LID-OFR-00",
+      "version": "0.1.0"
+    },
     {
       "name": "inbox-agent",
       "source": "./plugins/inbox-agent",

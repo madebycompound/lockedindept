@@ -34,6 +34,7 @@ window.LID_DATA = {
 
   // download: link to a .zip. Empty = coming soon.
   agents: [
+    { n: "00", code: "LID-OFR-00", slug: "offer-creator", name: "Offer creator", desc: "The method in one place: your vision and the person who creates it, who you're the expert for, the problem you solve, your offer and how to sell it. Run this first.", needs: "Claude Code, an hour, your website", download: "https://github.com/madebycompound/lockedindept/tree/main/plugins/offer-creator", guide: "https://github.com/madebycompound/lockedindept/blob/main/plugins/offer-creator/README.md" },
     { n: "01", code: "LID-EDT-01", slug: "edit-assistant", name: "Edit assistant", desc: "Logs footage, pulls selects and cuts first drafts, so your own content actually goes out.", needs: "Claude Code, your footage folder", download: "", guide: "" },
     { n: "02", code: "LID-CON-02", slug: "content-scheduler", name: "Content scheduler", desc: "Turns your ideas and voice notes into a week of posts, queued by Monday.", needs: "Buffer", download: "", guide: "" },
     { n: "03", code: "LID-INB-03", slug: "inbox-agent", name: "Inbox agent", desc: "Sorts enquiries and drafts replies in your voice. You read and hit send.", needs: "Gmail or Outlook", download: "https://github.com/madebycompound/lockedindept/tree/main/plugins/inbox-agent", guide: "https://github.com/madebycompound/lockedindept/blob/main/plugins/inbox-agent/README.md" },
