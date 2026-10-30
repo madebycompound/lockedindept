@@ -143,7 +143,8 @@ const VIDEOS = {
 };
 const DM_URL = "https://ig.me/m/lockedin.dept";
 const SB_URL = "https://pqsgymxddtrmzpcawzxi.supabase.co", SB_KEY = "sb_publishable_wBq1dszXPJ2CZzqkQIRXTA_hXE3b3zI";
-async function sb(table, row){ try{ const r = await fetch(SB_URL+"/rest/v1/"+table, {method:"POST", headers:{apikey:SB_KEY, authorization:"Bearer "+SB_KEY, "content-type":"application/json", prefer:"return=representation"}, body:JSON.stringify(row)}); if(!r.ok) return null; const j = await r.json(); return j && j[0] ? j[0] : null; }catch(e){ return null; } }
+function uuid(){ try{ return crypto.randomUUID(); }catch(e){ return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,c=>{const r=Math.random()*16|0;return (c==='x'?r:(r&0x3|0x8)).toString(16);}); } }
+async function sb(table, row){ try{ row = Object.assign({id: uuid()}, row); const r = await fetch(SB_URL+"/rest/v1/"+table, {method:"POST", headers:{apikey:SB_KEY, authorization:"Bearer "+SB_KEY, "content-type":"application/json", prefer:"return=minimal"}, body:JSON.stringify(row)}); return r.ok ? row : null; }catch(e){ return null; } }
 const FIRST = {
   health: "This week: three training sessions in the diary before Sunday, each one booked like a client call. Not a plan, three times in the calendar.",
   self: "This week: write the one sentence that says who you help and what it costs, then say it out loud to one real person. The flinch is the work.",
