@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="The Core Four Score. Twenty honest answers across health, self, wealth and relationships. Your score out of 10 for each, the gap costing you most, and what to watch first.">
+<meta property="og:title" content="What is your Core Four score?">
+<meta property="og:description" content="Health, self, wealth, relationships. Twenty questions, three minutes, the gap that is costing you most.">
+<title>Core Four Score / Locked In Dept.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&display=swap">
+<style>
+/* Layout: matches lockedindept.com. Paper ground, hairline rules, Archivo only, single light look; yellow is the one accent (no orange photos here). */
+:root{
+  --paper:#ECEBE7; --ink:#0B0B0B; --muted:#6B6A66; --rule:#D2D0CA; --card:#F5F4F1;
+  --accent:#E8FF2A; --on-accent:#0B0B0B; --low:#E8FF2A;
+  --display:'Archivo','Helvetica Neue',Helvetica,Arial,sans-serif;
+  --body:'Archivo','Helvetica Neue',Helvetica,Arial,sans-serif;
+  --mono:'Archivo','Helvetica Neue',Helvetica,Arial,sans-serif;
+  color-scheme:light;
+}
+
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased}
+.grain{position:fixed;inset:0;pointer-events:none;z-index:30;opacity:.35;mix-blend-mode:multiply;width:100%;height:100%}
+.wrap{max-width:760px;margin:0 auto;padding-block:24px 64px;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.sheet{background:var(--paper);border:1px solid var(--ink)}
+.strip{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:10px 16px;border-bottom:1px solid var(--ink)}
+.lbl{font-family:var(--body);font-size:11px;font-weight:500;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+.lbl b{color:var(--ink);font-weight:700}
+.pad{padding:28px 20px}
+@media (min-width:600px){.pad{padding:40px 36px}}
+h1,h2,h3{font-family:var(--display);font-weight:800;text-transform:uppercase;letter-spacing:-.045em;line-height:.9;margin:0;text-wrap:balance}
+h1{font-size:clamp(40px,10vw,88px)}
+h2{font-size:clamp(32px,7.5vw,60px)}
+h3{font-size:22px;letter-spacing:-.035em;line-height:1}
+p{margin:0;max-width:60ch}
+.lead{font-size:18px;color:var(--ink)}
+.stack{display:flex;flex-direction:column;gap:20px}
+.grid4{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border-top:1px solid var(--ink)}
+
+.grid4>div{padding:16px;border-right:1px solid var(--rule);border-bottom:1px solid var(--rule);display:flex;flex-direction:column;gap:6px;min-width:0}
+.grid4 h3{font-size:clamp(15px,4.2vw,26px)}
+.prog[hidden]{display:none}
+.bar.lowest h3{background:var(--low);justify-self:start;padding:3px 8px 1px;margin-left:-8px}
+.bar.lowest .track{background:repeating-linear-gradient(-45deg,var(--card) 0 6px,var(--low) 6px 8px)}
+.grid4 p{font-size:13px;color:var(--muted)}
+.btn{appearance:none;border:1px solid var(--ink);background:var(--ink);color:var(--paper);font-family:var(--body);font-weight:700;font-size:13px;letter-spacing:.04em;text-transform:uppercase;padding:16px 20px;cursor:pointer;display:inline-flex;align-items:center;justify-content:space-between;gap:16px;text-decoration:none;min-height:52px}
+.btn:hover{background:var(--accent);color:var(--on-accent);border-color:var(--ink)}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn.ghost:hover{background:var(--accent);color:var(--on-accent)}
+.btn:focus-visible,.opt input:focus-visible+span{outline:3px solid var(--accent);outline-offset:2px}
+.btn[disabled]{opacity:.35;cursor:not-allowed;background:var(--ink);color:var(--paper)}
+.row{display:flex;gap:12px;flex-wrap:wrap}
+.row .btn{flex:1 1 220px}
+
+/* progress */
+.prog{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--ink)}
+.prog span{height:8px;border-right:1px solid var(--ink)}
+.prog span:last-child{border-right:0}
+.prog span.on{background:var(--accent)}
+.prog span.done{background:var(--ink)}
+
+/* questions */
+.q{display:flex;flex-direction:column;gap:12px;padding-block:18px;border-top:1px solid var(--rule)}
+.q:first-of-type{border-top:0}
+.qt{font-size:17px;font-weight:600;display:flex;gap:12px}
+.qt .n{font-family:var(--mono);font-size:12px;color:var(--muted);padding-top:4px;flex:0 0 auto}
+.scale{display:grid;grid-template-columns:repeat(5,1fr);border:1px solid var(--ink)}
+.opt{position:relative}
+.opt input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+.opt span{display:flex;align-items:center;justify-content:center;height:48px;border-right:1px solid var(--ink);font-family:var(--mono);font-size:15px;cursor:pointer;user-select:none}
+.opt:last-child span{border-right:0}
+.opt input:checked+span{background:var(--accent);color:var(--on-accent);font-weight:600}
+.opt:hover span{background:var(--rule)}
+.opt input:checked:hover+span{background:var(--accent)}
+.ends{display:flex;justify-content:space-between}
+
+/* results */
+.total{display:flex;align-items:flex-end;gap:12px;flex-wrap:wrap}
+.total .big{font-family:var(--display);font-weight:800;font-size:clamp(88px,24vw,160px);line-height:.8;letter-spacing:-.07em;font-variant-numeric:tabular-nums}
+.bars{display:flex;flex-direction:column;border-top:1px solid var(--ink)}
+.bar{display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"name v" "track track";align-items:end;gap:10px 12px;padding:16px 0;border-bottom:1px solid var(--rule)}
+.bar h3{grid-area:name;min-width:0}.bar .track{grid-area:track}.bar .v{grid-area:v}
+.bar h3{font-size:20px}
+.track{height:22px;border:1px solid var(--ink);position:relative;background:var(--card)}
+.fill{position:absolute;inset:0 auto 0 0;background:var(--ink)}
+.bar.lowest .fill{background:var(--low)}
+.bar .v{font-family:var(--mono);font-weight:600;font-size:16px;text-align:right;font-variant-numeric:tabular-nums}
+.tag{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;background:var(--low);color:var(--ink);padding:2px 6px;margin-left:6px;vertical-align:middle}
+.diag{border:1px solid var(--ink);background:var(--card);padding:20px;display:flex;flex-direction:column;gap:12px}
+.gap{border-left:6px solid var(--low);padding-left:14px;font-size:17px}
+.video{display:grid;grid-template-columns:1fr;border:1px solid var(--ink);background:var(--ink);color:var(--paper)}
+@media (min-width:600px){.video{grid-template-columns:220px 1fr}}
+.thumb{aspect-ratio:16/10;max-width:100%;background:var(--low);color:var(--ink);display:flex;align-items:flex-end;padding:14px;position:relative}
+.thumb .play{position:absolute;top:14px;left:14px;width:44px;height:44px;border:2px solid var(--ink);border-radius:50%;display:flex;align-items:center;justify-content:center}
+.thumb .play::after{content:"";border-left:14px solid var(--ink);border-top:9px solid transparent;border-bottom:9px solid transparent;margin-left:4px}
+.thumb h3{font-size:28px;color:var(--ink)}
+.vbody{padding:18px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.vbody .lbl{color:#A9A89F}
+.vbody p{color:#E5E4DE;font-size:15px}
+.vbody .btn{background:var(--paper);color:var(--ink);border-color:var(--paper)}
+.vbody .btn:hover{background:var(--low);color:var(--ink);border-color:var(--low)}
+.copybox{font-family:var(--mono);font-size:13px;background:var(--card);border:1px dashed var(--muted);padding:12px;white-space:pre-wrap;word-break:break-word;user-select:all}
+.note{font-size:13px;color:var(--muted)}
+.foot{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:10px 16px;border-top:1px solid var(--ink)}
+@media (prefers-reduced-motion:no-preference){
+  .fill{transition:width .9s cubic-bezier(.2,.8,.2,1)}
+  .step{animation:in .35s ease-out}
+  @keyframes in{from{transform:translateY(8px)}to{transform:none}}
+}
+
+.res .btn:hover,.res .btn.ghost:hover{background:var(--low);color:var(--ink);border-color:var(--ink)}
+</style>
+<style>*{box-sizing:border-box}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<svg class="grain" aria-hidden="true"><filter id="g"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" stitchTiles="stitch"></feTurbulence><feColorMatrix values="0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 0.18 0"></feColorMatrix></filter><rect width="100%" height="100%" filter="url(#g)"></rect></svg>
+<div class="wrap">
+  <div class="sheet">
+    <div class="strip"><span class="lbl"><b>Locked In Dept.©</b></span><span class="lbl">Core Four / 20 questions / 3 min</span></div>
+    <div class="prog" id="prog" hidden><span></span><span></span><span></span><span></span></div>
+    <main id="app"></main>
+    <div class="foot"><span class="lbl">lockedindept.com</span><span class="lbl">@lockedin.dept</span></div>
+  </div>
+</div>
+
+<script>
+/* ============ EDIT HERE: drop video URLs in when they're live ============ */
+const VIDEOS = {
+  health:        { title:"Lock In Your Body", url:"", length:"6 min",
+                   blurb:"Why your business is paying for your health, and the 90-day training rules I run alongside every client." },
+  self:          { title:"Become The Expert", url:"", length:"7 min",
+                   blurb:"The identity shift from hired creative to the expert people pay more for. Belief first, then price." },
+  wealth:        { title:"Fewer Clients, Paying More", url:"", length:"8 min",
+                   blurb:"How to move off one-off projects into monthly clients, and the prescription-style sale that gets you there." },
+  relationships: { title:"Build It Around Your Life", url:"", length:"5 min",
+                   blurb:"Designing the business around the people you love, instead of fitting them around what's left." },
+  balanced:      { title:"The Next Level", url:"", length:"6 min",
+                   blurb:"You're strong across the board. This is about going from creative founder to leader with a much bigger vision." }
+};
+const DM_URL = "https://ig.me/m/lockedin.dept";
+/* ======================================================================== */
+
+const AREAS = [
+  { key:"health", name:"Health", sub:"Body, energy, sleep",
+    qs:["I train at least three times a week.",
+        "I sleep seven or more hours most nights.",
+        "I wake up with energy for the work that matters.",
+        "I eat to fuel myself, not just whatever is quick.",
+        "My body feels like an asset, not something I'm neglecting."],
+    low:"Your health is the leak. Low energy shows up as slow decisions, short fuses and work that takes twice as long. You can be a 6 in business, but lifting this from a {s} to a 7 will pull the business up with it.",
+    mid:"Health is holding, but it isn't fuelling you yet. A few locked-in habits here would give you more output than another hour at the desk." },
+  { key:"self", name:"Self", sub:"Belief, clarity, identity",
+    qs:["I can say clearly who I help and why they should pay me more.",
+        "I state my price on a call without flinching.",
+        "I have a written vision for where I'll be in 12 months.",
+        "I show up online as the expert instead of hiding behind the work.",
+        "I protect daily habits that keep my head clear."],
+    low:"The work isn't what's holding you back. It's what you believe you're allowed to charge and how big you let yourself think. At {s} out of 10, you're playing smaller than your talent.",
+    mid:"You know you're good, but you don't fully back yourself yet. That gap shows up in your pricing and in how often you hide." },
+  { key:"wealth", name:"Wealth", sub:"Income, clients, freedom",
+    qs:["I consistently hit £10k months or more.",
+        "Most of my income comes from monthly or repeat clients.",
+        "I know my numbers: what comes in, what goes out, what I keep.",
+        "I could take two weeks off without the business falling over.",
+        "I turn down work that isn't worth my time."],
+    low:"You're working project to project with nothing compounding. At {s} out of 10, every month starts from zero, and that pressure leaks into everything else.",
+    mid:"Money is coming in, but it depends on you chasing it. The next step is fewer clients paying more, every month." },
+  { key:"relationships", name:"Relationships", sub:"Family, friends, circle",
+    qs:["The people closest to me get my best, not what's left over.",
+        "When I'm with family or friends I'm actually there, not thinking about clients.",
+        "I'm surrounded by people who push me to think bigger.",
+        "I have someone I can be fully honest with about the business.",
+        "My work supports the life I want with the people I love."],
+    low:"The business is taking from the people it's meant to be for. At {s} out of 10, you're building something that costs you the life you started it for.",
+    mid:"The relationships are there, but they're getting the leftovers. A bigger room around you and more presence at home would change how you show up at work too." }
+];
+const TIE = ["self","health","wealth","relationships"]; // belief first when scores tie
+
+let state = { step:-1, answers:{} };
+try{ const s = JSON.parse(localStorage.getItem("cf4")||"null"); if(s&&s.answers) state = s; }catch(e){}
+function save(){ try{ localStorage.setItem("cf4", JSON.stringify(state)); }catch(e){} }
+
+const app = document.getElementById("app");
+const prog = document.getElementById("prog");
+const esc = s => String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+function score(key){
+  const a = AREAS.find(x=>x.key===key);
+  const sum = a.qs.reduce((t,_,i)=>t+(state.answers[key+i]||0),0);
+  return Math.round(((sum-5)/20)*100)/10; // 5..25 -> 0..10
+}
+
+function render(){
+  app.className='';
+  prog.hidden = state.step<0 || state.step>3;
+  [...prog.children].forEach((s,i)=>{ s.className = i<state.step?"done":i===state.step?"on":""; });
+  if(state.step<0) return intro();
+  if(state.step>3) return results();
+  return area(state.step);
+}
+
+function intro(){
+  app.innerHTML = `
+  <section class="pad stack step">
+    <span class="lbl">The Core Four assessment</span>
+    <h1>Where are you<br>bleeding energy?</h1>
+    <p class="lead">Twenty honest answers across health, self, wealth and relationships. You get a score out of 10 for each, the gap that's costing you most, and the one video to watch first.</p>
+    <p class="note">This is the exact assessment I start every 1:1 client with. No email needed.</p>
+  </section>
+  <div class="grid4">
+    ${AREAS.map((a,i)=>`<div><span class="lbl">0${i+1}</span><h3>${a.name}</h3><p>${a.sub}</p></div>`).join("")}
+  </div>
+  <section class="pad"><div class="row">
+    <button class="btn" id="go">Start the assessment <span>→</span></button>
+  </div></section>`;
+  document.getElementById("go").onclick = ()=>{ state.step=0; save(); render(); scrollTop(); };
+}
+
+function area(i){
+  const a = AREAS[i];
+  app.innerHTML = `
+  <section class="pad stack step">
+    <span class="lbl">Area 0${i+1} of 04 / ${esc(a.sub)}</span>
+    <h2>${a.name}</h2>
+    <p class="note">1 = not true at all. 5 = completely true. Answer for how things are now, not how you want them to be.</p>
+    <form id="f" class="stack" style="gap:0">
+      ${a.qs.map((q,j)=>{
+        const id=a.key+j, v=state.answers[id];
+        return `<fieldset class="q" style="border-left:0;border-right:0;border-bottom:0;margin:0;padding-inline:0">
+          <legend class="qt" style="padding:0"><span class="n">${i*5+j+1}/20</span><span>${esc(q)}</span></legend>
+          <div class="scale">${[1,2,3,4,5].map(n=>`<label class="opt"><input type="radio" id="${id}-${n}" name="${id}" value="${n}" ${v===n?"checked":""}><span>${n}</span></label>`).join("")}</div>
+          <div class="ends"><span class="lbl">Not true</span><span class="lbl">Completely true</span></div>
+        </fieldset>`}).join("")}
+    </form>
+    <div class="row">
+      <button class="btn ghost" id="back"><span>←</span> Back</button>
+      <button class="btn" id="next" ${complete(a)?"":"disabled"}>${i===3?"See my score":"Next area"} <span>→</span></button>
+    </div>
+  </section>`;
+  document.getElementById("f").addEventListener("change",e=>{
+    state.answers[e.target.name]=Number(e.target.value); save();
+    document.getElementById("next").disabled = !complete(a);
+  });
+  document.getElementById("f").addEventListener("submit",e=>e.preventDefault());
+  document.getElementById("back").onclick=()=>{ state.step--; save(); render(); scrollTop(); };
+  document.getElementById("next").onclick=()=>{ if(!complete(a)) return; state.step++; save(); render(); scrollTop(); };
+}
+function complete(a){ return a.qs.every((_,j)=>state.answers[a.key+j]); }
+
+function results(){
+  const scores = AREAS.map(a=>({...a, s:score(a.key)}));
+  const total = Math.round(scores.reduce((t,a)=>t+a.s,0)*10)/10;
+  const min = Math.min(...scores.map(a=>a.s));
+  const max = Math.max(...scores.map(a=>a.s));
+  const lowest = TIE.map(k=>scores.find(a=>a.key===k)).find(a=>a.s===min);
+  const highest = scores.find(a=>a.s===max);
+  const balanced = min>=7.5;
+  const vid = VIDEOS[balanced?"balanced":lowest.key];
+  const spread = Math.round((max-min)*10)/10;
+
+  let headline, diag;
+  if(balanced){
+    headline = "You're strong across the board.";
+    diag = "Nothing is leaking badly. What's left is ambition: a bigger goal, a bigger room and a business that runs without you in every detail.";
+  } else {
+    headline = `Your biggest gap is ${lowest.name}.`;
+    diag = (lowest.s<5?lowest.low:lowest.mid).replace("{s}", lowest.s);
+  }
+  const gapLine = !balanced && spread>=3
+    ? `You're at ${highest.s} in ${highest.name} but ${lowest.s} in ${lowest.name}. A ${spread}-point gap like that means one area is quietly paying for the other.`
+    : "";
+
+  const summary = `My Core Four: Health ${score("health")} / Self ${score("self")} / Wealth ${score("wealth")} / Relationships ${score("relationships")}. Total ${total}/40. Lowest: ${balanced?"none under 7.5":lowest.name}. LOCKED IN`;
+
+  app.className='res';
+  app.innerHTML = `
+  <section class="pad stack step">
+    <span class="lbl">Your Core Four score</span>
+    <div class="total"><span class="big">${total}</span><span class="lbl" style="padding-bottom:14px">out of 40</span></div>
+    <div class="bars">
+      ${scores.map(a=>`<div class="bar ${(!balanced&&a===lowest)?"lowest":""}">
+        <h3>${a.name}</h3>
+        <div class="track" role="img" aria-label="${a.name} ${a.s} out of 10"><div class="fill" style="width:0%" data-w="${a.s*10}"></div></div>
+        <span class="v">${a.s.toFixed(1)}</span>
+      </div>`).join("")}
+    </div>
+    <p class="note">Screenshot this and post it to your story. Tag @lockedin.dept.</p>
+  </section>
+
+  <section class="pad stack" style="border-top:1px solid var(--ink)">
+    <span class="lbl">Where you're bleeding energy</span>
+    <h2>${esc(headline)}</h2>
+    <div class="diag">
+      <p class="lead">${esc(diag)}</p>
+      ${gapLine?`<p class="gap">${esc(gapLine)}</p>`:""}
+    </div>
+  </section>
+
+  <section class="pad stack" style="border-top:1px solid var(--ink)">
+    <span class="lbl">Watch this first</span>
+    <div class="video">
+      <div class="thumb"><span class="play" aria-hidden="true"></span><h3>${esc(vid.title)}</h3></div>
+      <div class="vbody">
+        <span class="lbl">${balanced?"For strong all-rounders":"For a low "+esc(lowest.name)+" score"} / ${esc(vid.length)}</span>
+        <p>${esc(vid.blurb)}</p>
+        ${vid.url
+          ? `<a class="btn" href="${esc(vid.url)}" target="_blank" rel="noopener">Watch the video <span>→</span></a>`
+          : `<span class="btn" aria-disabled="true" style="cursor:default">Video drops this week <span>●</span></span>`}
+      </div>
+    </div>
+  </section>
+
+  <section class="pad stack" style="border-top:1px solid var(--ink)">
+    <span class="lbl">Want to fix it in 90 days?</span>
+    <h2>Send me your score.</h2>
+    <p>Copy your result, DM it to @lockedin.dept, and I'll reply personally with what I'd change first. Ten founding places for January.</p>
+    <div class="copybox" id="sum">${esc(summary)}</div>
+    <div class="row">
+      <button class="btn ghost" id="copy">Copy my score <span>⧉</span></button>
+      <a class="btn" href="${DM_URL}" target="_blank" rel="noopener">DM @lockedin.dept <span>→</span></a>
+    </div>
+    <button class="btn ghost" id="redo" style="align-self:flex-start">Retake the assessment</button>
+  </section>`;
+
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{
+    document.querySelectorAll(".fill").forEach(f=>f.style.width=f.dataset.w+"%");
+  }));
+  const copyBtn=document.getElementById("copy");
+  copyBtn.onclick=()=>{
+    const done=()=>{ copyBtn.firstChild.textContent="Copied "; };
+    const fallback=()=>{ const r=document.createRange(); r.selectNodeContents(document.getElementById("sum")); const s=getSelection(); s.removeAllRanges(); s.addRange(r); copyBtn.firstChild.textContent="Selected, now copy "; };
+    try{ navigator.clipboard.writeText(summary).then(done,fallback); }catch(e){ fallback(); }
+  };
+  document.getElementById("redo").onclick=()=>{ state={step:-1,answers:{}}; save(); render(); scrollTop(); };
+}
+function scrollTop(){ try{ window.scrollTo({top:0,behavior:"smooth"}); }catch(e){ window.scrollTo(0,0); } }
+render();
+</script>
+</body>
+</html>
