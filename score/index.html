@@ -142,6 +142,15 @@ const VIDEOS = {
                    blurb:"You're strong across the board. This is about going from creative founder to leader with a much bigger vision." }
 };
 const DM_URL = "https://ig.me/m/lockedin.dept";
+const SB_URL = "https://pqsgymxddtrmzpcawzxi.supabase.co", SB_KEY = "sb_publishable_wBq1dszXPJ2CZzqkQIRXTA_hXE3b3zI";
+async function sb(table, row){ try{ const r = await fetch(SB_URL+"/rest/v1/"+table, {method:"POST", headers:{apikey:SB_KEY, authorization:"Bearer "+SB_KEY, "content-type":"application/json", prefer:"return=representation"}, body:JSON.stringify(row)}); if(!r.ok) return null; const j = await r.json(); return j && j[0] ? j[0] : null; }catch(e){ return null; } }
+const FIRST = {
+  health: "This week: three training sessions in the diary before Sunday, each one booked like a client call. Not a plan, three times in the calendar.",
+  self: "This week: write the one sentence that says who you help and what it costs, then say it out loud to one real person. The flinch is the work.",
+  wealth: "This week: take your last three quotes, add 40%, and send the next one at that number. Say it plainly, then stop talking.",
+  relationships: "This week: one evening with the phone in another room, and one honest conversation about where the business is. Both before Sunday.",
+  balanced: "This week: write the goal that scares you, with a number and a date, and tell someone who'll hold you to it."
+};
 /* ======================================================================== */
 
 const AREAS = [
@@ -277,6 +286,8 @@ function results(){
   const summary = `My Core Four: Health ${score("health")} / Self ${score("self")} / Wealth ${score("wealth")} / Relationships ${score("relationships")}. Total ${total}/40. Lowest: ${balanced?"none under 7.5":lowest.name}. LOCKED IN`;
 
   app.className='res';
+  const first = FIRST[balanced?"balanced":lowest.key];
+  if(!state.scoreId){ sb("scores",{health:score("health"), self:score("self"), wealth:score("wealth"), relationships:score("relationships"), total, lowest: balanced?"balanced":lowest.key, answers: state.answers, source:"web"}).then(r=>{ if(r&&r.id){ state.scoreId=r.id; save(); } }); }
   app.innerHTML = `
   <section class="pad stack step">
     <span class="lbl">Your Core Four score</span>
@@ -298,6 +309,20 @@ function results(){
       <p class="lead">${esc(diag)}</p>
       ${gapLine?`<p class="gap">${esc(gapLine)}</p>`:""}
     </div>
+    <div class="diag" style="background:var(--ink);color:var(--paper);border-color:var(--ink)">
+      <span class="lbl" style="color:#A9A89F">Your first move</span>
+      <p class="lead" style="color:var(--paper)">${esc(first)}</p>
+    </div>
+  </section>
+
+  <section class="pad stack" style="border-top:1px solid var(--ink)">
+    <span class="lbl">Post it</span>
+    <h2>Your story card.</h2>
+    <p>Save it, post it to your story, tag @lockedin.dept. Compare with a friend who needs to hear it.</p>
+    <canvas id="card" width="1080" height="1920" style="width:100%;max-width:320px;border:1px solid var(--ink);display:block"></canvas>
+    <div class="row">
+      <a class="btn" id="dl" href="#" download="core-four-score.png">Save the card <span>↓</span></a>
+    </div>
   </section>
 
   <section class="pad stack" style="border-top:1px solid var(--ink)">
@@ -317,11 +342,18 @@ function results(){
   <section class="pad stack" style="border-top:1px solid var(--ink)">
     <span class="lbl">Want to fix it in 90 days?</span>
     <h2>Send me your score.</h2>
-    <p>Copy your result, DM it to @lockedin.dept, and I'll reply personally with what I'd change first. Ten founding places for January.</p>
+    <p>Leave your Instagram handle and I'll reply personally with what I'd change first. Or copy your score and DM it. Ten founding places for January.</p>
+    <form id="lead" class="stack" style="gap:12px" ${state.leadSent?"hidden":""}>
+      <input id="handle" type="text" placeholder="@yourhandle" autocomplete="off" style="height:52px;border:0;border-bottom:1px solid var(--ink);background:transparent;font:inherit;font-size:17px;padding:0;width:100%">
+      <input id="email" type="email" placeholder="Email (optional, for the video when it drops)" style="height:52px;border:0;border-bottom:1px solid var(--ink);background:transparent;font:inherit;font-size:17px;padding:0;width:100%">
+      <div class="row"><button class="btn" type="submit">Send Josh my score <span>→</span></button></div>
+      <p class="note">No list, no sequence. One reply from a person.</p>
+    </form>
+    <p class="lead" id="leadok" ${state.leadSent?"":"hidden"}>Sent. Josh replies within a day, usually faster.</p>
     <div class="copybox" id="sum">${esc(summary)}</div>
     <div class="row">
       <button class="btn ghost" id="copy">Copy my score <span>⧉</span></button>
-      <a class="btn" href="${DM_URL}" target="_blank" rel="noopener">DM @lockedin.dept <span>→</span></a>
+      <a class="btn ghost" href="${DM_URL}" target="_blank" rel="noopener">DM @lockedin.dept <span>→</span></a>
     </div>
     <button class="btn ghost" id="redo" style="align-self:flex-start">Retake the assessment</button>
   </section>`;
@@ -329,6 +361,12 @@ function results(){
   requestAnimationFrame(()=>requestAnimationFrame(()=>{
     document.querySelectorAll(".fill").forEach(f=>f.style.width=f.dataset.w+"%");
   }));
+  const lf=document.getElementById("lead");
+  if(lf) lf.addEventListener("submit", async e=>{ e.preventDefault(); const h=document.getElementById("handle").value.trim(), em=document.getElementById("email").value.trim(); if(!h&&!em) return;
+    const b=lf.querySelector("button"); b.disabled=true; b.firstChild.textContent="Sending ";
+    const r = await sb("leads",{score_id: state.scoreId||null, handle:h||null, email:em||null, health:score("health"), self:score("self"), wealth:score("wealth"), relationships:score("relationships"), total, lowest: balanced?"balanced":lowest.key});
+    if(r){ state.leadSent=true; save(); lf.hidden=true; document.getElementById("leadok").hidden=false; } else { b.disabled=false; b.firstChild.textContent="Didn't send, try again "; } });
+  drawCard(scores, total, balanced?null:lowest);
   const copyBtn=document.getElementById("copy");
   copyBtn.onclick=()=>{
     const done=()=>{ copyBtn.firstChild.textContent="Copied "; };
@@ -336,6 +374,24 @@ function results(){
     try{ navigator.clipboard.writeText(summary).then(done,fallback); }catch(e){ fallback(); }
   };
   document.getElementById("redo").onclick=()=>{ state={step:-1,answers:{}}; save(); render(); scrollTop(); };
+}
+function drawCard(scores, total, lowest){
+  const c=document.getElementById("card"); if(!c) return; const x=c.getContext("2d"); const W=1080,H=1920;
+  const F=(w,px)=>`${w} ${px}px Archivo, Helvetica, Arial, sans-serif`;
+  x.fillStyle="#0B0B0B"; x.fillRect(0,0,W,H);
+  x.fillStyle="#ECEBE7"; x.font=F(700,30); x.textBaseline="top"; x.fillText("LOCKED IN DEPT.©",80,96); x.textAlign="right"; x.font=F(500,30); x.fillText("CORE FOUR SCORE",W-80,96); x.textAlign="left";
+  x.fillRect(80,160,W-160,2);
+  x.font=F(800,400); x.fillStyle="#E8FF2A"; x.fillText(String(total).replace(/\.0$/,""),64,220);
+  x.font=F(500,34); x.fillStyle="#A9A89F"; x.fillText("OUT OF 40",80,640);
+  let y=760;
+  scores.forEach(a=>{ const low = lowest && a.key===lowest.key; x.fillStyle=low?"#E8FF2A":"#ECEBE7"; x.font=F(800,64); x.fillText(a.name.toUpperCase(),80,y); x.textAlign="right"; x.font=F(700,64); x.fillText(a.s.toFixed(1),W-80,y); x.textAlign="left";
+    x.fillStyle="#2A2A28"; x.fillRect(80,y+92,W-160,22); x.fillStyle=low?"#E8FF2A":"#ECEBE7"; x.fillRect(80,y+92,(W-160)*a.s/10,22); y+=200; });
+  x.fillStyle="#ECEBE7"; x.fillRect(80,y+10,W-160,2);
+  x.font=F(500,34); x.fillStyle="#A9A89F"; x.fillText(lowest?("BIGGEST GAP: "+lowest.name.toUpperCase()):"STRONG ACROSS THE BOARD",80,y+50);
+  x.font=F(800,56); x.fillStyle="#ECEBE7"; x.fillText("WHAT'S YOURS?",80,H-190);
+  x.font=F(500,34); x.fillStyle="#A9A89F"; x.fillText("lockedindept.com/score",80,H-110); x.textAlign="right"; x.fillText("@lockedin.dept",W-80,H-110); x.textAlign="left";
+  const dl=document.getElementById("dl"); if(dl){ try{ dl.href=c.toDataURL("image/png"); }catch(e){} }
+  if(document.fonts && document.fonts.ready) document.fonts.ready.then(()=>{ if(!c._redrawn){ c._redrawn=true; drawCard(scores,total,lowest); } });
 }
 function scrollTop(){ try{ window.scrollTo({top:0,behavior:"smooth"}); }catch(e){ window.scrollTo(0,0); } }
 render();

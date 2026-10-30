@@ -19,6 +19,10 @@
 <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px"><span class="lbl" id="ccount"></span><span class="note" id="cflags"></span></div>
 </section>
 <section id="members" style="display:flex;flex-direction:column"></section>
+<section id="leads" hidden>
+<div class="head gut" style="padding-top:56px"><div><p class="lbl" style="margin-bottom:12px">Core Four Score</p><h2 class="big" style="font-size:clamp(40px,6vw,88px)">Leads</h2></div><span class="lbl" id="leadcount"></span></div>
+<div id="leadlist" style="display:flex;flex-direction:column"></div>
+</section>
 <style>
 .m{border-bottom:1px solid var(--line)}
 .m summary{list-style:none;cursor:pointer;display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 24px;padding:22px var(--gr) 22px var(--gl)}
@@ -103,6 +107,24 @@ document.addEventListener("lid:ready", async function () {
       '</div></div></details>';
   }).join("") || '<p class="gut" style="padding-block:40px;font-size:17px">No members yet. Invite them in Supabase and they appear here once they log in.</p>';
   document.getElementById("ccount").textContent = rows.length + (rows.length === 1 ? " member" : " members");
+  if (LID.live) {
+    var L = await LID.sb.from("leads").select("*").order("created_at", { ascending: false }).limit(200); var leads = L.data || [];
+    var SC = await LID.sb.from("scores").select("id", { count: "exact", head: true });
+    document.getElementById("leads").hidden = false;
+    document.getElementById("leadcount").textContent = leads.length + (leads.length === 1 ? " lead" : " leads") + " / " + ((SC.count || 0)) + " scores taken";
+    document.getElementById("leadlist").innerHTML = leads.length ? leads.map(function (l) {
+      var who = l.handle ? (l.handle[0] === "@" ? l.handle : "@" + l.handle) : (l.email || "No handle");
+      var ig = l.handle ? "https://instagram.com/" + l.handle.replace(/^@/, "") : null;
+      return '<div class="m" style="padding:18px var(--gr) 18px var(--gl);display:flex;flex-wrap:wrap;gap:8px 24px;align-items:baseline">' +
+        '<span style="flex:1 1 200px;font-size:21px;font-weight:800;letter-spacing:-.03em;text-transform:uppercase">' + (ig ? '<a href="' + ig + '" target="_blank" rel="noopener" style="text-decoration:none">' + who.replace(/</g, "&lt;") + '</a>' : who.replace(/</g, "&lt;")) + '</span>' +
+        (l.email && l.handle ? '<span class="lbl" style="color:var(--mute)">' + l.email.replace(/</g, "&lt;") + '</span>' : '') +
+        '<span class="lbl">H ' + l.health + ' / S ' + l.self + ' / W ' + l.wealth + ' / R ' + l.relationships + '</span>' +
+        '<span class="lbl"><b>' + l.total + '</b> / 40</span>' +
+        '<span class="badge soft">' + (l.lowest || "").replace(/</g, "&lt;") + '</span>' +
+        '<span class="lbl" style="color:var(--mute)">' + new Date(l.created_at).toLocaleDateString("en-GB", { day: "numeric", month: "short" }) + '</span>' +
+        (ig ? '<a class="link" href="' + ig + '" target="_blank" rel="noopener" style="min-height:auto">Reply on Instagram →</a>' : '') + '</div>';
+    }).join("") : '<p class="gut" style="padding-block:24px;font-size:17px;color:var(--mute)">No leads yet. They appear here when someone leaves a handle after the score.</p>';
+  }
   document.getElementById("cflags").textContent = flags ? flags + " need you" : "All caught up";
 
   document.getElementById("members").addEventListener("click", async function (e) {
