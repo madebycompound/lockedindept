@@ -65,7 +65,7 @@ const M={
     const prog=Math.min(1,t/cyc);
     for(let i=0;i<N;i++){const ph=Math.min(1,prog*1.6-i/N*0.6); if(ph<=0)continue; const r=R*Math.pow(1-ph,1.8)+6; g.globalAlpha=(0.12+0.6*ph)*(t>cyc?Math.max(0,1-(t-cyc)/0.5):1); g.beginPath(); g.ellipse(cx,cy,r,r*0.42,-0.25,0,Math.PI*2); g.stroke();}
     g.globalAlpha=1;
-    if(t>=cyc){ g.fillStyle=P; g.textAlign='center'; g.font='800 '+Math.round(H/9)+'px Archivo, sans-serif'; g.fillText('LOCKED IN DEPT.', cx, cy+H/26); }
+    if(t>=cyc){ g.fillStyle=P; g.textAlign='center'; g.font='800 '+Math.round(H/9)+'px Archivo, sans-serif'; g.fillText('LOCKED IN DEPT.', cx, cy+H/26); if(t>=cyc+0.4){ g.font='500 '+Math.round(H/40)+'px Archivo, sans-serif'; g.fillText('E N G I N E E R E D   T O   W I N', cx, cy+H/26+H/9); } }
     else { g.fillStyle=Y; g.beginPath(); g.arc(cx,cy,H/120,0,7); g.fill(); }
   }
 };
