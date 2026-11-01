@@ -17,6 +17,7 @@ let seed=7; const rnd=()=>{seed=(seed*16807)%2147483647;return (seed-1)/21474836
 const NEB=[]; (function(){const cl=[];for(let k=0;k<14;k++)cl.push({x:rnd(),y:rnd(),r:0.05+rnd()*0.18,n:rnd()});
   for(let i=0;i<26000;i++){const c=cl[Math.floor(rnd()*cl.length)];const a=rnd()*Math.PI*2,r=Math.sqrt(rnd())*c.r;NEB.push({x:c.x+Math.cos(a)*r*1.6,y:c.y+Math.sin(a)*r,s:0.6+rnd()*1.6,a:0.15+rnd()*0.6,z:0.4+rnd()*0.6});}
   for(let i=0;i<4000;i++)NEB.push({x:rnd(),y:rnd(),s:0.5+rnd(),a:0.1+rnd()*0.3,z:0.3+rnd()*0.7});})();
+const WM=new Image(); WM.src='/brand/lockedindept-wordmark-paper.svg';
 const PTS=[]; for(let i=0;i<9000;i++){const a=rnd()*Math.PI*2,r=Math.sqrt(rnd());PTS.push({a,r,s:1.5+rnd()*2.5,d:rnd()})}
 
 const M={
@@ -77,7 +78,7 @@ const M={
     const prog=Math.min(1,t/cyc);
     for(let i=0;i<N;i++){const ph=Math.min(1,prog*1.6-i/N*0.6); if(ph<=0)continue; const r=R*Math.pow(1-ph,1.8)+6; g.globalAlpha=(0.12+0.6*ph)*(t>cyc?Math.max(0,1-(t-cyc)/0.5):1); g.beginPath(); g.ellipse(cx,cy,r,r*0.42,-0.25,0,Math.PI*2); g.stroke();}
     g.globalAlpha=1;
-    if(t>=cyc){ g.fillStyle=P; g.textAlign='center'; g.font='800 '+Math.round(H/9)+'px Archivo, sans-serif'; g.fillText('LOCKED IN DEPT.', cx, cy+H/26); if(t>=cyc+0.4){ g.font='500 '+Math.round(H/40)+'px Archivo, sans-serif'; g.fillText('E N G I N E E R E D   T O   W I N', cx, cy+H/26+H/9); } }
+    if(t>=cyc){ const wh=Math.min(H*0.36,W*0.7*(1946/5644)), ww=wh*(5644/1946); g.drawImage(WM, cx-ww/2, cy-wh/2, ww, wh); if(t>=cyc+0.4){ g.fillStyle=P; g.textAlign='left'; g.font='500 '+Math.round(H/40)+'px Archivo, sans-serif'; g.letterSpacing='0.2em'; g.fillText('ENGINEERED TO WIN', cx-ww/2+ww*(255/5644), cy+wh/2+H/40); g.letterSpacing='0px'; } }
     else { g.fillStyle=Y; g.beginPath(); g.arc(cx,cy,H/120,0,7); g.fill(); }
   }
 };

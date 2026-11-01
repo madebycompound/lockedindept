@@ -12,7 +12,7 @@ const OUT=path.join(__dirname,'out'); fs.mkdirSync(OUT,{recursive:true});
   const b=await chromium.launch({args:['--use-gl=swiftshader','--enable-webgl','--ignore-gpu-blocklist']});
   const p=await b.newPage({viewport:{width:1920,height:1080}});
   await p.goto('http://localhost:8765/brand/motion/render.html',{waitUntil:'networkidle'});
-  await p.evaluate(()=>document.fonts.load('800 40px Archivo'));
+  await p.evaluate(()=>document.fonts.load('800 40px Archivo')); await p.evaluate(()=>new Promise(r=>{if(WM.complete)r();else WM.onload=r;}));
   for(const s of sizes){ const [w,h]=SIZES[s]; await p.setViewportSize({width:w,height:h});
     for(const [name,dur] of Object.entries(MOTIFS)){
       const dir=path.join(OUT,'_frames'); fs.rmSync(dir,{recursive:true,force:true}); fs.mkdirSync(dir);
