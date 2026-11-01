@@ -1,0 +1,4 @@
+node_modules/
+out/_frames/
+test_*.png
+out/*.mov

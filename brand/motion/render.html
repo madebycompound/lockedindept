@@ -1,0 +1,98 @@
+<!doctype html><meta charset="utf-8">
+<style>
+@font-face{font-family:Archivo;src:url(/brand/Archivo-ExtraBold.ttf);font-weight:800}
+html,body{margin:0;background:transparent}
+canvas{display:block}
+</style>
+<canvas id="c"></canvas>
+<script src="/brand/motion/node_modules/three/build/three.min.js"></script>
+<script>
+// Locked In Dept. motion library. Every motif is a pure function of time so frames can be rendered deterministically.
+const P='#ECEBE7', Y='#E8FF2A', K='#0B0B0B';
+const ease=x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;
+const c=document.getElementById('c'); let g=c.getContext('2d'), W=1920, H=1080;
+function setSize(w,h){W=w;H=h;c.width=w;c.height=h;c.style.width=w+'px';c.style.height=h+'px';}
+// seeded random for the band particles
+let seed=7; const rnd=()=>{seed=(seed*16807)%2147483647;return (seed-1)/2147483646};
+const PTS=[]; for(let i=0;i<9000;i++){const a=rnd()*Math.PI*2,r=Math.sqrt(rnd());PTS.push({a,r,s:1.5+rnd()*2.5,d:rnd()})}
+
+const M={
+  pull(t,dur){ // rings pulled to a centre, loops over dur
+    const cx=W*0.5, cy=H*0.5, R=Math.max(W,H)*0.75, N=22;
+    g.strokeStyle=P; g.lineWidth=Math.round(H/540);
+    for(let i=0;i<N;i++){const ph=((t/dur)+i/N)%1, r=R*Math.pow(1-ph,1.8)+6; g.globalAlpha=0.12+0.6*ph; g.beginPath(); g.ellipse(cx,cy,r,r*0.42,-0.25,0,Math.PI*2); g.stroke();}
+    g.globalAlpha=1; g.fillStyle=Y; g.beginPath(); g.arc(cx,cy,H/120,0,7); g.fill();
+  },
+  rings(t,dur){ // flat concentric version
+    const cx=W*0.5, cy=H*0.5, R=Math.min(W,H)*0.48, N=16;
+    g.strokeStyle=P;
+    for(let i=0;i<N;i++){const ph=((t/dur)+i/N)%1, r=R*Math.pow(1-ph,1.6)+4; g.lineWidth=(0.6+ph*1.8)*H/540; g.globalAlpha=0.2+0.8*ph; g.beginPath(); g.arc(cx,cy,r,0,7); g.stroke();}
+    g.globalAlpha=1; g.fillStyle=Y; g.beginPath(); g.arc(cx,cy,H/110,0,7); g.fill();
+  },
+  field(t,dur){ // dot grid bent by a drifting well
+    const step=Math.max(W,H)/48, u=t/dur*Math.PI*2;
+    const gx=W*0.5+Math.cos(u)*W*0.3, gy=H*0.5+Math.sin(u*2)*H*0.25;
+    g.fillStyle=P;
+    for(let x=step/2;x<W;x+=step)for(let y=step/2;y<H;y+=step){const dx=gx-x,dy=gy-y,d=Math.hypot(dx,dy)+1,p=Math.min(0.8,(W*0.2)/d*0.5),s=(1.2+2.5*p)*H/540; g.globalAlpha=0.3+p*0.7; g.fillRect(x+dx*p-s/2,y+dy*p-s/2,s,s);}
+    g.globalAlpha=1; g.fillStyle=Y; g.beginPath(); g.arc(gx,gy,H/160,0,7); g.fill();
+  },
+  band(t,dur){ // particle head, band across the eyes, particles leave right and return
+    const cx=W/2, cy=H*0.5, rx=Math.min(W,H)*0.28, ry=Math.min(W,H)*0.37, k=0.5-0.5*Math.cos(t/dur*Math.PI*2);
+    g.fillStyle=P;
+    for(const p of PTS){let x=cx+Math.cos(p.a)*p.r*rx, y=cy+Math.sin(p.a)*p.r*ry*(p.a>Math.PI?1.05:0.95); const right=Math.max(0,Math.cos(p.a)*p.r), drift=right*right*k*W*0.25*p.d; x+=drift+Math.sin(t*2+p.a*7)*drift*0.3; y+=Math.sin(t*1.3+p.a*5)*drift*0.4; g.globalAlpha=1-Math.min(1,drift/(W*0.2)); const s=p.s*H/1080; g.fillRect(x,y,s,s);}
+    g.globalAlpha=1; g.fillStyle=Y; g.fillRect(cx-rx*1.25, cy-ry*0.22, rx*2.5, ry*0.2);
+  },
+  merge(t,dur){ // two discs close, overlap lights, FREEDOM, release
+    const u=(t%dur)/dur, p=u<.4?ease(u/.4):u<.65?1:1-ease((u-.65)/.35);
+    const cx=W/2, cy=H/2, r=Math.min(H*0.34,W*0.2), gap=W*0.2*(1-p)+r*0.28, ax=cx-gap, bx=cx+gap;
+    g.lineWidth=H/540; g.strokeStyle=P;
+    g.beginPath(); g.arc(ax,cy,r,0,7); g.stroke(); g.beginPath(); g.arc(bx,cy,r,0,7); g.stroke();
+    g.save(); g.beginPath(); g.arc(ax,cy,r,0,7); g.clip(); g.beginPath(); g.arc(bx,cy,r,0,7); g.fillStyle=Y; g.fill(); g.restore();
+    g.fillStyle=P; g.textAlign='center'; g.font='500 '+Math.round(H/45)+'px Archivo, sans-serif';
+    g.fillText('BUSINESS', ax, cy+r+H/22); g.fillText('AI', bx, cy+r+H/22);
+    if(p>0.98){ g.fillStyle=K; g.font='800 '+Math.round(r*0.17)+'px Archivo, sans-serif'; g.fillText('FREEDOM', cx, cy+r*0.06); }
+  },
+  count(t,dur){ // ring and number count to 100 over 1.6s, hold
+    const v=Math.min(1,t/1.6)*100, n=Math.round(v), cx=W/2, cy=H/2, r=Math.min(W,H)*0.32;
+    g.lineWidth=H/540; g.strokeStyle=P; g.globalAlpha=.3; g.beginPath(); g.arc(cx,cy,r,0,7); g.stroke(); g.globalAlpha=1;
+    g.lineWidth=H/60; g.strokeStyle=Y; g.beginPath(); g.arc(cx,cy,r,-Math.PI/2,-Math.PI/2+Math.PI*2*(n/100)); g.stroke();
+    g.fillStyle=P; g.textAlign='center'; g.font='800 '+Math.round(r*0.75)+'px Archivo, sans-serif'; g.fillText(n, cx, cy+r*0.27);
+    g.font='500 '+Math.round(H/45)+'px Archivo, sans-serif'; g.fillText('PERCENT', cx, cy+r*0.62);
+  },
+  sting(t,dur){ // intro: the pull for 1.2s, wordmark cuts in, holds
+    const cx=W*0.5, cy=H*0.5, R=Math.max(W,H)*0.8, N=22, cyc=1.2;
+    g.strokeStyle=P; g.lineWidth=Math.round(H/540);
+    const prog=Math.min(1,t/cyc);
+    for(let i=0;i<N;i++){const ph=Math.min(1,prog*1.6-i/N*0.6); if(ph<=0)continue; const r=R*Math.pow(1-ph,1.8)+6; g.globalAlpha=(0.12+0.6*ph)*(t>cyc?Math.max(0,1-(t-cyc)/0.5):1); g.beginPath(); g.ellipse(cx,cy,r,r*0.42,-0.25,0,Math.PI*2); g.stroke();}
+    g.globalAlpha=1;
+    if(t>=cyc){ g.fillStyle=P; g.textAlign='center'; g.font='800 '+Math.round(H/9)+'px Archivo, sans-serif'; g.fillText('LOCKED IN DEPT.', cx, cy+H/26); }
+    else { g.fillStyle=Y; g.beginPath(); g.arc(cx,cy,H/120,0,7); g.fill(); }
+  }
+};
+
+// chrome: WebGL blob with alpha, mirrored studio
+let three=null;
+function chromeInit(){
+  const T=THREE; const faces=['right','left','top','bottom','front','back'].map(kind=>{const s=256,cv=document.createElement('canvas');cv.width=cv.height=s;const q=cv.getContext('2d');const gr=q.createLinearGradient(0,0,0,s);
+    if(kind==='top'){gr.addColorStop(0,'#3a3a38');gr.addColorStop(1,'#1a1a18')}else if(kind==='bottom'){gr.addColorStop(0,'#0b0b0b');gr.addColorStop(1,'#020202')}else{gr.addColorStop(0,'#2c2c2a');gr.addColorStop(0.48,'#8c8c88');gr.addColorStop(0.5,'#0b0b0b');gr.addColorStop(1,'#050505')}
+    q.fillStyle=gr;q.fillRect(0,0,s,s);const box=(x,y,w,h,a)=>{q.fillStyle='rgba(255,255,255,'+a+')';q.fillRect(x,y,w,h)};
+    if(kind==='front'){box(40,30,70,110,.95);box(150,40,22,100,.7)}if(kind==='left')box(60,50,120,40,.9);if(kind==='right')box(90,20,30,130,.8);if(kind==='top')box(70,70,116,116,.85);if(kind==='back')box(100,60,50,16,.5);return cv;});
+  const env=new T.CubeTexture(faces); env.needsUpdate=true;
+  const cv=document.createElement('canvas'); const renderer=new T.WebGLRenderer({canvas:cv,antialias:true,alpha:true,preserveDrawingBuffer:true}); renderer.setClearColor(0x000000,0);
+  const scene=new T.Scene(); const cam=new T.PerspectiveCamera(32,1,0.1,50); cam.position.set(0,0,6);
+  const geo=new T.SphereGeometry(1.25,200,200); const base=geo.attributes.position.array.slice();
+  const mesh=new T.Mesh(geo,new T.MeshStandardMaterial({color:0xffffff,metalness:1,roughness:0.04,envMap:env,envMapIntensity:1.4})); scene.add(mesh);
+  three={cv,renderer,scene,cam,geo,base,mesh};
+}
+M.chrome=function(t,dur){
+  if(!three) chromeInit(); const {cv,renderer,scene,cam,geo,base,mesh}=three; const S=Math.min(W,H);
+  renderer.setSize(S,S,false); cam.aspect=1; cam.updateProjectionMatrix();
+  const pos=geo.attributes.position, u=t/dur*Math.PI*2; // loopable: use sin/cos of u
+  for(let i=0;i<pos.count;i++){const x=base[i*3],y=base[i*3+1],z=base[i*3+2]; const d=1+0.10*Math.sin(3*x+u)*Math.sin(2.5*y-u)+0.05*Math.sin(4*z+u); pos.setXYZ(i,x*d,y*d,z*d);}
+  pos.needsUpdate=true; geo.computeVertexNormals(); mesh.rotation.y=u; mesh.rotation.x=Math.sin(u)*0.2;
+  renderer.render(scene,cam); g.drawImage(cv,(W-S)/2,(H-S)/2,S,S);
+};
+
+window.renderFrame=function(name,t,dur,w,h){ if(c.width!==w||c.height!==h) setSize(w,h); g.setTransform(1,0,0,1,0,0); g.clearRect(0,0,W,H); M[name](t,dur); return true; };
+window.motifs=Object.keys(M);
+</script>
