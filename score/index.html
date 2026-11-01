@@ -79,7 +79,10 @@ p{margin:0;max-width:60ch}
 .ends{display:flex;justify-content:space-between}
 
 /* results */
-.total{display:flex;align-items:flex-end;gap:12px;flex-wrap:wrap}
+.total{display:flex;align-items:center;gap:24px;flex-wrap:wrap}
+.count{position:relative;width:clamp(180px,48vw,260px);aspect-ratio:1/1;max-width:100%;flex:0 0 auto}
+.count canvas{position:absolute;inset:0;width:100%;height:100%}
+.count .big{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:clamp(56px,14vw,84px)!important;line-height:1!important}
 .total .big{font-family:var(--display);font-weight:800;font-size:clamp(88px,24vw,160px);line-height:.8;letter-spacing:-.07em;font-variant-numeric:tabular-nums}
 .bars{display:flex;flex-direction:column;border-top:1px solid var(--ink)}
 .bar{display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"name v" "track track";align-items:end;gap:10px 12px;padding:16px 0;border-bottom:1px solid var(--rule)}
@@ -294,7 +297,7 @@ function results(){
   app.innerHTML = `
   <section class="pad stack step">
     <span class="lbl">Your Core Four score</span>
-    <div class="total"><span class="big">${total}</span><span class="lbl" style="padding-bottom:14px">out of 40</span></div>
+    <div class="total"><div class="count"><canvas id="ring" aria-hidden="true"></canvas><span class="big" id="tot">0</span></div><span class="lbl">out of 40</span></div>
     <div class="bars">
       ${scores.map(a=>`<div class="bar ${(!balanced&&a===lowest)?"lowest":""}">
         <h3>${a.name}</h3>
@@ -364,6 +367,24 @@ function results(){
   requestAnimationFrame(()=>requestAnimationFrame(()=>{
     document.querySelectorAll(".fill").forEach(f=>f.style.width=f.dataset.w+"%");
   }));
+  // The Count: ring sweeps and the number counts up together
+  (function(){
+    const c=document.getElementById("ring"), n=document.getElementById("tot"); if(!c) return;
+    const g=c.getContext("2d"), r=c.getBoundingClientRect(), d=Math.min(devicePixelRatio||1,2), w=r.width||220;
+    c.width=w*d; c.height=w*d; g.setTransform(d,0,0,d,0,0);
+    const ink=getComputedStyle(document.documentElement).getPropertyValue("--ink").trim()||"#0B0B0B", acc=getComputedStyle(document.documentElement).getPropertyValue("--accent").trim()||"#E8FF2A";
+    const dur=matchMedia("(prefers-reduced-motion: reduce)").matches?0:1600, t0=performance.now();
+    function frame(now){
+      const u=dur?Math.min(1,(now-t0)/dur):1, v=total*u;
+      g.clearRect(0,0,w,w); const cx=w/2, cy=w/2, rad=w/2-6;
+      g.lineWidth=1; g.strokeStyle=ink; g.globalAlpha=.25; g.beginPath(); g.arc(cx,cy,rad,0,Math.PI*2); g.stroke(); g.globalAlpha=1;
+      g.lineWidth=8; g.strokeStyle=ink; g.beginPath(); g.arc(cx,cy,rad,-Math.PI/2,-Math.PI/2+Math.PI*2*(v/40)); g.stroke();
+      g.fillStyle=acc; const a=-Math.PI/2+Math.PI*2*(v/40); g.beginPath(); g.arc(cx+Math.cos(a)*rad,cy+Math.sin(a)*rad,6,0,7); g.fill();
+      n.textContent=(Math.round(v*10)/10).toFixed(Number.isInteger(total)?0:1);
+      if(u<1) requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  })();
   const lf=document.getElementById("lead");
   if(lf) lf.addEventListener("submit", async e=>{ e.preventDefault(); const h=document.getElementById("handle").value.trim(), em=document.getElementById("email").value.trim(); if(!h&&!em) return;
     const b=lf.querySelector("button"); b.disabled=true; b.firstChild.textContent="Sending ";

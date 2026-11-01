@@ -66,8 +66,12 @@ nav{display:flex;flex-wrap:wrap;gap:24px}nav a{text-decoration:none;min-height:4
 .list{list-style:none;margin:0;padding:0}
 .list li{display:flex;gap:24px;padding-block:18px;border-bottom:1px solid var(--ink);font-size:17px;line-height:1.4}
 .list li .lbl{flex:0 0 32px;padding-top:5px}
-.fin{position:relative;height:clamp(240px,40vw,600px);overflow:hidden;border-top:1px solid var(--ink)}
-.fin .crop{position:absolute;left:-.04em;bottom:-.22em;font-size:clamp(200px,46vw,720px);line-height:.8;font-weight:800;letter-spacing:-.07em;text-transform:uppercase;white-space:nowrap}
+.fin{position:relative;height:clamp(240px,40vw,600px);overflow:hidden;border-top:1px solid var(--ink);background:var(--ink);color:var(--paper)}
+.fin .meta{z-index:2;color:var(--paper)}.fin .meta a{color:var(--paper)}
+.phys{position:absolute;inset:0;width:100%;height:100%;z-index:0}
+.merge{position:relative;height:clamp(320px,42vw,560px);overflow:hidden;border-top:1px solid var(--ink);background:var(--ink);color:var(--paper)}
+.merge .meta{position:absolute;left:0;right:0;z-index:2;color:var(--paper)}
+.fin .crop{z-index:1;position:absolute;left:-.04em;bottom:-.22em;font-size:clamp(200px,46vw,720px);line-height:.8;font-weight:800;letter-spacing:-.07em;text-transform:uppercase;white-space:nowrap}
 .fin .v1{position:absolute;top:72px;bottom:0;left:50%;width:2px;background:var(--paper)}
 .fin .v2{position:absolute;top:72px;bottom:0;left:calc(50% + 2px);width:1px;background:var(--ink)}
 .lead{font-size:17px;line-height:1.5;max-width:560px}
@@ -234,6 +238,12 @@ img{max-width:100%}
 <p class="quote rv main" style="font-size:clamp(24px,3vw,42px);line-height:1.15">I've taken creatives from burning out at £5k months to their first £20k, £25k and £30k months. The work was never what held them back. It was what they believed they were allowed to charge, how big they let themselves think, and whether they backed themselves. I get into that. Then I push. And I'm locked in myself right now: four months into my own transformation, building this while moving my family to Bali.</p>
 </section>
 
+<section class="merge" aria-label="The proposition">
+<canvas class="phys" data-phys="merge" aria-hidden="true"></canvas>
+<div class="gut meta lbl" style="top:24px"><span>The proposition</span><span>Fig. 03 / The merge</span></div>
+<div class="gut meta lbl" style="bottom:20px"><span>Business + AI</span><span>= Freedom</span></div>
+</section>
+
 <section class="rule" id="apply" aria-label="Apply">
 <div class="strip gut meta lbl"><span>08 / Apply</span><span>Founding cohort / Closes 30 November</span></div>
 <div class="split">
@@ -255,6 +265,7 @@ img{max-width:100%}
 </section>
 
 <section class="fin" aria-label="Finale">
+<canvas class="phys" data-phys="field" aria-hidden="true"></canvas>
 <div class="gut meta lbl" style="position:absolute;top:24px;left:0;right:0"><span>Applications close 30 November</span><a class="arrow" href="#apply" style="text-decoration:none;display:inline-flex;align-items:center;gap:10px;min-height:44px;margin-top:-14px">Get locked in <svg aria-hidden="true" width="22" height="12" viewBox="0 0 22 12" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M0 6h20M15 1l5 5-5 5"></path></svg></a></div>
 <p class="crop rs" aria-hidden="true">Lock</p>
 <div class="v1" aria-hidden="true"></div><div class="v2" aria-hidden="true"></div>
@@ -277,6 +288,45 @@ document.documentElement.classList.add('js');
   var io=new IntersectionObserver(function(entries){entries.forEach(function(en){if(en.isIntersecting){en.target.classList.add('on');io.unobserve(en.target)}})},{rootMargin:'0px 0px -12% 0px',threshold:0.05});
   els.forEach(function(e){io.observe(e)});
   setTimeout(function(){els.forEach(function(e){e.classList.add('on')})},1500);
+})();
+</script>
+
+<script>
+/* Physics: the Field (dot grid bent by a well) and the Merge (two discs, the overlap is the proposition). Runs only while on screen. */
+(function(){
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches, P='#ECEBE7', Y='#E8FF2A', K='#0B0B0B';
+const ease=x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;
+document.querySelectorAll('canvas.phys').forEach(c=>{
+  const kind=c.dataset.phys, g=c.getContext('2d'); let w=1,h=1,mx=null,my=null,on=false,raf=0; const t0=performance.now();
+  function size(){const r=c.getBoundingClientRect(),d=Math.min(devicePixelRatio||1,2);w=r.width;h=r.height;c.width=w*d;c.height=h*d;g.setTransform(d,0,0,d,0,0);}
+  size();addEventListener('resize',()=>{size();if(reduce)draw(2.5)});
+  const sec=c.parentElement;
+  sec.addEventListener('pointermove',e=>{const r=c.getBoundingClientRect();mx=e.clientX-r.left;my=e.clientY-r.top});
+  sec.addEventListener('pointerleave',()=>{mx=my=null});
+  function field(t){
+    const step=Math.max(22,w/40), gx=mx??(w*0.5+Math.cos(t*0.5)*w*0.3), gy=my??(h*0.45+Math.sin(t*0.4)*h*0.25);
+    g.fillStyle=P;
+    for(let x=step/2;x<w;x+=step)for(let y=step/2;y<h;y+=step){
+      const dx=gx-x,dy=gy-y,d=Math.hypot(dx,dy)+1,p=Math.min(0.8,(w*0.22)/d*0.5),s=1.2+2.5*p;
+      g.globalAlpha=0.3+p*0.7; g.fillRect(x+dx*p-s/2,y+dy*p-s/2,s,s);
+    }
+    g.globalAlpha=1; g.fillStyle=Y; g.beginPath(); g.arc(gx,gy,3,0,7); g.fill();
+  }
+  function merge(t){
+    const cyc=6,u=(t%cyc)/cyc, p=u<.4?ease(u/.4):u<.65?1:1-ease((u-.65)/.35);
+    const cx=w/2, cy=h/2, r=Math.min(h*0.36,w*0.2), gap=w*0.22*(1-p)+r*0.28, ax=cx-gap, bx=cx+gap;
+    g.lineWidth=1.2; g.strokeStyle=P;
+    g.beginPath(); g.arc(ax,cy,r,0,7); g.stroke(); g.beginPath(); g.arc(bx,cy,r,0,7); g.stroke();
+    g.save(); g.beginPath(); g.arc(ax,cy,r,0,7); g.clip(); g.beginPath(); g.arc(bx,cy,r,0,7); g.fillStyle=Y; g.fill(); g.restore();
+    g.fillStyle=P; g.textAlign='center'; g.font='500 11px Archivo, sans-serif';
+    g.fillText('BUSINESS', ax, cy+r+24); g.fillText('AI', bx, cy+r+24);
+    if(p>0.98){ g.fillStyle=K; g.font='800 '+Math.round(r*0.17)+'px Archivo, sans-serif'; g.fillText('FREEDOM', cx, cy+r*0.06); }
+  }
+  function draw(t){g.clearRect(0,0,w,h);(kind==='merge'?merge:field)(t)}
+  function loop(now){if(!on)return;draw((now-t0)/1000);raf=requestAnimationFrame(loop)}
+  if(reduce){draw(2.5);return}
+  new IntersectionObserver(es=>{es.forEach(e=>{on=e.isIntersecting;if(on&&!raf)raf=requestAnimationFrame(loop);if(!on){cancelAnimationFrame(raf);raf=0}})}).observe(c);
+});
 })();
 </script>
 
