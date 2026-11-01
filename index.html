@@ -145,7 +145,6 @@ img{max-width:100%}
 <canvas class="phys" data-phys="pull"></canvas>
 <p class="crop rs">Dept.</p>
 <div class="v1"></div><div class="v2"></div>
-<p class="lbl" style="position:absolute;left:var(--gl);bottom:16px;color:var(--paper);mix-blend-mode:difference">Josh Pearson</p>
 </section>
 
 <section class="rule sec gut" id="shift" aria-label="The shift">
@@ -251,9 +250,9 @@ document.querySelectorAll('canvas.phys').forEach(c=>{
   sec.addEventListener('pointermove',e=>{const r=c.getBoundingClientRect();mx=e.clientX-r.left;my=e.clientY-r.top});
   sec.addEventListener('pointerleave',()=>{mx=my=null});
   function pull(t){
-    const cx=w*0.74, cy=h*0.4, R=Math.max(w,h)*0.8, N=20, cyc=6;
+    const cx=w*0.74, cy=h*0.4, R=Math.max(w,h)*0.8, N=w<700?9:16, cyc=6;
     g.strokeStyle=P; g.lineWidth=1;
-    for(let i=0;i<N;i++){const ph=((t/cyc)+i/N)%1, r=R*Math.pow(1-ph,1.8)+4; g.globalAlpha=0.16+0.6*ph; g.beginPath(); g.ellipse(cx,cy,r,r*0.42,-0.25,0,Math.PI*2); g.stroke();}
+    for(let i=0;i<N;i++){const ph=((t/cyc)+i/N)%1, r=R*Math.pow(1-ph,1.8)+4; g.globalAlpha=(w<700?0.08:0.12)+0.5*ph; g.beginPath(); g.ellipse(cx,cy,r,r*0.42,-0.25,0,Math.PI*2); g.stroke();}
     g.globalAlpha=1; g.fillStyle=Y; g.beginPath(); g.arc(cx,cy,4,0,7); g.fill();
   }
   function field(t){
