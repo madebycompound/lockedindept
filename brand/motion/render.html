@@ -14,6 +14,9 @@ const c=document.getElementById('c'); let g=c.getContext('2d'), W=1920, H=1080;
 function setSize(w,h){W=w;H=h;c.width=w;c.height=h;c.style.width=w+'px';c.style.height=h+'px';}
 // seeded random for the band particles
 let seed=7; const rnd=()=>{seed=(seed*16807)%2147483647;return (seed-1)/2147483646};
+const NEB=[]; (function(){const cl=[];for(let k=0;k<14;k++)cl.push({x:rnd(),y:rnd(),r:0.05+rnd()*0.18,n:rnd()});
+  for(let i=0;i<26000;i++){const c=cl[Math.floor(rnd()*cl.length)];const a=rnd()*Math.PI*2,r=Math.sqrt(rnd())*c.r;NEB.push({x:c.x+Math.cos(a)*r*1.6,y:c.y+Math.sin(a)*r,s:0.6+rnd()*1.6,a:0.15+rnd()*0.6,z:0.4+rnd()*0.6});}
+  for(let i=0;i<4000;i++)NEB.push({x:rnd(),y:rnd(),s:0.5+rnd(),a:0.1+rnd()*0.3,z:0.3+rnd()*0.7});})();
 const PTS=[]; for(let i=0;i<9000;i++){const a=rnd()*Math.PI*2,r=Math.sqrt(rnd());PTS.push({a,r,s:1.5+rnd()*2.5,d:rnd()})}
 
 const M={
@@ -58,6 +61,15 @@ const M={
     g.lineWidth=H/60; g.strokeStyle=Y; g.beginPath(); g.arc(cx,cy,r,-Math.PI/2,-Math.PI/2+Math.PI*2*(n/100)); g.stroke();
     g.fillStyle=P; g.textAlign='center'; g.font='800 '+Math.round(r*0.75)+'px Archivo, sans-serif'; g.fillText(n, cx, cy+r*0.27);
     g.font='500 '+Math.round(H/45)+'px Archivo, sans-serif'; g.fillText('PERCENT', cx, cy+r*0.62);
+  },
+  scale(t,dur){ // The Scale: nebula of paper particles, slow push, one small figure dead centre. Figure is a placeholder until Josh's shot lands.
+    const z=1+0.12*(t/dur), cx=W/2, cy=H/2;
+    for(const p of NEB){const k=(0.85+0.35*p.z)*z, px=cx+(p.x-0.5)*W*k, py=cy+(p.y-0.5)*H*k; if(px<0||py<0||px>W||py>H)continue; g.globalAlpha=Math.min(1,p.a*1.4); g.fillStyle=P; const s=p.s*H/1080*z; g.fillRect(px,py,s,s);}
+    g.globalAlpha=1; g.fillStyle=Y; g.beginPath(); g.arc(cx+W*0.18, cy-H*0.2, H/300*z, 0, 7); g.fill();
+    // placeholder figure: a 6% tall silhouette
+    const fh=H*0.06, fw=fh*0.3, fx=cx-fw/2, fy=cy+H*0.12;
+    g.fillStyle=K; g.fillRect(fx,fy,fw,fh); g.beginPath(); g.arc(cx,fy-fh*0.08,fh*0.1,0,7); g.fill();
+    g.fillStyle=P; g.globalAlpha=0.9; g.fillRect(fx+fw*0.35,fy+fh*0.55,fw*0.3,fh*0.45); g.globalAlpha=1; // leg light
   },
   sting(t,dur){ // intro: the pull for 1.2s, wordmark cuts in, holds
     const cx=W*0.5, cy=H*0.5, R=Math.max(W,H)*0.8, N=22, cyc=1.2;

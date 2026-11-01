@@ -4,7 +4,9 @@ const {chromium}=require('playwright'); const {execSync}=require('child_process'
 const FPS=+(process.argv[3]||30);
 const SIZES={landscape:[1920,1080],portrait:[1080,1920]};
 const which=process.argv[2]||'both'; const sizes=which==='both'?Object.keys(SIZES):[which];
-const MOTIFS={pull:6,rings:4,field:8,band:7,merge:6,count:3,sting:3,chrome:8}; // seconds
+const ALL={pull:6,rings:4,field:8,band:7,merge:6,count:3,sting:3,chrome:8,scale:8};
+const only=(process.argv[4]||'').split(',').filter(Boolean);
+const MOTIFS=only.length?Object.fromEntries(only.map(k=>[k,ALL[k]])):ALL; // seconds
 const OUT=path.join(__dirname,'out'); fs.mkdirSync(OUT,{recursive:true});
 (async()=>{
   const b=await chromium.launch({args:['--use-gl=swiftshader','--enable-webgl','--ignore-gpu-blocklist']});
