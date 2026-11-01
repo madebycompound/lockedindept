@@ -63,13 +63,15 @@ nav{display:flex;flex-wrap:wrap;gap:24px}nav a{text-decoration:none;min-height:4
 .core h3{font-size:clamp(28px,2.6vw,38px);line-height:1;font-weight:800;letter-spacing:-.035em;text-transform:uppercase;margin-bottom:12px}
 .core>div:last-child>p{min-height:calc(15px * 1.5 * 3)}
 .code{padding:18px 20px;background:var(--ink);color:var(--paper);font-family:'SF Mono',Menlo,Consolas,monospace;font-size:13px;overflow-x:auto;white-space:nowrap}
-.band{position:relative;height:clamp(180px,32vw,480px);overflow:hidden;border-top:1px solid var(--ink)}
-.band .crop{position:absolute;left:-.04em;right:0;bottom:-.2em;font-size:clamp(160px,40vw,620px);line-height:.8;font-weight:800;letter-spacing:-.06em;text-transform:uppercase;white-space:nowrap}
-.band .v1,.fin .v1{position:absolute;top:0;bottom:0;left:50%;width:2px;background:var(--paper)}
-.band .v2,.fin .v2{position:absolute;top:0;bottom:0;left:calc(50% + 2px);width:1px;background:var(--ink)}
-.fin{position:relative;height:clamp(240px,40vw,600px);overflow:hidden;border-top:1px solid var(--ink)}
-.fin .crop{position:absolute;left:-.04em;bottom:-.22em;font-size:clamp(200px,46vw,720px);line-height:.8;font-weight:800;letter-spacing:-.07em;text-transform:uppercase;white-space:nowrap}
+.band{position:relative;height:clamp(180px,32vw,480px);overflow:hidden;border-top:1px solid var(--ink);background:var(--ink);color:var(--paper)}
+.band .crop{position:absolute;left:-.04em;right:0;bottom:-.2em;font-size:clamp(160px,40vw,620px);line-height:.8;font-weight:800;letter-spacing:-.06em;text-transform:uppercase;white-space:nowrap;z-index:1}
+.band .v1,.fin .v1{position:absolute;top:0;bottom:0;left:50%;width:2px;background:var(--paper);z-index:1}
+.band .v2,.fin .v2{position:absolute;top:0;bottom:0;left:calc(50% + 2px);width:1px;background:var(--ink);z-index:1}
+.fin{position:relative;height:clamp(240px,40vw,600px);overflow:hidden;border-top:1px solid var(--ink);background:var(--ink);color:var(--paper)}
+.fin .crop{position:absolute;left:-.04em;bottom:-.22em;font-size:clamp(200px,46vw,720px);line-height:.8;font-weight:800;letter-spacing:-.07em;text-transform:uppercase;white-space:nowrap;z-index:1}
 .fin .v1,.fin .v2{top:72px}
+.fin .meta{z-index:2;color:var(--paper)}.fin .meta a{color:var(--paper)}
+.phys{position:absolute;inset:0;width:100%;height:100%;z-index:0}
 .lead{font-size:17px;line-height:1.5;max-width:560px}
 .quote{font-size:clamp(24px,2.8vw,40px);line-height:1.18;font-weight:500;letter-spacing:-.025em;max-width:62ch}
 @keyframes up{from{transform:translateY(105%)}to{transform:none}}
@@ -140,6 +142,7 @@ img{max-width:100%}
 </section>
 
 <section class="band" aria-hidden="true">
+<canvas class="phys" data-phys="pull"></canvas>
 <p class="crop rs">Dept.</p>
 <div class="v1"></div><div class="v2"></div>
 <p class="lbl" style="position:absolute;left:var(--gl);bottom:16px;color:var(--paper);mix-blend-mode:difference">Josh Pearson</p>
@@ -211,6 +214,7 @@ img{max-width:100%}
 </section>
 
 <section class="fin" aria-label="Finale">
+<canvas class="phys" data-phys="field" aria-hidden="true"></canvas>
 <div class="gut meta lbl" style="position:absolute;top:24px;left:0;right:0"><span>You're already the expert</span><a class="arrow" href="/90-days" style="text-decoration:none;display:inline-flex;align-items:center;gap:10px;min-height:44px;margin-top:-14px">Get locked in <svg aria-hidden="true" width="22" height="12" viewBox="0 0 22 12" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M0 6h20M15 1l5 5-5 5"></path></svg></a></div>
 <p class="crop rs" aria-hidden="true">Lock</p>
 <div class="v1" aria-hidden="true"></div><div class="v2" aria-hidden="true"></div>
@@ -233,6 +237,39 @@ document.documentElement.classList.add('js');
   var io=new IntersectionObserver(function(entries){entries.forEach(function(en){if(en.isIntersecting){en.target.classList.add('on');io.unobserve(en.target)}})},{rootMargin:'0px 0px -12% 0px',threshold:0.05});
   els.forEach(function(e){io.observe(e)});
   setTimeout(function(){els.forEach(function(e){e.classList.add('on')})},1500);
+})();
+</script>
+<script>
+/* Physics: the Pull (rings drawn to a centre) and the Field (dot grid bent by a well). Runs only while on screen. */
+(function(){
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches, P='#ECEBE7', Y='#E8FF2A';
+document.querySelectorAll('canvas.phys').forEach(c=>{
+  const kind=c.dataset.phys, g=c.getContext('2d'); let w=1,h=1,mx=null,my=null,on=false,raf=0; const t0=performance.now();
+  function size(){const r=c.getBoundingClientRect(),d=Math.min(devicePixelRatio||1,2);w=r.width;h=r.height;c.width=w*d;c.height=h*d;g.setTransform(d,0,0,d,0,0);}
+  size();addEventListener('resize',()=>{size();if(reduce)draw(2.3)});
+  const sec=c.parentElement;
+  sec.addEventListener('pointermove',e=>{const r=c.getBoundingClientRect();mx=e.clientX-r.left;my=e.clientY-r.top});
+  sec.addEventListener('pointerleave',()=>{mx=my=null});
+  function pull(t){
+    const cx=w*0.74, cy=h*0.4, R=Math.max(w,h)*0.8, N=20, cyc=6;
+    g.strokeStyle=P; g.lineWidth=1;
+    for(let i=0;i<N;i++){const ph=((t/cyc)+i/N)%1, r=R*Math.pow(1-ph,1.8)+4; g.globalAlpha=0.16+0.6*ph; g.beginPath(); g.ellipse(cx,cy,r,r*0.42,-0.25,0,Math.PI*2); g.stroke();}
+    g.globalAlpha=1; g.fillStyle=Y; g.beginPath(); g.arc(cx,cy,4,0,7); g.fill();
+  }
+  function field(t){
+    const step=Math.max(22,w/40), gx=mx??(w*0.5+Math.cos(t*0.5)*w*0.3), gy=my??(h*0.45+Math.sin(t*0.4)*h*0.25);
+    g.fillStyle=P;
+    for(let x=step/2;x<w;x+=step)for(let y=step/2;y<h;y+=step){
+      const dx=gx-x,dy=gy-y,d=Math.hypot(dx,dy)+1,p=Math.min(0.8,(w*0.22)/d*0.5),s=1.2+2.5*p;
+      g.globalAlpha=0.3+p*0.7; g.fillRect(x+dx*p-s/2,y+dy*p-s/2,s,s);
+    }
+    g.globalAlpha=1; g.fillStyle=Y; g.beginPath(); g.arc(gx,gy,3,0,7); g.fill();
+  }
+  function draw(t){g.clearRect(0,0,w,h);(kind==='pull'?pull:field)(t)}
+  function loop(now){if(!on)return;draw((now-t0)/1000);raf=requestAnimationFrame(loop)}
+  if(reduce){draw(2.3);return}
+  new IntersectionObserver(es=>{es.forEach(e=>{on=e.isIntersecting;if(on&&!raf)raf=requestAnimationFrame(loop);if(!on){cancelAnimationFrame(raf);raf=0}})}).observe(c);
+});
 })();
 </script>
 
