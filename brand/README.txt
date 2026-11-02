@@ -9,8 +9,7 @@ Use over photography in paper (white). Use yellow or black on flat backgrounds a
 
 Language
 Tagline: ENGINEERED TO WIN
-  Set in Archivo ExtraBold, all caps, letter-spacing -4.5%, or as a small label (11px, +4% tracking) under the wordmark.
-  Use on end cards, the sting, merch and the footer. Never alongside another slogan on the same frame.
-Lockup: LOCKED IN DEPT. / ENGINEERED TO WIN (wordmark above, tagline as label below, left aligned)
+  Set in Archivo ExtraBold, all caps, letter-spacing -4.5%, same voice as the wordmark. Never as a small tracked label.
+  It gets its own frame or end card. Not under the wordmark in the sting: the wordmark stands alone.
 Other fixed phrases: Est. 2026 / Independent culture / Get locked in / Charge like the expert
 World: physics, consciousness, the merge (business + AI = freedom). Everything is pulled, counted or dissolved.

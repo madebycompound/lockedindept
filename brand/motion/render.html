@@ -78,7 +78,7 @@ const M={
     const prog=Math.min(1,t/cyc);
     for(let i=0;i<N;i++){const ph=Math.min(1,prog*1.6-i/N*0.6); if(ph<=0)continue; const r=R*Math.pow(1-ph,1.8)+6; g.globalAlpha=(0.12+0.6*ph)*(t>cyc?Math.max(0,1-(t-cyc)/0.5):1); g.beginPath(); g.ellipse(cx,cy,r,r*0.42,-0.25,0,Math.PI*2); g.stroke();}
     g.globalAlpha=1;
-    if(t>=cyc){ const wh=Math.min(H*0.36,W*0.7*(1946/5644)), ww=wh*(5644/1946); g.drawImage(WM, cx-ww/2, cy-wh/2, ww, wh); if(t>=cyc+0.4){ g.fillStyle=P; g.textAlign='left'; g.font='500 '+Math.round(H/40)+'px Archivo, sans-serif'; g.letterSpacing='0.2em'; g.fillText('ENGINEERED TO WIN', cx-ww/2+ww*(255/5644), cy+wh/2+H/40); g.letterSpacing='0px'; } }
+    if(t>=cyc){ const wh=Math.min(H*0.36,W*0.7*(1946/5644)), ww=wh*(5644/1946); g.drawImage(WM, cx-ww/2, cy-wh/2, ww, wh); }
     else { g.fillStyle=Y; g.beginPath(); g.arc(cx,cy,H/120,0,7); g.fill(); }
   }
 };
