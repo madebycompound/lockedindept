@@ -1,6 +1,6 @@
 // Content for the portal. Edit this file to change lessons, agents, calls and the Core Four questions.
 window.LID_DATA = {
-  cohort: { name: "Founding cohort", starts: "January 2027", event: "In person, first week of December" },
+  cohort: { name: "Founding cohort", starts: "January 2027", event: "Live online workshop, December" },
 
   method: [
     { n: "01", key: "clarity", title: "Clarity", desc: "What you're really selling, who it's for, and the bigger vision you've been putting off saying out loud." },
