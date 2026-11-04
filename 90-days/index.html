@@ -23,6 +23,19 @@
 @font-face{font-family:'Archivo';font-style:normal;font-weight:500;font-display:swap;src:url(/fonts/archivo-500.woff2) format('woff2')}
 @font-face{font-family:'Archivo';font-style:normal;font-weight:700;font-display:swap;src:url(/fonts/archivo-700.woff2) format('woff2')}
 @font-face{font-family:'Archivo';font-style:normal;font-weight:800;font-display:swap;src:url(/fonts/archivo-800.woff2) format('woff2')}
+.af{display:flex;flex-direction:column;gap:20px;max-width:620px}
+.af-row{display:flex;flex-direction:column;gap:6px}
+.af input,.af select,.af textarea{font:inherit;font-size:17px;color:var(--ink);background:transparent;border:0;border-bottom:1px solid var(--ink);border-radius:0;padding:10px 0;min-height:44px;width:100%;box-sizing:border-box;-webkit-appearance:none;appearance:none}
+.af textarea{resize:vertical;line-height:1.4}
+.af select{background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%230B0B0B' stroke-width='1.4'/%3E%3C/svg%3E") no-repeat right 4px center}
+.af input::placeholder,.af textarea::placeholder{color:#8A8984}
+.af input:focus,.af select:focus,.af textarea:focus{outline:none;border-bottom:2px solid var(--ink)}
+.af [aria-invalid="true"]{border-bottom:2px solid #B3261E}
+.af-err{color:#B3261E}
+.af-hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.apply-bar{position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));z-index:50;min-height:56px;transform:translateY(140%);transition:transform .3s}
+.apply-bar.on{transform:none}
+@media (min-width:900px){.btn.apply-bar{display:none}}
 </style>
 <style>
 /* Layout: one-column editorial poster, full-bleed hairline sections, paper ground, no accent colour; the photos carry the colour. */
@@ -281,22 +294,38 @@ img{max-width:100%}
 <section class="rule" id="apply" aria-label="Apply">
 <div class="strip gut meta lbl"><span>08 / Apply</span><span>Founding cohort / Closes 30 November</span></div>
 <div class="split">
-<div class="cell cellR" style="flex:1 1 480px;gap:32px;padding-bottom:48px">
-<h2 class="big rv" style="font-size:clamp(40px,6vw,92px);line-height:.88;letter-spacing:-.05em">Ten places.<br>Apply in a DM.</h2>
-<p class="lead rv">Message <strong>LOCKED IN</strong> to @lockedin.dept on Instagram. You'll get three questions back, then a call with Josh if it's a fit. No forms, no funnels.</p>
-<p><a class="btn" href="https://ig.me/m/lockedin.dept" target="_blank" rel="noopener" style="background:var(--yellow);color:var(--ink);border-color:var(--yellow)">DM "Locked In" <svg aria-hidden="true" width="22" height="12" viewBox="0 0 22 12" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M0 6h20M15 1l5 5-5 5"></path></svg></a></p>
+<div class="cell cellR" style="flex:1 1 520px;gap:28px;padding-bottom:48px">
+<h2 class="big rv" style="font-size:clamp(40px,6vw,92px);line-height:.88;letter-spacing:-.05em">Ten places.<br>Apply in a minute.</h2>
+<form id="applyForm" class="af" novalidate>
+<div class="af-row"><label for="af-name" class="lbl">Name</label><input id="af-name" name="name" autocomplete="name" required></div>
+<div class="af-row"><label for="af-email" class="lbl">Email</label><input id="af-email" name="email" type="email" autocomplete="email" inputmode="email" required></div>
+<div class="af-row"><label for="af-handle" class="lbl">Instagram <span style="color:var(--mute)">(optional)</span></label><input id="af-handle" name="handle" autocomplete="off" placeholder="@"></div>
+<div class="af-row"><label for="af-work" class="lbl">What you do</label><input id="af-work" name="work" required placeholder="Filmmaker, brand films for fashion and food"></div>
+<div class="af-row"><label for="af-now" class="lbl">Where you are now, per month</label><select id="af-now" name="now" required><option value="">Choose one</option><option>Under £3k</option><option>£3k to £5k</option><option>£5k to £10k</option><option>£10k to £20k</option><option>£20k plus</option></select></div>
+<div class="af-row"><label for="af-goal" class="lbl">Where you want to be in 90 days</label><textarea id="af-goal" name="goal" rows="3" required placeholder="The number, and what changes when you hit it"></textarea></div>
+<div class="af-hp" aria-hidden="true"><label for="af-co">Company</label><input id="af-co" name="company" tabindex="-1" autocomplete="off"></div>
+<p class="af-err lbl" role="alert" hidden></p>
+<button class="btn" type="submit" style="background:var(--yellow);color:var(--ink);border-color:var(--yellow);justify-content:space-between;min-height:60px;width:100%;cursor:pointer;font-family:inherit"><span>Apply</span><svg aria-hidden="true" width="22" height="12" viewBox="0 0 22 12" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M0 6h20M15 1l5 5-5 5"></path></svg></button>
+<p class="lbl" style="color:var(--mute);line-height:1.6">Prefer Instagram? <a href="https://ig.me/m/lockedin.dept" target="_blank" rel="noopener">DM LOCKED IN to @lockedin.dept</a>. Your details stay with us. <a href="/privacy">Privacy</a>.</p>
+</form>
+<div id="applyDone" hidden tabindex="-1">
+<p class="big" style="font-size:clamp(32px,4vw,56px);line-height:.92;letter-spacing:-.04em;margin:0 0 20px">You're in<br>the queue.</p>
+<p class="lead">Josh reads every application himself and will be in touch within 24 hours to book your call. Check your inbox for a confirmation.</p>
+<p style="margin-top:24px"><a class="btn" href="/score">Score your Core Four first <svg aria-hidden="true" width="22" height="12" viewBox="0 0 22 12" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M0 6h20M15 1l5 5-5 5"></path></svg></a></p>
+</div>
 </div>
 <div class="cell" style="flex:1 1 360px;gap:0;padding-bottom:48px">
 <span class="lbl" style="margin-bottom:16px">What happens next</span>
 <ul class="list">
-<li><span class="lbl">01</span><span>You DM. Josh replies, not an assistant.</span></li>
-<li><span class="lbl">02</span><span>Three questions: what you do, where you are, where you want to be in 90 days.</span></li>
+<li><span class="lbl">01</span><span>You apply. Josh reads it himself, not an assistant.</span></li>
+<li><span class="lbl">02</span><span>He's in touch within 24 hours to book a call.</span></li>
 <li><span class="lbl">03</span><span>A 30-minute call. Group or 1:1 decided together.</span></li>
 <li><span class="lbl">04</span><span>You're in. Portal and agents open the same day, workshop invite with them.</span></li>
 </ul>
 </div>
 </div>
 </section>
+<a class="btn apply-bar" href="#apply" aria-hidden="true" tabindex="-1" style="justify-content:space-between"><span>Apply / Ten places</span><svg aria-hidden="true" width="22" height="12" viewBox="0 0 22 12" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M0 6h20M15 1l5 5-5 5"></path></svg></a>
 
 <section class="fin" aria-label="Finale">
 <canvas class="phys" data-phys="field" aria-hidden="true"></canvas>
@@ -363,5 +392,27 @@ document.querySelectorAll('canvas.phys').forEach(c=>{
 })();
 </script>
 
+<script>
+(function(){
+var f=document.getElementById('applyForm'); if(!f) return;
+var err=f.querySelector('.af-err'), btn=f.querySelector('button[type=submit]');
+f.addEventListener('submit',function(ev){
+  ev.preventDefault(); var bad=null;
+  ['name','email','work','now','goal'].forEach(function(n){var el=f.elements[n],ok=el.value.trim()&&(n!=='email'||/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(el.value.trim()));el.setAttribute('aria-invalid',ok?'false':'true');if(!ok&&!bad)bad=el;});
+  if(bad){err.textContent='Fill in the highlighted fields.';err.hidden=false;bad.focus();return;}
+  err.hidden=true; btn.disabled=true; btn.firstChild.textContent='Sending';
+  var d={}; ['name','email','handle','work','now','goal','company'].forEach(function(n){d[n]=f.elements[n].value});
+  d.source=(new URLSearchParams(location.search).get('utm_source'))||document.referrer||'direct';
+  fetch('/api/apply',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(d)}).then(function(r){return r.json().then(function(j){return{ok:r.ok,j:j}})}).then(function(x){
+    if(!x.ok) throw new Error(x.j&&x.j.error||'');
+    f.hidden=true; var done=document.getElementById('applyDone'); done.hidden=false; done.focus();
+  }).catch(function(e){err.textContent=e.message||'Something went wrong. DM LOCKED IN to @lockedin.dept instead.';err.hidden=false;btn.disabled=false;btn.firstChild.textContent='Apply';});
+});
+var bar=document.querySelector('.apply-bar'), ap=document.getElementById('apply'), hero=document.querySelector('header')||document.body;
+if(bar&&'IntersectionObserver' in window){var past=false,near=false;function u(){bar.classList.toggle('on',past&&!near)}
+ new IntersectionObserver(function(e){near=e[0].isIntersecting;u()},{rootMargin:'0px 0px 200px 0px'}).observe(ap);
+ window.addEventListener('scroll',function(){past=window.scrollY>window.innerHeight*0.9;u()},{passive:true});}
+})();
+</script>
 </body>
 </html>
