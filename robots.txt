@@ -1,6 +1,5 @@
 User-agent: *
 Disallow: /portal/
-Disallow: /v2
 Disallow: /api/
 
 Sitemap: https://lockedindept.com/sitemap.xml
