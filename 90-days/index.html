@@ -124,7 +124,7 @@ nav{display:flex;flex-wrap:wrap;gap:24px}nav a{text-decoration:none;min-height:4
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.js .rv,.js .wp,.js .rs{opacity:1;transform:none;clip-path:none}}
 @media (max-width:640px){.cellR{border-right:0;border-bottom:1px solid var(--ink)}.hero .mid{flex-direction:column;align-items:stretch}.hero .mid p{max-width:none;text-align:left!important;margin:0!important}}
 img{max-width:100%}
-@media (max-width:640px){.vidh{display:none}}
+@media (max-width:640px){.vidh{display:none}.stat{min-height:0;gap:14px;padding-bottom:28px}.stat .n{font-size:48px}}
 </style>
 </head>
 <body>
@@ -134,22 +134,32 @@ img{max-width:100%}
 <header>
 <div class="bar gut lbl">
 <span style="font-weight:700">Locked In Dept.</span>
-<span>Founding cohort / 001</span>
-<span>Applications close 30 Nov</span>
+<span>Founding cohort / Ten places</span>
 <span>Starts Jan 2027</span>
-<nav aria-label="Main"><a href="/">Home</a><a href="#method">Method</a><a href="#agents">Agents</a><a href="#programme">The 90 days</a><a href="#apply">Apply</a></nav>
+<nav aria-label="Main"><a href="/">Home</a><a href="#case">Case 001</a><a href="#how">How it works</a><a href="#programme">Price</a><a href="#apply">Apply</a></nav>
 </div>
 </header>
 
-<section class="hero gut" id="top">
-<h1 class="big"><span class="mask"><span class="up" style="animation-delay:.05s">Locked In</span></span><span class="mask"><span class="up" style="animation-delay:.15s">Dept.© Est.26</span></span></h1>
-<div class="mid">
-<p class="lbl in" style="animation-delay:.9s;text-align:left">Same camera. Same skill. £1k or £10k a month. The difference is who you sell to, how you sell, and whether you back yourself.</p>
-<div class="fig o in" style="animation-delay:.5s"><img src="/img/red-exit.webp" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 30%" fetchpriority="high" decoding="async"><span class="cap lbl">Fig. 00 / The stands</span></div>
-<p class="lbl in" style="animation-delay:1s;text-align:right;margin-left:auto">Founding cohort of ten. Portal, agents and a live online workshop from December. Programme starts January.</p>
+<section class="rule split" id="top" aria-label="The 90 days">
+<div class="cell cellR" style="flex:1 1 560px;gap:32px;padding-top:56px;padding-bottom:56px;justify-content:center">
+<p class="lbl in" style="animation-delay:.1s">The 90 days / Applications close 30 November</p>
+<h1 class="big" style="font-size:clamp(44px,7.2vw,112px)"><span class="mask"><span class="up" style="animation-delay:.05s">Charge like</span></span><span class="mask"><span class="up" style="animation-delay:.15s">the expert.</span></span><span class="mask"><span class="up" style="animation-delay:.25s;color:var(--grey)">Scale without</span></span><span class="mask"><span class="up" style="animation-delay:.35s;color:var(--grey)">the payroll.</span></span></h1>
+<p class="lead in" style="animation-delay:.7s;font-size:clamp(17px,1.4vw,20px);max-width:520px">Ninety days locked in with Josh Pearson. Fix the offer, the price and the pitch. Then install the agents that do the work a team used to. Ten creatives. January 2027.</p>
+<div class="in" style="animation-delay:.9s;display:flex;flex-wrap:wrap;gap:12px 24px;align-items:center">
+<a class="btn" href="#apply" style="background:var(--yellow);color:var(--ink);border-color:var(--yellow)">Apply for January <svg aria-hidden="true" width="22" height="12" viewBox="0 0 22 12" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M0 6h20M15 1l5 5-5 5"></path></svg></a>
+<a class="lbl" href="/pricing-kit" style="min-height:44px;display:inline-flex;align-items:center;gap:8px;font-weight:700">Not ready? Get the free pricing kit <svg aria-hidden="true" width="22" height="12" viewBox="0 0 22 12" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M0 6h20M15 1l5 5-5 5"></path></svg></a>
 </div>
-<p class="big lines"><span class="mask"><span class="up" style="animation-delay:1.1s">Get locked in</span></span><span class="mask"><span class="up" style="animation-delay:1.2s">For 90 days®</span></span><span class="mask"><span class="up" style="animation-delay:1.3s">Make more</span></span><span class="mask"><span class="up" style="animation-delay:1.4s">Work less</span></span></p>
-<p class="in" style="animation-delay:1.7s;margin-top:48px"><a class="btn" href="#apply">Apply for January <svg aria-hidden="true" width="22" height="12" viewBox="0 0 22 12" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M0 6h20M15 1l5 5-5 5"></path></svg></a></p>
+</div>
+<div class="fig o in" style="animation-delay:.5s;flex:1 1 360px;min-height:420px"><img src="/img/red-exit.webp" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 30%" fetchpriority="high" decoding="async"><span class="cap lbl">Fig. 00 / The stands</span></div>
+</section>
+
+<section class="rule split" aria-label="Proof" style="background:var(--ink);color:var(--paper)">
+<div class="gut" style="flex:1 1 240px;padding-block:20px;display:flex;align-items:center;gap:12px"><span class="lbl" style="color:#A9A8A3">Case 001</span><span class="lbl">Josh Gore / Filmmaker</span></div>
+<div style="flex:3 1 600px;display:flex;flex-wrap:wrap">
+<div class="gut" style="flex:1 1 180px;padding-block:20px;border-left:1px solid #333"><p style="font-weight:800;font-size:clamp(26px,2.6vw,40px);letter-spacing:-.04em;line-height:.9">£500 → £5K</p><p class="lbl" style="margin-top:6px;color:#A9A8A3">Shoots to monthly retainers</p></div>
+<div class="gut" style="flex:1 1 180px;padding-block:20px;border-left:1px solid #333"><p style="font-weight:800;font-size:clamp(26px,2.6vw,40px);letter-spacing:-.04em;line-height:.9">£5K → £25K</p><p class="lbl" style="margin-top:6px;color:#A9A8A3">Months, burnt out to a team</p></div>
+<div class="gut" style="flex:1 1 180px;padding-block:20px;border-left:1px solid #333"><p style="font-weight:800;font-size:clamp(26px,2.6vw,40px);letter-spacing:-.04em;line-height:.9">100</p><p class="lbl" style="margin-top:6px;color:#A9A8A3">Ideal clients in one room</p></div>
+</div>
 </section>
 
 <div class="marq rule lbl" aria-hidden="true"><div>
@@ -157,38 +167,30 @@ img{max-width:100%}
 <span>Not a course</span><span>/</span><span>Not weeks building a website</span><span>/</span><span>Not late nights</span><span>/</span><span>Not a hired tripod</span><span>/</span><span>Not another team to manage</span><span>/</span>
 </div></div>
 
-<section class="rule split" aria-label="Sound familiar">
-<div class="cell cellR" style="flex:1 1 520px">
-<div class="meta lbl"><span>01 / Sound familiar</span><span>The hamster wheel</span></div>
-<div>
-<h2 class="rv" style="font-size:clamp(32px,4vw,56px);line-height:1;font-weight:500;letter-spacing:-.03em;text-transform:uppercase">You're not under&#8209;skilled.<br>You're under&#8209;sold.</h2>
-<div style="display:flex;justify-content:flex-end;margin-top:8px"><svg aria-hidden="true" width="44" height="14" viewBox="0 0 44 14" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M0 7h42M36 1l6 6-6 6"></path></svg></div>
-<div style="height:1px;background:var(--ink);margin-top:12px"></div>
-<div class="meta lbl" style="margin-top:16px"><span>Status:</span><span>Project to project / Around £5k months</span></div>
+<section class="rule" aria-label="The two traps">
+<div class="strip gut meta lbl"><span>01 / Sound familiar</span><span>Which one are you?</span></div>
+<div class="split">
+<div class="cell cellR" style="flex:1 1 360px;gap:16px;padding-top:32px;padding-bottom:36px"><span class="lbl">Trap 01 / Under-charging</span><p class="big rv" style="font-size:clamp(30px,3.4vw,52px);line-height:.9;letter-spacing:-.04em">Fear sets<br>your price.</p><p class="rv" style="font-size:16px;line-height:1.5;max-width:420px">You know you're good. But when it's time to say the number, you shave it down before they can. Small-budget clients, treated like a camera operator, chasing the next project before the last one's paid.</p></div>
+<div class="cell cellR" style="flex:1 1 360px;gap:16px;padding-top:32px;padding-bottom:36px"><span class="lbl">Trap 02 / Over-booked</span><p class="big rv" style="font-size:clamp(30px,3.4vw,52px);line-height:.9;letter-spacing:-.04em">Too busy<br>to grow.</p><p class="rv" style="font-size:16px;line-height:1.5;max-width:420px">Fully booked and it still isn't enough. Every client, every edit, every late night is you. More clients feels impossible. Stopping feels worse. Trapped in the business you built to get free.</p></div>
+<div class="fig r wp" style="flex:1 1 280px;min-height:360px"><img src="/img/orange-motion.webp" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 70%" loading="lazy" decoding="async"><span class="cap lbl">The way out isn't more hours</span></div>
 </div>
-<div style="display:flex;flex-wrap:wrap;gap:24px;align-items:flex-end">
-<div class="fig r wp" style="flex:0 1 240px;min-width:180px;aspect-ratio:4/5;max-width:100%"><img src="/img/red-blur.webp" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 30%" loading="lazy" decoding="async"><span class="cap lbl">Fig. 01</span></div>
-<div class="rv" style="flex:1 1 200px;max-width:360px;display:flex;flex-direction:column;gap:16px"><p style="font-size:17px;line-height:1.45;margin:0">The same work, with the same camera, sells for £1,000 a month to one client and £10,000 to another. You've had the big months. Most months you're nearer five, with small-budget clients who treat you like a hired tripod, chasing the next project before the last one's paid.</p><a class="lbl" href="/pricing-kit" style="min-height:44px;display:inline-flex;align-items:center;gap:8px;font-weight:700">Find your gap: free pricing calculator <svg aria-hidden="true" width="22" height="12" viewBox="0 0 22 12" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M0 6h20M15 1l5 5-5 5"></path></svg></a></div>
-</div>
-<div class="meta lbl"><span>Skill isn't the problem</span><span>Belief and leverage are</span></div>
-</div>
-<div class="fig r wp" style="flex:1 1 420px;min-height:520px"><img src="/img/orange-motion.webp" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 70%" loading="lazy" decoding="async"><span class="cap lbl">The way out isn't more hours</span></div>
+<p class="big gut rv" style="font-size:clamp(26px,3.6vw,56px);line-height:.95;letter-spacing:-.04em;padding-block:36px;border-top:1px solid var(--ink)">Either way, the life you actually want gets further away.</p>
 </section>
 
-<section class="rule" aria-label="The two traps">
-<div class="strip gut meta lbl"><span>01B / The two traps</span><span>Which one are you in?</span></div>
+<section class="rule" id="shift" aria-label="The shift">
+<div class="strip gut meta lbl"><span>02 / The shift</span><span>You win on expertise × leverage</span></div>
 <div class="split">
-<div class="cell cellR" style="flex:1 1 420px;gap:20px;padding-top:32px;padding-bottom:40px"><span class="lbl">Trap 01 / Under-charging</span><p class="big rv" style="font-size:clamp(32px,4vw,60px);line-height:.9;letter-spacing:-.04em;margin:0">Fear sets<br>your price.</p><p class="rv" style="font-size:17px;line-height:1.5;margin:0;max-width:460px">You know you're good. But when it's time to say the number, you shave it down before they can. You take the small-budget work because it feels safer than hearing no. So you need more clients just to stand still.</p></div>
-<div class="cell" style="flex:1 1 420px;gap:20px;padding-top:32px;padding-bottom:40px"><span class="lbl">Trap 02 / Over-booked</span><p class="big rv" style="font-size:clamp(32px,4vw,60px);line-height:.9;letter-spacing:-.04em;margin:0">Too busy<br>to grow.</p><p class="rv" style="font-size:17px;line-height:1.5;margin:0;max-width:460px">You're fully booked and it still doesn't feel like enough. Every client is you, every edit is you, every late night is you. The idea of taking on more feels impossible, and stopping feels worse. You're trapped in the business you built to get free.</p></div>
+<div class="cell cellR" style="flex:1 1 420px;gap:24px;padding-top:40px;padding-bottom:48px;justify-content:center">
+<h2 class="big rv" style="font-size:clamp(36px,5vw,76px);line-height:.88;letter-spacing:-.05em">The gap isn't<br>your pricing.<br><span style="color:var(--grey)">It's you.</span></h2>
+<p class="lead rv">You're not under-skilled. You're under-sold, mostly by yourself. The fix is two things at once. <strong>Expertise:</strong> own a result and charge like the expert who delivers it. <strong>Leverage:</strong> build the system so the work doesn't need you in every frame.</p>
+<p class="rv" style="font-size:15px;line-height:1.5;color:var(--mute);max-width:480px">Start with the life you want, then build the business inside it. With four-hour days you can't sell hours, so this is the only way the maths works.</p>
 </div>
-<p class="big gut rv" style="font-size:clamp(28px,4.2vw,64px);line-height:.95;letter-spacing:-.04em;padding-block:48px;margin:0;border-top:1px solid var(--ink)">Either way, the life you<br>actually want gets further away.</p>
-</section>
-<section class="rule" aria-label="The real work">
-<div class="strip gut meta lbl"><span>02 / The real gap</span><span>What you want / What changes it</span></div>
-<h2 class="big gut rv" style="padding-block:64px;font-size:clamp(40px,7.4vw,116px);line-height:.88;letter-spacing:-.05em;border-bottom:1px solid var(--ink)">The gap isn't your pricing.<br><span style="color:var(--grey)">It's whether you back yourself.</span></h2>
-<div class="split">
-<div class="cell cellR" style="flex:1 1 420px;gap:40px;padding-bottom:40px;padding-top:24px"><span class="lbl">What you came for</span><p class="rv" style="font-size:clamp(22px,2.2vw,30px);line-height:1.25;font-weight:500;letter-spacing:-.02em">More money, fewer clients. Time back. Room to travel, to be present with the people you love, to build the life you keep putting off until the business calms down.</p></div>
-<div class="cell" style="flex:1 1 420px;gap:40px;padding-bottom:40px;padding-top:24px"><span class="lbl">What actually gets you there</span><p class="rv" style="font-size:clamp(22px,2.2vw,30px);line-height:1.25;font-weight:700;letter-spacing:-.02em">A goal that scares you, and becoming the person who hits it. We get into how you think, find where you get in your own way, and push until charging like the expert is just what you do. Then we give you the leverage to grow without hiring a team.</p></div>
+<div class="cell rv" style="flex:1 1 420px;padding-top:40px;padding-bottom:48px;justify-content:center"><div role="img" aria-label="Expertise times leverage. Service provider: low both. Busy expert: high expertise, low leverage. Content factory: low expertise, high leverage. The Dept.: high both." style="display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--ink)">
+<div style="padding:20px;border-right:1px solid var(--ink);border-bottom:1px solid var(--ink)"><span class="lbl" style="color:var(--mute)">Expertise, no leverage</span><p style="margin:8px 0 6px;font-weight:800;text-transform:uppercase;letter-spacing:-.03em;line-height:.95;font-size:clamp(20px,2.2vw,30px)">Busy expert</p><p style="font-size:15px;line-height:1.45">Good money, capped by your hours.</p></div>
+<div style="padding:20px;border-bottom:1px solid var(--ink);background:var(--ink);color:var(--paper)"><span class="lbl" style="color:#A9A8A3">Expertise × leverage</span><p style="margin:8px 0 6px;font-weight:800;text-transform:uppercase;letter-spacing:-.03em;line-height:.95;font-size:clamp(20px,2.2vw,30px);color:var(--yellow)">The Dept.</p><p style="font-size:15px;line-height:1.45">Own the result, priced as the expert. Agents carry the work.</p></div>
+<div style="padding:20px;border-right:1px solid var(--ink)"><span class="lbl" style="color:var(--mute)">Neither</span><p style="margin:8px 0 6px;font-weight:800;text-transform:uppercase;letter-spacing:-.03em;line-height:.95;font-size:clamp(20px,2.2vw,30px)">Service provider</p><p style="font-size:15px;line-height:1.45">The hired tripod. Paid for hours.</p></div>
+<div style="padding:20px"><span class="lbl" style="color:var(--mute)">Leverage, no expertise</span><p style="margin:8px 0 6px;font-weight:800;text-transform:uppercase;letter-spacing:-.03em;line-height:.95;font-size:clamp(20px,2.2vw,30px)">Content factory</p><p style="font-size:15px;line-height:1.45">Volume without authority. A commodity.</p></div>
+</div></div>
 </div>
 </section>
 
@@ -221,146 +223,35 @@ img{max-width:100%}
 <p class="gut lbl" style="padding-bottom:24px;color:var(--mute)">Individual result over several years of work together. Yours depends on your work, your market and your effort.</p>
 </section>
 
-<section class="rule" id="method" aria-label="The method">
-<div class="strip gut meta lbl"><span>03 / The method</span><span>The Core Four / Scored out of ten</span></div>
-<div class="gut" style="padding-block:64px;display:flex;flex-wrap:wrap;gap:24px 40px;border-bottom:1px solid var(--ink)">
-<h2 class="big h2 rv" style="flex:1 1 400px;min-width:0">You can't build a thriving business on a body that's running on empty.</h2>
-<p class="lead rv" style="flex:1 1 320px;min-width:0;max-width:440px;align-self:flex-end">Day one, you score four areas out of ten. That shows us where you're bleeding energy. You can be a six in business and a three in health. Get the three to a seven and the business moves too. Business leads. The rest holds it up.</p>
-</div>
+
+<section class="rule" id="how" aria-label="How it works">
+<div class="strip gut meta lbl"><span>03 / How it works</span><span>Dec 2026 to Mar 2027</span></div>
 <div class="split">
-<div class="core cellR"><div class="meta lbl"><span>01</span><span>/ 10</span></div><p class="ghost">01</p><div><h3>Wealth</h3><p style="font-size:15px;line-height:1.5">Offers, pricing and selling. Fewer clients paying more every month. This leads.</p></div></div>
-<div class="core cellR"><div class="meta lbl"><span>02</span><span>/ 10</span></div><p class="ghost">02</p><div><h3>Self</h3><p style="font-size:15px;line-height:1.5">Belief. The goal that scares you, and the identity that goes with it. Where most people quietly cap themselves.</p></div></div>
-<div class="core cellR"><div class="meta lbl"><span>03</span><span>/ 10</span></div><p class="ghost">03</p><div><h3>Health</h3><p style="font-size:15px;line-height:1.5">Energy, training, sleep. A three here drags everything else down with it.</p></div></div>
-<div class="core"><div class="meta lbl"><span>04</span><span>/ 10</span></div><p class="ghost">04</p><div><h3>Relationships</h3><p style="font-size:15px;line-height:1.5">The people you are doing this for. Business that costs you them was never the point.</p></div></div>
+<div class="cell cellR" style="flex:1 1 300px;gap:16px;padding-top:32px;padding-bottom:40px"><span class="lbl">01 / The offer</span><p class="big rv" style="font-size:clamp(26px,2.6vw,40px);line-height:.92;letter-spacing:-.04em">Offer, price,<br>pitch. Fixed.</p><p class="rv" style="font-size:15px;line-height:1.5">A live online workshop in December: walk out with offers ready to send before January. Then weekly group calls for 90 days on pricing, selling and going to market, with the psychology underneath.</p></div>
+<div class="cell cellR" style="flex:1 1 300px;gap:16px;padding-top:32px;padding-bottom:40px"><span class="lbl">02 / The person</span><p class="big rv" style="font-size:clamp(26px,2.6vw,40px);line-height:.92;letter-spacing:-.04em">Core Four,<br>scored day one.</p><p class="rv" style="font-size:15px;line-height:1.5">Wealth, self, health, relationships, out of ten. It shows where you're bleeding energy. You set your constraints next to it: hours, protected time, the number. Then we build to fit them, and track it to day ninety.</p></div>
+<div class="cell" style="flex:1 1 300px;gap:16px;padding-top:32px;padding-bottom:40px"><span class="lbl">03 / The leverage</span><p class="big rv" style="font-size:clamp(26px,2.6vw,40px);line-height:.92;letter-spacing:-.04em">Your team,<br>without hiring one.</p><p class="rv" style="font-size:15px;line-height:1.5">A library of working AI agents, installed in one line. They do the work you've been doing at midnight, so you own more of the result without adding hours.</p><div class="rv" style="margin-top:8px"><div style="padding:16px 0;border-top:1px solid var(--ink);display:flex;gap:16px;align-items:baseline"><span class="lbl" style="flex:0 0 28px">01</span><span style="flex:1 1 auto"><strong style="display:block;font-size:17px">Edit assistant</strong><span style="font-size:14px;line-height:1.4;color:var(--mute)">First cuts from your footage</span></span></div><div style="padding:16px 0;border-top:1px solid var(--ink);display:flex;gap:16px;align-items:baseline"><span class="lbl" style="flex:0 0 28px">02</span><span style="flex:1 1 auto"><strong style="display:block;font-size:17px">Content scheduler</strong><span style="font-size:14px;line-height:1.4;color:var(--mute)">A week of posts from voice notes</span></span></div><div style="padding:16px 0;border-top:1px solid var(--ink);display:flex;gap:16px;align-items:baseline"><span class="lbl" style="flex:0 0 28px">03</span><span style="flex:1 1 auto"><strong style="display:block;font-size:17px">Inbox agent</strong><span style="font-size:14px;line-height:1.4;color:var(--mute)">Replies drafted in your voice</span></span></div><div style="padding:16px 0;border-top:1px solid var(--ink);display:flex;gap:16px;align-items:baseline"><span class="lbl" style="flex:0 0 28px">04</span><span style="flex:1 1 auto"><strong style="display:block;font-size:17px">Proposal builder</strong><span style="font-size:14px;line-height:1.4;color:var(--mute)">Call notes to priced proposal</span></span></div><div style="padding:16px 0;border-top:1px solid var(--ink);display:flex;gap:16px;align-items:baseline"><span class="lbl" style="flex:0 0 28px">05</span><span style="flex:1 1 auto"><strong style="display:block;font-size:17px">Outreach agent</strong><span style="font-size:14px;line-height:1.4;color:var(--mute)">Finds and emails ideal clients</span></span></div><div style="padding:16px 0;border-top:1px solid var(--ink);display:flex;gap:16px;align-items:baseline"><span class="lbl" style="flex:0 0 28px">06</span><span style="flex:1 1 auto"><strong style="display:block;font-size:17px">Offer creator</strong><span style="font-size:14px;line-height:1.4;color:var(--mute)">Your offer, written and priced</span></span></div></div></div>
 </div>
 </section>
 
-<section class="rule" id="constraint" aria-label="Build around constraint">
-<div class="strip gut meta lbl"><span>03A / Build around constraint</span><span>Start with the life</span></div>
+<section class="rule" id="programme" aria-label="Price and apply">
+<div class="strip gut meta lbl"><span>04 / The 90 days</span><span>Founding cohort / Ten places</span></div>
 <div class="split">
-<div class="cell cellR" style="flex:1 1 560px;gap:28px;padding-top:40px;padding-bottom:48px">
-<h2 class="big rv" style="font-size:clamp(40px,6.4vw,100px);line-height:.88;letter-spacing:-.05em;margin:0">Build around<br>constraint.</h2>
-<p class="lead rv" style="margin:0">Most creatives build the business, then try to fit a life around whatever's left. I do it the other way round. I decide the life first, treat it as a hard limit, and build the business to fit inside it.</p>
-<p class="rv" style="font-size:17px;line-height:1.5;margin:0;max-width:560px">Constraint is what forces the right moves. With four hours a day, you can't sell hours. You have to own results as the expert, and you have to build the leverage so the work doesn't need you in every frame. That's expertise × leverage. It's not a theory. It's the only way the maths works.</p>
-</div>
-<div class="cell" style="flex:1 1 380px;gap:0;padding-top:40px;padding-bottom:48px">
-<span class="lbl" style="margin-bottom:16px">My constraints</span>
-<ul class="list">
-<li class="rv"><span class="lbl">01</span><span><strong>Four-hour working days.</strong> Not five, not "just this week".</span></li>
-<li class="rv"><span class="lbl">02</span><span><strong>Time protected</strong> for my health, the things I love, and my family. It goes in the diary first.</span></li>
-<li class="rv"><span class="lbl">03</span><span><strong>A multi seven-figure business</strong> built inside those lines. That's the goal I'm building toward.</span></li>
+<div class="cell cellR" style="flex:1 1 420px;gap:32px;padding-top:40px;padding-bottom:48px">
+<div><p class="rv" style="font-size:clamp(56px,7vw,110px);line-height:.85;font-weight:800;letter-spacing:-.05em">£3,000</p><p class="lbl" style="margin-top:12px">Founding price / Rises for cohort two / 1:1 version £6,000</p></div>
+<ul class="list rv" style="max-width:520px">
+<li><span class="lbl">A</span><span><strong>Starts in December.</strong> Portal and agents open the day you join. Workshop recorded, with a workbook.</span></li>
+<li><span class="lbl">B</span><span><strong>Weekly calls for 90 days</strong>, the Core Four tracked, the AI assistant trained on all of it.</span></li>
+<li><span class="lbl">C</span><span><strong>Every agent</strong>, set up and documented, plus new ones as the cohort asks.</span></li>
+<li><span class="lbl">D</span><span><strong>After:</strong> stay on monthly for the portal and the room, or step up to the mastermind: four events a year, Bali and beyond.</span></li>
 </ul>
-<div class="rv" style="margin-top:28px;border:1px solid var(--ink);padding:20px">
-<span class="lbl">Yours</span>
-<p style="font-weight:800;text-transform:uppercase;letter-spacing:-.03em;line-height:.95;font-size:clamp(22px,2.2vw,30px);margin:10px 0 12px">It doesn't have to be seven figures.</p>
-<p style="font-size:17px;line-height:1.5;margin:0">A £20k to £50k a month agency, built around the life you want, without being a slave to your clients. That's a business most creatives think is out of reach. It isn't. In the 90 days you set your constraints on day one, next to your Core Four, then we build your offer, your price and your leverage to fit them.</p>
+<div class="rv" id="guarantee" style="border:1px solid var(--ink);padding:20px;max-width:520px">
+<p class="lbl" style="margin-bottom:10px">The guarantee</p>
+<p style="font-size:clamp(20px,2vw,28px);line-height:1.05;font-weight:800;letter-spacing:-.03em;text-transform:uppercase;margin:0 0 10px">Make back what you paid in 90 days, or Josh keeps working with you free until you do.</p>
+<p style="font-size:14px;line-height:1.5;margin:0">One condition: you do the work. 10 of the weekly calls, the workshop, 20 offers sent, numbers logged each week. <a href="/terms#guarantee">Full terms</a>.</p>
 </div>
 </div>
-</div>
-</section>
-<section class="rule sec gut" id="expertise" aria-label="Expertise times leverage">
-<div class="side lbl"><span>03B / How you win</span><span>Expertise × leverage</span></div>
-<div class="main">
-<h2 class="big h2 rv" style="margin-bottom:20px">Expertise ×<br>leverage.</h2>
-<p class="lead rv" style="margin-bottom:40px">You don't win as a service provider. You win by owning a result as the expert, then building the leverage so it doesn't cost you your week. Expertise without leverage burns you out. Leverage without expertise makes you a commodity. Together, they're the business.</p>
-<div role="img" aria-label="Expertise times leverage. Low expertise and low leverage: service provider. High expertise, low leverage: busy expert. Low expertise, high leverage: content factory. High expertise and high leverage: the Dept." style="display:grid;grid-template-columns:28px 1fr 1fr;grid-template-rows:auto auto 28px;max-width:960px">
-<div style="grid-row:1/3;writing-mode:vertical-rl;transform:rotate(180deg);text-align:center" class="lbl">Expertise →</div>
-<div style="display:grid;grid-template-columns:1fr 1fr;grid-column:2/4;grid-row:1/3;border:1px solid var(--ink)">
-<div style="padding:20px;display:flex;flex-direction:column;gap:10px;min-height:190px;border-right:1px solid var(--ink);border-bottom:1px solid var(--ink);"><span class="lbl" style="color:var(--mute)">High expertise / low leverage</span><p style="margin:0;font-weight:800;text-transform:uppercase;letter-spacing:-.03em;line-height:.95;font-size:clamp(22px,2.4vw,34px)">Busy expert</p><p style="margin:0;font-size:15px;line-height:1.45">Good money, capped by your hours. One bad month from burnout.</p></div>
-<div style="padding:20px;display:flex;flex-direction:column;gap:10px;min-height:190px;border-bottom:1px solid var(--ink);background:var(--ink);color:var(--paper);"><span class="lbl" style="color:#A9A8A3">High expertise / high leverage</span><p style="margin:0;font-weight:800;text-transform:uppercase;letter-spacing:-.03em;line-height:.95;font-size:clamp(22px,2.4vw,34px);color:var(--yellow)">The Dept.</p><p style="margin:0;font-size:15px;line-height:1.45">You own the result, priced as the expert. Agents carry the work. Time in low, money out high.</p></div>
-<div style="padding:20px;display:flex;flex-direction:column;gap:10px;min-height:190px;border-right:1px solid var(--ink);"><span class="lbl" style="color:var(--mute)">Low expertise / low leverage</span><p style="margin:0;font-weight:800;text-transform:uppercase;letter-spacing:-.03em;line-height:.95;font-size:clamp(22px,2.4vw,34px)">Service provider</p><p style="margin:0;font-size:15px;line-height:1.45">The hired tripod. Paid for hours, compared on price.</p></div>
-<div style="padding:20px;display:flex;flex-direction:column;gap:10px;min-height:190px;"><span class="lbl" style="color:var(--mute)">Low expertise / high leverage</span><p style="margin:0;font-weight:800;text-transform:uppercase;letter-spacing:-.03em;line-height:.95;font-size:clamp(22px,2.4vw,34px)">Content factory</p><p style="margin:0;font-size:15px;line-height:1.45">Volume without authority. A commodity, squeezed on margin.</p></div>
-</div>
-<div style="grid-column:2/4;grid-row:3;text-align:center;padding-top:8px" class="lbl">Leverage →</div>
-</div>
-</div>
-</section>
-<section class="rule sec gut" id="agents" aria-label="Leverage">
-<div class="side lbl"><span>04 / Leverage</span><span>Your team, without hiring one</span></div>
-<div class="main">
-<h2 class="big h2 rv" style="margin-bottom:20px">Scale without<br>the payroll.</h2>
-<p class="lead rv" style="margin-bottom:20px"><strong>The bigger money is in owning the result.</strong> That takes a stack of skills: strategy, production, editing, copy, ads, reporting. It used to take a team. Now it takes you and the right agents. Time in stays low. Money out goes up.</p>
-<p class="lead rv" style="margin-bottom:48px">Hiring costs money, takes months to train and gives you people to manage. Every member gets a library of working AI agents instead. Install one in a single line and it starts doing the work you've been doing at midnight. Including the content you keep not posting.</p>
-<div class="meta lbl" style="justify-content:flex-start;gap:8px 24px;padding-bottom:12px"><span style="flex:0 0 40px">No.</span><span style="flex:1 1 180px">Agent</span><span style="flex:2 1 260px">Replaces</span><span style="flex:0 0 120px">Code</span></div>
-<div class="row rv"><span class="lbl" style="flex:0 0 40px">01</span><span style="flex:1 1 180px;font-size:20px;font-weight:700">Edit assistant</span><span style="flex:2 1 260px;font-size:15px;line-height:1.45">Logs footage, pulls selects and cuts first drafts, so your own content actually goes out.</span><span class="lbl" style="flex:0 0 120px">LID-EDT-01</span></div>
-<div class="row rv"><span class="lbl" style="flex:0 0 40px">02</span><span style="flex:1 1 180px;font-size:20px;font-weight:700">Content scheduler</span><span style="flex:2 1 260px;font-size:15px;line-height:1.45">Turns your ideas and voice notes into a week of posts, queued by Monday.</span><span class="lbl" style="flex:0 0 120px">LID-CON-02</span></div>
-<div class="row rv"><span class="lbl" style="flex:0 0 40px">03</span><span style="flex:1 1 180px;font-size:20px;font-weight:700">Inbox agent</span><span style="flex:2 1 260px;font-size:15px;line-height:1.45">Sorts enquiries and drafts replies in your voice. You read and hit send.</span><span class="lbl" style="flex:0 0 120px">LID-INB-03</span></div>
-<div class="row rv"><span class="lbl" style="flex:0 0 40px">04</span><span style="flex:1 1 180px;font-size:20px;font-weight:700">Proposal builder</span><span style="flex:2 1 260px;font-size:15px;line-height:1.45">Turns a discovery call into a priced proposal built around value, not hours.</span><span class="lbl" style="flex:0 0 120px">LID-PRO-04</span></div>
-<div class="row rv"><span class="lbl" style="flex:0 0 40px">05</span><span style="flex:1 1 180px;font-size:20px;font-weight:700">Outreach agent</span><span style="flex:2 1 260px;font-size:15px;line-height:1.45">Finds the clients you actually want, writes the first email, follows up.</span><span class="lbl" style="flex:0 0 120px">LID-OUT-05</span></div>
-<div class="row rv"><span class="lbl" style="flex:0 0 40px">06</span><span style="flex:1 1 180px;font-size:20px;font-weight:700">Client onboarding</span><span style="flex:2 1 260px;font-size:15px;line-height:1.45">Sends the welcome, collects the brief, books the kickoff.</span><span class="lbl" style="flex:0 0 120px">LID-ONB-06</span></div>
-</div>
-</section>
-
-<section class="rule split" aria-label="Before">
-<div class="fig b wp" style="flex:999 1 640px;min-height:480px"><img src="/img/blue-chair.webp" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 55%" loading="lazy" decoding="async"><span class="cap lbl">Fig. 02 / Before</span></div>
-<div class="cell" style="flex:1 1 280px;border-left:1px solid var(--ink);justify-content:space-between;gap:40px;padding-top:32px;padding-bottom:32px">
-<span class="lbl">Fig. 02 / Before</span>
-<p class="big rv" style="font-size:clamp(30px,3vw,44px);line-height:.95;letter-spacing:-.04em">Burnt out<br>at £5k a month<br>is a choice.</p>
-<span class="lbl">So is the next 90 days</span>
-</div>
-</section>
-
-<section class="rule" id="programme" aria-label="The 90 days">
-<div class="strip gut meta lbl"><span>05 / The 90 days</span><span>Founding cohort / Jan to Mar 2027</span></div>
-<div class="split">
-<div class="cell cellR" style="flex:1 1 520px;justify-content:space-between;gap:64px;padding-bottom:48px">
-<h2 class="big rv" style="font-size:clamp(40px,6.4vw,100px);line-height:.88;letter-spacing:-.05em">Lock in.<br>Come out<br>different.</h2>
-<div><p class="rv" style="font-size:clamp(44px,6vw,92px);line-height:.88;font-weight:800;letter-spacing:-.05em">£3,000</p><p class="lbl" style="margin-top:12px">Founding price / Ten places / Rises for cohort two</p>
-<div class="rv" id="guarantee" style="margin-top:32px;border:1px solid var(--ink);padding:24px">
-<p class="lbl" style="margin-bottom:12px">The guarantee</p>
-<p style="font-size:clamp(24px,2.4vw,34px);line-height:1.05;font-weight:800;letter-spacing:-.03em;text-transform:uppercase;margin:0 0 14px">Make back what you paid in 90 days, or Josh keeps working with you free until you do.</p>
-<p style="font-size:15px;line-height:1.5;margin:0">Guaranteed ROI, on one condition: you do the work. Come to at least 10 of the weekly calls, build your offer in the December workshop, send at least 20 offers or pitches, and log your numbers in the portal each week. <a href="/terms#guarantee">Full terms</a>.</p>
-</div>
-</div>
-</div>
-<div class="cell" style="flex:1 1 420px;justify-content:space-between;gap:40px;padding-bottom:48px">
-<ul class="list">
-<li class="rv"><span class="lbl">A</span><span><strong>Start in December, not January.</strong> The portal and the agent library open the day you join. Then a live online workshop in December: walk out with offers ready to send and sales before January. Recorded, with a workbook, if you can't make it live.</span></li>
-<li class="rv"><span class="lbl">B</span><span><strong>Weekly group calls for 90 days.</strong> Pricing, selling, going to market, and the psychology underneath all of it.</span></li>
-<li class="rv"><span class="lbl">C</span><span><strong>The Core Four, scored and tracked.</strong> Health, self, wealth, relationships, from day one to day ninety.</span></li>
-<li class="rv"><span class="lbl">D</span><span><strong>The agent library.</strong> Every agent, set up and documented, plus new ones as the cohort asks.</span></li>
-<li class="rv"><span class="lbl">E</span><span><strong>The portal.</strong> Short lessons, the AI assistant trained on all of it, and the cohort in one place.</span></li>
-<li class="rv"><span class="lbl">F</span><span><strong>Want it 1:1?</strong> Same 90 days with Josh directly, at £6,000. We decide which fits on the call.</span></li>
-</ul>
-<a class="btn" href="#apply" style="justify-content:space-between;min-height:60px;padding:0 24px;background:var(--yellow);color:var(--ink);border-color:var(--yellow)">Apply for January <svg aria-hidden="true" width="22" height="12" viewBox="0 0 22 12" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M0 6h20M15 1l5 5-5 5"></path></svg></a>
-</div>
-</div>
-</section>
-
-<section class="rule" aria-label="After the 90 days">
-<div class="strip gut meta lbl"><span>06 / After the 90 days</span><span>Two doors</span></div>
-<div class="split">
-<div class="cell cellR" style="flex:1 1 420px;gap:32px;padding-top:24px;padding-bottom:40px"><span class="lbl">Club Locked In / The mastermind</span><p class="big rv" style="font-size:clamp(26px,2.8vw,40px);line-height:.95;letter-spacing:-.04em">Four events a year.<br>Bali, Thailand,<br>wherever we go next.</p><p style="font-size:15px;line-height:1.5;max-width:420px">For the ones going from creative founder to leader. Three to four days in a room, four times a year, plus 1:1 with Josh in between. By invitation.</p></div>
-<div class="cell" style="flex:1 1 420px;gap:32px;padding-top:24px;padding-bottom:40px"><span class="lbl">Stay locked in / Ongoing</span><p class="big rv" style="font-size:clamp(26px,2.8vw,40px);line-height:.95;letter-spacing:-.04em">Keep the portal,<br>the agents and<br>the room.</p><p style="font-size:15px;line-height:1.5;max-width:420px">Monthly access to the community, the library and every new agent, so the momentum doesn't stop when the 90 days do.</p></div>
-</div>
-</section>
-
-<section class="rule sec gut" aria-label="Founder">
-<div class="side lbl"><span>07 / Who's behind it</span><span>Josh Pearson, founder</span></div>
-<div class="main"><p class="quote rv" style="font-size:clamp(24px,3vw,42px);line-height:1.15">I've taken creatives from burning out at £5k months to their first £20k, £25k and £30k months. The work was never what held them back. It was what they believed they were allowed to charge, how big they let themselves think, and whether they backed themselves. That's the work. I find where you're holding yourself back, and I don't let you stay there.</p>
-<div style="display:flex;flex-wrap:wrap;gap:32px 48px;margin-top:48px;align-items:flex-start">
-<div class="fig wp" style="position:relative;aspect-ratio:4/5;flex:0 1 380px;min-width:240px;max-width:100%;background:var(--ink)"><img src="/img/josh-pearson-2.webp" alt="Josh Pearson, founder of Locked In Dept." style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 58%" loading="lazy" decoding="async"><span class="cap lbl" style="top:14px;bottom:auto">Josh Pearson / Founder</span></div>
-<div style="flex:1 1 360px;min-width:0;max-width:560px;display:flex;flex-direction:column;gap:18px">
-<p class="rv" style="font-size:17px;line-height:1.55;margin:0">I've been on the entrepreneur path since I was 13. Twenty-two years of building things, more than a decade of it behind a camera. I've co-owned a brand agency, partnered on paid media, and run retainers from £1,000 to $20,000 a month.</p>
-<p class="rv" style="font-size:17px;line-height:1.55;margin:0">I build around my life, not the other way round. The business is the vehicle, not the point.</p>
-</div>
-</div>
-<p class="big rv" style="font-size:clamp(30px,4.4vw,68px);line-height:.92;letter-spacing:-.04em;margin:56px 0 0;padding-top:32px;border-top:1px solid var(--ink)">The bigger the climb in business, the bigger the climb you make inside your own head.</p>
-<p class="rv" style="font-size:17px;line-height:1.55;margin:16px 0 0;max-width:620px">That's what I've learned in twenty-two years, and it's why the 90 days work on both: the offer, the price and the leverage, and the person who has to back themselves to do it.</p>
-</div>
-</section>
-
-<section class="merge" aria-label="The proposition">
-<canvas class="phys" data-phys="merge" aria-hidden="true"></canvas>
-<div class="gut meta lbl" style="top:24px"><span>The proposition</span><span>Fig. 03 / The merge</span></div>
-<div class="gut meta lbl" style="bottom:20px"><span>Business + AI</span><span>= Freedom</span></div>
-</section>
-
-<section class="rule" id="apply" aria-label="Apply">
-<div class="strip gut meta lbl"><span>08 / Apply</span><span>Founding cohort / Closes 30 November</span></div>
-<div class="split">
-<div class="cell cellR" style="flex:1 1 520px;gap:28px;padding-bottom:48px">
-<h2 class="big rv" style="font-size:clamp(40px,6vw,92px);line-height:.88;letter-spacing:-.05em">Ten places.<br>Apply in a minute.</h2>
+<div class="cell" id="apply" style="flex:1 1 420px;gap:24px;padding-top:40px;padding-bottom:48px">
+<div><p class="lbl" style="margin-bottom:12px">Apply / Closes 30 November</p><h2 class="big rv" style="font-size:clamp(32px,3.6vw,56px);line-height:.88;letter-spacing:-.05em">Ten places.<br>Apply in a minute.</h2></div>
 <form id="applyForm" class="af" novalidate>
 <div class="af-row"><label for="af-name" class="lbl">Name</label><input id="af-name" name="name" autocomplete="name" required></div>
 <div class="af-row"><label for="af-email" class="lbl">Email</label><input id="af-email" name="email" type="email" autocomplete="email" inputmode="email" required></div>
@@ -379,16 +270,17 @@ img{max-width:100%}
 <p class="lead">Josh reads every application himself and will be in touch within 24 hours to book your call. Check your inbox for a confirmation.</p>
 <p style="margin-top:24px"><a class="btn" href="/score">Score your Core Four first <svg aria-hidden="true" width="22" height="12" viewBox="0 0 22 12" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M0 6h20M15 1l5 5-5 5"></path></svg></a></p>
 </div>
+<p class="lbl rv" style="color:var(--mute);line-height:1.7;max-width:520px">Josh reads every one. He's in touch within 24 hours to book a 30-minute call. Group or 1:1 decided together.</p>
 </div>
-<div class="cell" style="flex:1 1 360px;gap:0;padding-bottom:48px">
-<span class="lbl" style="margin-bottom:16px">What happens next</span>
-<ul class="list">
-<li><span class="lbl">01</span><span>You apply. Josh reads it himself, not an assistant.</span></li>
-<li><span class="lbl">02</span><span>He's in touch within 24 hours to book a call.</span></li>
-<li><span class="lbl">03</span><span>A 30-minute call. Group or 1:1 decided together.</span></li>
-<li><span class="lbl">04</span><span>You're in. Portal and agents open the same day, workshop invite with them.</span></li>
-</ul>
 </div>
+</section>
+
+<section class="rule split" aria-label="Founder">
+<div class="fig wp" style="flex:0 1 380px;min-width:260px;min-height:420px;background:var(--ink)"><img src="/img/josh-pearson-2.webp" alt="Josh Pearson, founder of Locked In Dept." loading="lazy" decoding="async" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 58%"><span class="cap lbl" style="top:14px;bottom:auto">Josh Pearson / Founder</span></div>
+<div class="cell" style="flex:1 1 420px;gap:24px;padding-top:40px;padding-bottom:48px;border-left:1px solid var(--ink);justify-content:center">
+<p class="lbl">05 / Who's behind it</p>
+<p class="big rv" style="font-size:clamp(26px,3vw,46px);line-height:.95;letter-spacing:-.04em">The bigger the climb in business, the bigger the climb you make inside your own head.</p>
+<p class="rv" style="font-size:16px;line-height:1.55;max-width:560px">I've been on the entrepreneur path since I was 13: twenty-two years of building, more than a decade behind a camera, retainers from £1,000 to $20,000 a month. I've taken creatives from burning out at £5k months to their first £20k, £25k and £30k months. The work was never what held them back. It was what they believed they were allowed to charge, and whether they backed themselves. I find where you're holding yourself back, and I don't let you stay there.</p>
 </div>
 </section>
 <a class="btn apply-bar" href="#apply" aria-hidden="true" tabindex="-1" style="justify-content:space-between"><span>Apply / Ten places</span><svg aria-hidden="true" width="22" height="12" viewBox="0 0 22 12" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M0 6h20M15 1l5 5-5 5"></path></svg></a>
