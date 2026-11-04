@@ -34,7 +34,9 @@ module.exports = async (req, res) => {
     const d = forceDay || dayDiff(new Date(L.created_at), now);
     const lesson = course.lessons[d]; if (!lesson) continue;
     const first = ((L.note || "").match(/Name: ([^\n]+)/) || [, "there"])[1].split(" ")[0];
-    try { await send(Object.assign({ to: L.email }, lesson(first), { unsub: `https://lockedindept.com/api/course?unsub=${L.id}&t=${token(L.id)}` })); sent.push([L.email, d]); }
+    const cm = (L.note || "").match(/Calc: now=(\d+) price=(\d+) floor=(\d+) gap=(\d+)/);
+    const calc = cm ? { now: +cm[1], price: +cm[2], floor: +cm[3], gap: +cm[4] } : null;
+    try { await send(Object.assign({ to: L.email }, lesson(first, calc), { unsub: `https://lockedindept.com/api/course?unsub=${L.id}&t=${token(L.id)}` })); sent.push([L.email, d]); }
     catch (e) { console.error(L.email, e.message); }
   }
   return res.status(200).json({ checked: rows.length, sent });

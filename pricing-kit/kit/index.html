@@ -50,7 +50,9 @@
 <div class="strip lbl"><span>03 / The calculator</span><span>Run your own numbers</span></div>
 <div class="calc">
 <form class="in" id="calcForm" aria-label="Retainer calculator">
-<p class="lbl mute" style="margin:0">Cost to make</p>
+<p class="lbl mute" style="margin:0">Right now</p>
+<div class="fld"><div class="row"><label for="c-now">What you charge this client now, a month</label><output for="c-now" id="o-now"></output></div><input type="range" id="c-now" min="0" max="15000" step="100" value="1500"><span class="lbl mute">Or what you'd quote a client like them. Be honest.</span></div>
+<p class="lbl mute" style="margin:12px 0 0">Cost to make</p>
 <div class="fld"><div class="row"><label for="c-shoot">Shoot days a month</label><output for="c-shoot" id="o-shoot"></output></div><input type="range" id="c-shoot" min="0" max="8" step="1" value="1"></div>
 <div class="fld"><div class="row"><label for="c-edits">Edits a month</label><output for="c-edits" id="o-edits"></output></div><input type="range" id="c-edits" min="0" max="30" step="1" value="8"></div>
 <div class="fld"><div class="row"><label for="c-hpe">Hours per edit</label><output for="c-hpe" id="o-hpe"></output></div><input type="range" id="c-hpe" min="1" max="20" step="1" value="4"></div>
@@ -64,8 +66,9 @@
 <div class="fld"><label for="c-brief">What they're really buying</label><select id="c-brief"><option value="1">Content to post</option><option value="1.25" selected>Attention, leads or sales they can see</option><option value="1.5">Growth, with you owning the outcome</option></select></div>
 </form>
 <div class="out" aria-live="polite">
-<div class="res" style="border-top:0;padding-top:0"><p class="lbl">Your floor</p><p class="v" id="r-floor">£0</p><p class="s">What it costs to make plus your day rate. Never quote below this.</p></div>
-<div class="res"><p class="lbl">Your price</p><p class="v" id="r-price" style="color:var(--yellow)">£0</p><p class="s" id="r-price-s">A month.</p></div>
+<div class="res" style="border-top:0;padding-top:0"><p class="lbl">The gap</p><p class="v" id="r-gap" style="color:var(--yellow)">£0</p><p class="s" id="r-gap-s"></p></div>
+<div class="res"><p class="lbl">Your floor</p><p class="v" id="r-floor">£0</p><p class="s">What it costs to make plus your day rate. Never quote below this.</p></div>
+<div class="res"><p class="lbl">Your price</p><p class="v" id="r-price">£0</p><p class="s" id="r-price-s">A month.</p></div>
 <div class="res"><p class="lbl">What you actually earn</p><p class="v" id="r-day" style="font-size:clamp(32px,4vw,52px)">£0</p><p class="s" id="r-day-s">A day, after crew and costs.</p></div>
 <div class="res"><p class="lbl">Say it as three options</p>
 <ul class="list" style="margin-top:8px;color:var(--paper)">
@@ -74,6 +77,7 @@
 <li style="border-color:#333"><span class="lbl">C</span><span id="t-c"></span></li>
 </ul></div>
 <p class="note" id="r-note" hidden></p>
+<div style="display:flex;flex-direction:column;gap:10px"><button type="button" class="btn y" id="shareBtn" style="width:100%"><span>Share my number</span><svg aria-hidden="true" width="22" height="12" viewBox="0 0 22 12" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M0 6h20M15 1l5 5-5 5"></path></svg></button><p class="lbl" style="color:#A9A8A3;margin:0">Makes a story-sized card. Post it and tag @lockedin.dept.</p></div>
 </div>
 </div>
 </section>
@@ -118,16 +122,21 @@
 (function(){
 var $=function(id){return document.getElementById(id)};
 var gbp=function(n){return '£'+Math.round(n).toLocaleString('en-GB')};
+var last={};
 var round=function(n){return n<2000?Math.round(n/50)*50:Math.round(n/100)*100};
 function calc(){
-  var shoot=+$('c-shoot').value, edits=+$('c-edits').value, hpe=+$('c-hpe').value, admin=+$('c-admin').value,
+  var now=+$('c-now').value, shoot=+$('c-shoot').value, edits=+$('c-edits').value, hpe=+$('c-hpe').value, admin=+$('c-admin').value,
       crew=+$('c-crew').value, kit=+$('c-kit').value, rate=+$('c-rate').value, who=+$('c-who').value, brief=+$('c-brief').value;
-  $('o-shoot').textContent=shoot; $('o-edits').textContent=edits; $('o-hpe').textContent=hpe+'h'; $('o-admin').textContent=admin+'h';
+  $('o-now').textContent=gbp(now); $('o-shoot').textContent=shoot; $('o-edits').textContent=edits; $('o-hpe').textContent=hpe+'h'; $('o-admin').textContent=admin+'h';
   $('o-crew').textContent=gbp(crew); $('o-kit').textContent=gbp(kit); $('o-rate').textContent=gbp(rate);
   var hours=shoot*10+edits*hpe+admin, days=hours/8;
   var floor=days*rate+crew+kit, price=round(floor*who*brief);
   var earn=price-crew-kit, perDay=days>0?earn/days:0;
   $('r-floor').textContent=gbp(round(floor));
+  var gap=Math.max(0,price-now);
+  $('r-gap').textContent=gap>0?gbp(gap):'£0';
+  $('r-gap-s').textContent=gap>0?('A month you\'re leaving on the table. '+gbp(gap*12)+' a year.'):(now>0?'You\'re at or above your price. Now go and find more clients like this one.':'Put in what you charge now to see the gap.');
+  last={now:now,price:price,floor:round(floor),gap:gap,day:Math.round(perDay)};
   $('r-price').textContent=gbp(price);
   $('r-price-s').textContent='A month, for about '+Math.round(hours)+' hours of your time ('+(Math.round(days*10)/10)+' days).';
   $('r-day').textContent=gbp(perDay);
@@ -141,8 +150,44 @@ function calc(){
   else if(days>12) msg='That\'s over 12 days a month of your time for one client. Either the price goes up or someone else does the making.';
   note.textContent=msg; note.hidden=!msg;
 }
-['c-shoot','c-edits','c-hpe','c-admin','c-crew','c-kit','c-rate','c-who','c-brief'].forEach(function(id){$(id).addEventListener('input',calc)});
+['c-now','c-shoot','c-edits','c-hpe','c-admin','c-crew','c-kit','c-rate','c-who','c-brief'].forEach(function(id){$(id).addEventListener('input',calc)});
 calc();
+
+// Save the numbers to the lead (if they signed up on this device) so emails and DMs can use them.
+var saveT=0, savedKey='';
+function save(){ var id,t; try{id=localStorage.getItem('lid-kit-id');t=localStorage.getItem('lid-kit-t')}catch(e){}
+  if(!id||!t) return; var k=JSON.stringify(last); if(k===savedKey) return; savedKey=k;
+  fetch('/api/kit',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({action:'calc',id:id,t:t,calc:last})}).catch(function(){}); }
+document.getElementById('calcForm').addEventListener('input',function(){clearTimeout(saveT);saveT=setTimeout(save,4000)});
+
+// Story card: 1080 x 1920, ink, the number in yellow.
+function card(){
+  var c=document.createElement('canvas'); c.width=1080; c.height=1920; var g=c.getContext('2d');
+  var P='#ECEBE7', K='#0B0B0B', Y='#E8FF2A', M='#8A8984', F="'Archivo', Helvetica, Arial, sans-serif";
+  g.fillStyle=K; g.fillRect(0,0,1080,1920);
+  function t(txt,x,y,size,w,col,align){g.font=w+' '+size+'px '+F; g.fillStyle=col; g.textAlign=align||'left'; g.fillText(txt,x,y);}
+  function fit(txt,y,max,w,col){var sz=max; g.font=w+' '+sz+'px '+F; while(g.measureText(txt).width>936&&sz>40){sz-=4;g.font=w+' '+sz+'px '+F;} t(txt,72,y,sz,w,col); return sz;}
+  g.fillStyle=P; g.fillRect(72,150,936,2);
+  t('LOCKED IN DEPT.',72,124,30,800,P); t('RETAINER PRICING KIT',1008,124,26,500,M,'right');
+  var y=420;
+  if(last.now>0){ t('I WAS CHARGING',72,y,30,500,M); var sz=fit(gbp(last.now),y+170,170,800,P);
+    g.font='800 '+sz+'px '+F; var w=g.measureText(gbp(last.now)).width; g.fillStyle=P; g.fillRect(72,y+110,w,10); y+=330; }
+  t('MY PRICE',72,y,30,500,M); fit(gbp(last.price),y+290,300,800,Y); t('A MONTH',72,y+360,34,700,P);
+  if(last.gap>0){ g.fillStyle='#333'; g.fillRect(72,y+430,936,2); t('THE GAP',72,y+500,30,500,M); fit(gbp(last.gap*12)+' A YEAR',y+600,96,800,P); }
+  g.fillStyle=P; g.fillRect(72,1690,936,2);
+  t('SAME CAMERA. SAME SKILL.',72,1760,40,800,P); t('FIND YOURS: LOCKEDINDEPT.COM/PRICING-KIT',72,1812,26,500,M);
+  return c;
+}
+document.getElementById('shareBtn').addEventListener('click',function(){
+  var b=this; save();
+  (document.fonts&&document.fonts.load?Promise.all([document.fonts.load("800 100px 'Archivo'"),document.fonts.load("500 30px 'Archivo'")]):Promise.resolve()).then(function(){
+    card().toBlob(function(blob){
+      var file=new File([blob],'my-price-locked-in-dept.png',{type:'image/png'});
+      if(navigator.canShare&&navigator.canShare({files:[file]})){ navigator.share({files:[file],text:'Found my gap. lockedindept.com/pricing-kit'}).catch(function(){}); }
+      else { var a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=file.name; document.body.appendChild(a); a.click(); a.remove(); }
+    },'image/png');
+  });
+});
 })();
 </script>
 </body>

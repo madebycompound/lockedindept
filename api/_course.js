@@ -10,10 +10,10 @@ module.exports = {
   }),
   lessons: [
     null,
-    (first) => ({
-      subject: "Your price isn't your skill",
+    (first, c) => ({
+      subject: c && c.gap > 0 ? `You're leaving £${c.gap.toLocaleString("en-GB")} a month on the table` : "Your price isn't your skill",
       kicker: "Lesson 01 of 05 / Pricing", title: "Your price isn't your skill.",
-      body: `${first}, I've done social retainers for £1,000 a month and social retainers for £10,000 a month. Same skill set. Some of the £1k work was better.\n\nYour price isn't set by how good you are. It's set by the result the client believes you can deliver, and whether they can afford to pay for it.\n\nIf you just learned to use a camera, you're not getting £10k months, and you shouldn't. But if you've been at this a few years and you're still hovering around £5k months, skill isn't the problem. How you communicate it is.\n\nToday: open the calculator and run one real client through it. Look at the gap between your floor and your price. That gap is what you've been leaving on the table.\n\nJosh`,
+      body: `${first}, I've done social retainers for £1,000 a month and social retainers for £10,000 a month. Same skill set. Some of the £1k work was better.\n\n${c && c.gap > 0 ? `You ran the numbers yesterday. You're charging £${c.now.toLocaleString("en-GB")} a month for work the formula prices at £${c.price.toLocaleString("en-GB")}. That's £${(c.gap * 12).toLocaleString("en-GB")} a year you're not charging for.\n\n` : ""}Your price isn't set by how good you are. It's set by the result the client believes you can deliver, and whether they can afford to pay for it.\n\nIf you just learned to use a camera, you're not getting £10k months, and you shouldn't. But if you've been at this a few years and you're still hovering around £5k months, skill isn't the problem. How you communicate it is.\n\nToday: open the calculator and run one real client through it. Look at the gap between your floor and your price. That gap is what you've been leaving on the table.\n\nJosh`,
       cta: "Open the calculator", url: SITE + "/pricing-kit/kit#calc"
     }),
     (first) => ({
@@ -34,10 +34,10 @@ module.exports = {
       body: `${first}, if a client could swap you for the next person on Instagram and get the same thing, you're a hired tripod. You'll be paid like one.\n\nThe way out isn't a better showreel. It's owning your expertise: being clear on who you're the leader for, and saying it everywhere.\n\nNot "filmmaker for brands". Something like: "I make content for independent food brands that turns followers into customers." Narrow feels scary. It's what lets you charge more, because to that client, you're the obvious choice.\n\nToday: write your one line. Who you're for, and the result you get them. Put it in your bio. Watch who it pulls in.\n\nJosh`,
       cta: "Score your Core Four", url: SITE + "/score"
     }),
-    (first) => ({
+    (first, c) => ({
       subject: "The number you're scared to say",
       kicker: "Lesson 05 of 05 / Belief", title: "The number you're scared to say.",
-      body: `${first}, last one.\n\nYou can know all of this and still quote low. Pricing isn't a maths problem. It's a belief problem. The number you're scared to say out loud is usually the right one.\n\nJosh Gore went from £500 shoots to £5,000 a month retainers, then landed a room of 100 of his ideal clients. He didn't get better at filming. He stopped thinking like a freelancer and started acting like the expert he already was.\n\nThat's what the 90 days are for. Ten creatives, from January. We fix the offer, the price and the pitch, and we work on the person who has to say the number. It comes with an ROI guarantee: do the work, and if you haven't made back what you paid by day 90, I keep working with you free until you have.\n\nApplications close 30 November.\n\nJosh`,
+      body: `${first}, last one.\n\nYou can know all of this and still quote low. Pricing isn't a maths problem. It's a belief problem. The number you're scared to say out loud is usually the right one.\n\n${c && c.price ? `For you, that number is £${c.price.toLocaleString("en-GB")} a month. Say it out loud once today.\n\n` : ""}Josh Gore went from £500 shoots to £5,000 a month retainers, then landed a room of 100 of his ideal clients. He didn't get better at filming. He stopped thinking like a freelancer and started acting like the expert he already was.\n\nThat's what the 90 days are for. Ten creatives, from January. We fix the offer, the price and the pitch, and we work on the person who has to say the number. It comes with an ROI guarantee: do the work, and if you haven't made back what you paid by day 90, I keep working with you free until you have.\n\nApplications close 30 November.\n\nJosh`,
       cta: "Apply for January", url: SITE + "/90-days#apply"
     })
   ]

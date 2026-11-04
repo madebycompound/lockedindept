@@ -73,7 +73,7 @@ f.addEventListener('submit',function(ev){
   .then(function(r){return r.json().then(function(j){return{ok:r.ok,j:j}})})
   .then(function(x){ if(!x.ok) throw new Error(x.j&&x.j.error||'');
     f.hidden=true; var done=document.getElementById('kitDone'); done.hidden=false; done.focus();
-    try{localStorage.setItem('lid-kit','1')}catch(e){} })
+    try{localStorage.setItem('lid-kit','1');if(x.j.id){localStorage.setItem('lid-kit-id',x.j.id);localStorage.setItem('lid-kit-t',x.j.t)}}catch(e){} })
   .catch(function(e){err.textContent=e.message||'Something went wrong. Try again, or DM KIT to @lockedin.dept.';err.hidden=false;btn.disabled=false;btn.firstChild.textContent='Send me the kit';});
 });
 })();

@@ -9,6 +9,7 @@ module.exports = async (req, res) => {
   if (req.method !== "POST") return res.status(405).json({ error: "POST only" });
   const b = typeof req.body === "string" ? JSON.parse(req.body || "{}") : (req.body || {});
   if (b.company) return res.status(200).json({ ok: true });
+  if (b.action === "calc") return saveCalc(b, res);
   const name = clean(b.name, 80), email = clean(b.email, 200).toLowerCase(), handle = clean(b.handle, 80).replace(/^@/, "");
   if (!name || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return res.status(400).json({ error: "Add your name and a valid email." });
   const id = crypto.randomUUID();
@@ -28,6 +29,20 @@ module.exports = async (req, res) => {
     mailed = true;
   } catch (e) {}
   if (!saved && !mailed) return res.status(502).json({ error: "Something went wrong. Try again in a minute." });
-  return res.status(200).json({ ok: true });
+  return res.status(200).json({ ok: true, id: saved ? id : null, t: saved ? token(id) : null });
 };
+// Calculator numbers: replaces the "Calc:" line on the lead. Needs SUPABASE_SERVICE_ROLE_KEY (anon can't update leads).
+async function saveCalc(b, res) {
+  const id = String(b.id || ""), c = b.calc || {}, key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!/^[0-9a-f-]{36}$/i.test(id) || b.t !== token(id)) return res.status(400).json({ error: "bad id" });
+  if (!key) return res.status(503).json({ error: "not configured" });
+  const n = k => Math.max(0, Math.min(1e6, Math.round(+c[k] || 0)));
+  const line = `Calc: now=${n("now")} price=${n("price")} floor=${n("floor")} gap=${n("gap")} day=${n("day")}`;
+  const url = process.env.SUPABASE_URL || "https://pqsgymxddtrmzpcawzxi.supabase.co", H = { apikey: key, authorization: "Bearer " + key, "content-type": "application/json" };
+  const g = await fetch(`${url}/rest/v1/leads?id=eq.${id}&select=note`, { headers: H }); const row = g.ok ? (await g.json())[0] : null;
+  if (!row) return res.status(404).json({ error: "not found" });
+  const note = (row.note || "").split("\n").filter(l => !l.startsWith("Calc: ")).concat(line).join("\n");
+  await fetch(`${url}/rest/v1/leads?id=eq.${id}`, { method: "PATCH", headers: H, body: JSON.stringify({ note }) });
+  return res.status(200).json({ ok: true });
+}
 module.exports.token = token;
