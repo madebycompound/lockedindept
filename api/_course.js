@@ -5,7 +5,7 @@ module.exports = {
   kit: (first) => ({
     subject: "Your Retainer Pricing Kit",
     kicker: "Kit 01 / Retainer pricing", title: "Here's the kit.",
-    body: `${first}, here it is: the formula, the ladder and the calculator.\n\nStart with the calculator. Put in a client you're working with right now, or one you want, and see what the number should be. Most people find they've been quoting somewhere near their floor.\n\nTomorrow morning: lesson one. Why your price has almost nothing to do with your skill.\n\nJosh`,
+    body: `${first}, here it is: the formula, the ladder and the calculator.\n\nThere's a PDF version too, with a worksheet you can print and fill in for your next client: https://lockedindept.com/pricing-kit/retainer-pricing-kit.pdf\n\nStart with the calculator. Put in a client you're working with right now, or one you want, and see what the number should be. Most people find they've been quoting somewhere near their floor.\n\nTomorrow morning: lesson one. Why your price has almost nothing to do with your skill.\n\nJosh`,
     cta: "Open the kit", url: SITE + "/pricing-kit/kit"
   }),
   lessons: [
