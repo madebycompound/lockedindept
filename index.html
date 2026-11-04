@@ -79,6 +79,15 @@ nav{display:flex;flex-wrap:wrap;gap:24px}nav a{text-decoration:none;min-height:4
 .shift .af{flex:1 1 260px;font-size:22px;line-height:1.3;font-weight:700;letter-spacing:-.01em}
 .core{flex:1 1 300px;min-width:0;min-height:440px;padding:24px var(--gr) 32px var(--gl);display:flex;flex-direction:column;justify-content:space-between;gap:32px;border-bottom:1px solid var(--ink)}
 .core .ghost{font-size:clamp(110px,14vw,200px);line-height:.8;font-weight:800;letter-spacing:-.07em;color:var(--ghost)}
+.dark{background:var(--ink);color:var(--paper)}
+.dark .strip{border-bottom-color:#2A2A28}
+.dark .lbl,.dark .meta{color:#A9A8A3}
+.dark .cellR{border-right-color:#2A2A28}
+.dark .core{border-bottom-color:#2A2A28}
+.dark .core .ghost{color:var(--yellow);letter-spacing:-.05em}
+.dark .core p:not(.ghost){color:#C9C8C3}
+.dark .core h3{color:var(--paper)}
+@media (max-width:640px){.dark .cellR{border-bottom-color:#2A2A28}}
 .core h3{font-size:clamp(28px,2.6vw,38px);line-height:1;font-weight:800;letter-spacing:-.035em;text-transform:uppercase;margin-bottom:12px}
 .core>div:last-child>p{min-height:calc(15px * 1.5 * 3)}
 .code{padding:18px 20px;background:var(--ink);color:var(--paper);font-family:'SF Mono',Menlo,Consolas,monospace;font-size:13px;overflow-x:auto;white-space:nowrap}
@@ -184,7 +193,7 @@ img{max-width:100%}
 </div>
 </section>
 
-<section class="rule" id="method" aria-label="The method">
+<section class="rule dark" id="method" aria-label="The method">
 <div class="strip gut meta lbl"><span>04 / The method</span><span>Four parts. In this order.</span></div>
 <div class="split">
 <div class="core cellR"><span class="lbl">01</span><p class="ghost">01</p><div><h3>Clarity</h3><p style="font-size:15px;line-height:1.5">What you're really selling, who it's for, and the bigger vision you've been putting off saying out loud.</p></div></div>
