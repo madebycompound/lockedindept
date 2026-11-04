@@ -92,6 +92,7 @@ nav{display:flex;flex-wrap:wrap;gap:24px}nav a{text-decoration:none;min-height:4
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.js .rv,.js .wp,.js .rs{opacity:1;transform:none;clip-path:none}}
 @media (max-width:640px){.cellR{border-right:0;border-bottom:1px solid var(--ink)}.hero .mid{flex-direction:column;align-items:stretch}.hero .mid p{max-width:none;text-align:left!important;margin:0!important}}
 img{max-width:100%}
+@media (max-width:640px){.vidh{display:none}}
 </style>
 </head>
 <body>
@@ -157,11 +158,12 @@ img{max-width:100%}
 <video controls playsinline preload="none" poster="/img/case-001-poster.jpg" src="[VIDEO URL]" style="width:100%;height:100%;display:block;object-fit:cover"></video> -->
 <figure class="gut" style="margin:0;padding-block:40px;border-bottom:1px solid var(--ink)">
 <div class="vid" style="position:relative;aspect-ratio:16/9;width:100%;background:var(--ink);color:var(--paper);overflow:hidden">
+<img src="/img/case-001-poster.jpg" alt="Josh Gore, mid-interview" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:70% center">
 <div style="position:absolute;inset:0;display:flex;flex-direction:column;justify-content:space-between;padding:clamp(16px,2.4vw,32px)">
 <div class="meta lbl" style="display:flex;justify-content:space-between;gap:16px;opacity:.7"><span>Interview / 1080p</span><span>Film coming</span></div>
 <div style="display:flex;align-items:center;gap:clamp(14px,2vw,24px)">
 <span aria-hidden="true" style="width:clamp(52px,6vw,84px);height:clamp(52px,6vw,84px);border:1px solid var(--paper);border-radius:50%;display:inline-flex;align-items:center;justify-content:center;flex:none"><svg width="22" height="24" viewBox="0 0 22 24" fill="currentColor"><path d="M2 1.5v21L21 12z"/></svg></span>
-<p class="big" style="margin:0;font-size:clamp(28px,4.4vw,64px);line-height:.92;letter-spacing:-.04em">IN HIS<br>OWN WORDS</p>
+<p class="big vidh" style="margin:0;font-size:clamp(28px,4.4vw,64px);line-height:.92;letter-spacing:-.04em">IN HIS<br>OWN WORDS</p>
 </div>
 </div>
 </div>
