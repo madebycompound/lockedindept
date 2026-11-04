@@ -34,6 +34,10 @@
     {
       "path": "/api/remind",
       "schedule": "0 9 * * *"
+    },
+    {
+      "path": "/api/course",
+      "schedule": "0 8 * * *"
     }
   ],
   "functions": {
