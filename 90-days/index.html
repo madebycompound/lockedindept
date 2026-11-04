@@ -175,6 +175,14 @@ img{max-width:100%}
 <div class="fig r wp" style="flex:1 1 420px;min-height:520px"><img src="/img/orange-motion.webp" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 70%" loading="lazy" decoding="async"><span class="cap lbl">The way out isn't more hours</span></div>
 </section>
 
+<section class="rule" aria-label="The two traps">
+<div class="strip gut meta lbl"><span>01B / The two traps</span><span>Which one are you in?</span></div>
+<div class="split">
+<div class="cell cellR" style="flex:1 1 420px;gap:20px;padding-top:32px;padding-bottom:40px"><span class="lbl">Trap 01 / Under-charging</span><p class="big rv" style="font-size:clamp(32px,4vw,60px);line-height:.9;letter-spacing:-.04em;margin:0">Fear sets<br>your price.</p><p class="rv" style="font-size:17px;line-height:1.5;margin:0;max-width:460px">You know you're good. But when it's time to say the number, you shave it down before they can. You take the small-budget work because it feels safer than hearing no. So you need more clients just to stand still.</p></div>
+<div class="cell" style="flex:1 1 420px;gap:20px;padding-top:32px;padding-bottom:40px"><span class="lbl">Trap 02 / Over-booked</span><p class="big rv" style="font-size:clamp(32px,4vw,60px);line-height:.9;letter-spacing:-.04em;margin:0">Too busy<br>to grow.</p><p class="rv" style="font-size:17px;line-height:1.5;margin:0;max-width:460px">You're fully booked and it still doesn't feel like enough. Every client is you, every edit is you, every late night is you. The idea of taking on more feels impossible, and stopping feels worse. You're trapped in the business you built to get free.</p></div>
+</div>
+<p class="big gut rv" style="font-size:clamp(28px,4.2vw,64px);line-height:.95;letter-spacing:-.04em;padding-block:48px;margin:0;border-top:1px solid var(--ink)">Either way, the life you<br>actually want gets further away.</p>
+</section>
 <section class="rule" aria-label="The real work">
 <div class="strip gut meta lbl"><span>02 / The real gap</span><span>What you want / What changes it</span></div>
 <h2 class="big gut rv" style="padding-block:64px;font-size:clamp(40px,7.4vw,116px);line-height:.88;letter-spacing:-.05em;border-bottom:1px solid var(--ink)">The gap isn't your pricing.<br><span style="color:var(--grey)">It's whether you back yourself.</span></h2>
@@ -327,6 +335,7 @@ img{max-width:100%}
 <div class="af-row"><label for="af-handle" class="lbl">Instagram <span style="color:var(--mute)">(optional)</span></label><input id="af-handle" name="handle" autocomplete="off" placeholder="@"></div>
 <div class="af-row"><label for="af-work" class="lbl">What you do</label><input id="af-work" name="work" required placeholder="Filmmaker, brand films for fashion and food"></div>
 <div class="af-row"><label for="af-now" class="lbl">Where you are now, per month</label><select id="af-now" name="now" required><option value="">Choose one</option><option>Under £3k</option><option>£3k to £5k</option><option>£5k to £10k</option><option>£10k to £20k</option><option>£20k plus</option></select></div>
+<div class="af-row"><label for="af-trap" class="lbl">Which sounds more like you?</label><select id="af-trap" name="trap" required><option value="">Choose one</option><option>I undercharge. I know I should charge more but I don't</option><option>I'm too busy. More clients feels impossible</option><option>Honestly, both</option></select></div>
 <div class="af-row"><label for="af-goal" class="lbl">Where you want to be in 90 days</label><textarea id="af-goal" name="goal" rows="3" required placeholder="The number, and what changes when you hit it"></textarea></div>
 <div class="af-hp" aria-hidden="true"><label for="af-co">Company</label><input id="af-co" name="company" tabindex="-1" autocomplete="off"></div>
 <p class="af-err lbl" role="alert" hidden></p>
@@ -433,10 +442,10 @@ var f=document.getElementById('applyForm'); if(!f) return;
 var err=f.querySelector('.af-err'), btn=f.querySelector('button[type=submit]');
 f.addEventListener('submit',function(ev){
   ev.preventDefault(); var bad=null;
-  ['name','email','work','now','goal'].forEach(function(n){var el=f.elements[n],ok=el.value.trim()&&(n!=='email'||/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(el.value.trim()));el.setAttribute('aria-invalid',ok?'false':'true');if(!ok&&!bad)bad=el;});
+  ['name','email','work','now','trap','goal'].forEach(function(n){var el=f.elements[n],ok=el.value.trim()&&(n!=='email'||/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(el.value.trim()));el.setAttribute('aria-invalid',ok?'false':'true');if(!ok&&!bad)bad=el;});
   if(bad){err.textContent='Fill in the highlighted fields.';err.hidden=false;bad.focus();return;}
   err.hidden=true; btn.disabled=true; btn.firstChild.textContent='Sending';
-  var d={}; ['name','email','handle','work','now','goal','company'].forEach(function(n){d[n]=f.elements[n].value});
+  var d={}; ['name','email','handle','work','now','trap','goal','company'].forEach(function(n){d[n]=f.elements[n].value});
   d.source=(new URLSearchParams(location.search).get('utm_source'))||document.referrer||'direct';
   fetch('/api/apply',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(d)}).then(function(r){return r.json().then(function(j){return{ok:r.ok,j:j}})}).then(function(x){
     if(!x.ok) throw new Error(x.j&&x.j.error||'');

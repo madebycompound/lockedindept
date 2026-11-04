@@ -9,11 +9,11 @@ module.exports = async (req, res) => {
   if (b.company) return res.status(200).json({ ok: true }); // honeypot: bots fill hidden fields
   const a = {
     name: clean(b.name, 120), email: clean(b.email, 200).toLowerCase(), handle: clean(b.handle, 80).replace(/^@/, ""),
-    work: clean(b.work, 160), now: clean(b.now, 40), goal: String(b.goal || "").trim().slice(0, 1500), source: clean(b.source, 60)
+    work: clean(b.work, 160), now: clean(b.now, 40), trap: clean(b.trap, 80), goal: String(b.goal || "").trim().slice(0, 1500), source: clean(b.source, 60)
   };
   if (!a.name || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(a.email) || !a.work || !a.now || !a.goal)
     return res.status(400).json({ error: "Please fill in every field." });
-  const note = `APPLICATION / 90 days\nName: ${a.name}\nDoes: ${a.work}\nMonthly now: ${a.now}\n90-day goal: ${a.goal}\nSource: ${a.source || "-"}`;
+  const note = `APPLICATION / 90 days\nName: ${a.name}\nDoes: ${a.work}\nMonthly now: ${a.now}\nTrap: ${a.trap || "-"}\n90-day goal: ${a.goal}\nSource: ${a.source || "-"}`;
   const url = process.env.SUPABASE_URL || "https://pqsgymxddtrmzpcawzxi.supabase.co";
   const anon = process.env.SUPABASE_ANON_KEY || "sb_publishable_wBq1dszXPJ2CZzqkQIRXTA_hXE3b3zI";
   let saved = false;
