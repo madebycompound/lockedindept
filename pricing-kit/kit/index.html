@@ -18,6 +18,7 @@
 <p class="lbl mute" style="margin:0 0 16px">The Retainer Pricing Kit / Josh Pearson</p>
 <h1 class="big" style="font-size:clamp(48px,9vw,140px)">Same camera.<br>Same skill.<br>£1k or £10k.</h1>
 <p class="lead" style="margin-top:32px">I've sold social retainers for £1,000 a month and social retainers for £10,000 a month. I've done full-service retainers at $20,000 a month. The camera didn't change. What changed was who I was selling to, what I was promising, what it cost me to make, and what I decided I wanted to earn. This kit is that thinking, written down, with a calculator to run your own numbers.</p>
+<p class="lead" style="margin-top:20px">And to be straight with you: this isn't about everyone charging £10k a month. You can make very good money on £1,500 retainers. What matters is what each one pays you for the time it takes, and how many you can run without burning out. Know your numbers, then pick your route.</p>
 <p class="lbl" style="margin-top:28px;display:flex;gap:28px;flex-wrap:wrap"><a href="#calc">Skip to the calculator</a><a href="/pricing-kit/retainer-pricing-kit.pdf" download>Download the PDF with the worksheet</a></p>
 </section>
 
@@ -38,12 +39,12 @@
 <section class="sec">
 <div class="strip lbl"><span>02 / The ladder</span><span>What usually sits at each level</span></div>
 <div class="tiers">
-<div class="tier"><span class="lbl">Level 01</span><p class="n">£1k</p><p><strong>Content support.</strong> Solo. A small business. A handful of edits a month, often from footage they send you. You're a pair of hands. Fine to start, deadly to stay.</p></div>
+<div class="tier"><span class="lbl">Level 01</span><p class="n">£1k</p><p><strong>Content support.</strong> Solo. A small business. A handful of edits a month, often from footage they send you. Great money if it takes you a day or two and you run several. A trap if it eats your week.</p></div>
 <div class="tier"><span class="lbl">Level 02</span><p class="n">£3k</p><p><strong>Content partner.</strong> A shoot day a month, a set number of edits, a plan for what goes out. You're making decisions now, not just taking instructions.</p></div>
 <div class="tier"><span class="lbl">Level 03</span><p class="n">£5-10k</p><p><strong>Growth partner.</strong> A brand with real budget. Strategy, production and reporting against the result they care about. Often an editor or second shooter under you.</p></div>
 <div class="tier" style="border-right:0"><span class="lbl">Level 04</span><p class="n">£15k+</p><p><strong>Full service.</strong> You own the outcome across content, campaigns and launches, with a team doing the making. You're the expert they can't replace.</p></div>
 </div>
-<div class="wrap prose" style="padding-top:32px"><p>Every level is a step on the same ladder: more ownership of the result, a bigger client, and less of your own hours per pound. You don't climb it by getting better at filming. You climb it by changing who you sell to and how you sell.</p></div>
+<div class="wrap prose" style="padding-top:32px"><p>Every level is a step on the same ladder: more ownership of the result, a bigger client, and less of your own hours per pound. You don't have to climb to the top to do well. Plenty of people make a great living at level two with five or six clients and an editor. But if you want to climb, you don't do it by getting better at filming. You do it by changing who you sell to and how you sell.</p></div>
 </section>
 
 <section class="sec" id="calc">
@@ -61,6 +62,7 @@
 <div class="fld"><div class="row"><label for="c-kit">Kit, software and travel, per month</label><output for="c-kit" id="o-kit"></output></div><input type="range" id="c-kit" min="0" max="2000" step="50" value="150"></div>
 <p class="lbl mute" style="margin:12px 0 0">What you want to make</p>
 <div class="fld"><div class="row"><label for="c-rate">Your day rate</label><output for="c-rate" id="o-rate"></output></div><input type="range" id="c-rate" min="200" max="1500" step="50" value="500"></div>
+<div class="fld"><div class="row"><label for="c-goal">What you want to make a month, after costs</label><output for="c-goal" id="o-goal"></output></div><input type="range" id="c-goal" min="2000" max="30000" step="500" value="8000"></div>
 <p class="lbl mute" style="margin:12px 0 0">Who and what</p>
 <div class="fld"><label for="c-who">Who the client is</label><select id="c-who"><option value="1">Small local business</option><option value="1.4" selected>Growing brand with ambition</option><option value="2">Established brand with real budget</option></select></div>
 <div class="fld"><label for="c-brief">What they're really buying</label><select id="c-brief"><option value="1">Content to post</option><option value="1.25" selected>Attention, leads or sales they can see</option><option value="1.5">Growth, with you owning the outcome</option></select></div>
@@ -70,6 +72,7 @@
 <div class="res"><p class="lbl">Your floor</p><p class="v" id="r-floor">£0</p><p class="s">What it costs to make plus your day rate. Never quote below this.</p></div>
 <div class="res"><p class="lbl">Your price</p><p class="v" id="r-price">£0</p><p class="s" id="r-price-s">A month.</p></div>
 <div class="res"><p class="lbl">What you actually earn</p><p class="v" id="r-day" style="font-size:clamp(32px,4vw,52px)">£0</p><p class="s" id="r-day-s">A day, after crew and costs.</p></div>
+<div class="res"><p class="lbl">Your route to your number</p><p class="v" id="r-route" style="font-size:clamp(32px,4vw,52px)">0</p><p class="s" id="r-route-s"></p></div>
 <div class="res"><p class="lbl">Say it as three options</p>
 <ul class="list" style="margin-top:8px;color:var(--paper)">
 <li style="border-color:#333"><span class="lbl">A</span><span id="t-a"></span></li>
@@ -126,13 +129,16 @@ var last={};
 var round=function(n){return n<2000?Math.round(n/50)*50:Math.round(n/100)*100};
 function calc(){
   var now=+$('c-now').value, shoot=+$('c-shoot').value, edits=+$('c-edits').value, hpe=+$('c-hpe').value, admin=+$('c-admin').value,
-      crew=+$('c-crew').value, kit=+$('c-kit').value, rate=+$('c-rate').value, who=+$('c-who').value, brief=+$('c-brief').value;
+      crew=+$('c-crew').value, kit=+$('c-kit').value, rate=+$('c-rate').value, goal=+$('c-goal').value, who=+$('c-who').value, brief=+$('c-brief').value;
   $('o-now').textContent=gbp(now); $('o-shoot').textContent=shoot; $('o-edits').textContent=edits; $('o-hpe').textContent=hpe+'h'; $('o-admin').textContent=admin+'h';
-  $('o-crew').textContent=gbp(crew); $('o-kit').textContent=gbp(kit); $('o-rate').textContent=gbp(rate);
+  $('o-crew').textContent=gbp(crew); $('o-kit').textContent=gbp(kit); $('o-rate').textContent=gbp(rate); $('o-goal').textContent=gbp(goal);
   var hours=shoot*10+edits*hpe+admin, days=hours/8;
   var floor=days*rate+crew+kit, price=round(floor*who*brief);
   var earn=price-crew-kit, perDay=days>0?earn/days:0;
   $('r-floor').textContent=gbp(round(floor));
+  var nClients=earn>0?Math.ceil(goal/earn):0, nDays=Math.round(nClients*days);
+  $('r-route').textContent=nClients?(nClients+(nClients===1?' client':' clients')):'n/a';
+  $('r-route-s').textContent=nClients?('At this price, to make '+gbp(goal)+' a month. That\'s about '+nDays+' days of your time a month'+(nDays>18?'. More than you have: raise the price, or bring in an editor and the agents so it isn\'t all you.':nDays>12?'. Doable, but full. Leverage is what gets you time back.':'. That\'s a good business.')):'';
   var gap=Math.max(0,price-now);
   $('r-gap').textContent=gap>0?gbp(gap):'£0';
   $('r-gap-s').textContent=gap>0?('A month you\'re leaving on the table. '+gbp(gap*12)+' a year.'):(now>0?'You\'re at or above your price. Now go and find more clients like this one.':'Put in what you charge now to see the gap.');
@@ -146,11 +152,11 @@ function calc(){
   $('t-c').textContent=gbp(round(price*1.7))+' / more output, more ownership, priority on everything.';
   var note=$('r-note'), msg='';
   if(hours===0) msg='Add some work to see a price.';
-  else if(price<1000) msg='Under £1k a month is hamster-wheel territory. Change who it\'s for or what they\'re buying before you change your hours.';
+  else if(price<1000) msg='Under £1k can still work if it\'s quick to make. Check what you actually earn a day, and how many of these you\'d need to hit your number.';
   else if(days>12) msg='That\'s over 12 days a month of your time for one client. Either the price goes up or someone else does the making.';
   note.textContent=msg; note.hidden=!msg;
 }
-['c-now','c-shoot','c-edits','c-hpe','c-admin','c-crew','c-kit','c-rate','c-who','c-brief'].forEach(function(id){$(id).addEventListener('input',calc)});
+['c-goal','c-now','c-shoot','c-edits','c-hpe','c-admin','c-crew','c-kit','c-rate','c-who','c-brief'].forEach(function(id){$(id).addEventListener('input',calc)});
 calc();
 
 // Save the numbers to the lead (if they signed up on this device) so emails and DMs can use them.
