@@ -35,7 +35,8 @@ module.exports = async (req, res) => {
     const lesson = course.lessons[d]; if (!lesson) continue;
     const first = ((L.note || "").match(/Name: ([^\n]+)/) || [, "there"])[1].split(" ")[0];
     const cm = (L.note || "").match(/Calc: now=(\d+) price=(\d+) floor=(\d+) gap=(\d+)/);
-    const calc = cm ? { now: +cm[1], price: +cm[2], floor: +cm[3], gap: +cm[4] } : null;
+    const hm = (L.note || "").match(/hours=(\d+) hnow=(\d+) hprice=(\d+)/);
+    const calc = cm ? Object.assign({ now: +cm[1], price: +cm[2], floor: +cm[3], gap: +cm[4] }, hm ? { hours: +hm[1], hnow: +hm[2], hprice: +hm[3] } : {}) : null;
     try { await send(Object.assign({ to: L.email }, lesson(first, calc), { unsub: `https://lockedindept.com/api/course?unsub=${L.id}&t=${token(L.id)}` })); sent.push([L.email, d]); }
     catch (e) { console.error(L.email, e.message); }
   }

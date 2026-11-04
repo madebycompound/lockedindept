@@ -18,7 +18,7 @@
 <p class="lbl mute" style="margin:0 0 16px">The Retainer Pricing Kit / Josh Pearson</p>
 <h1 class="big" style="font-size:clamp(48px,9vw,140px)">Same camera.<br>Same skill.<br>£1k or £10k.</h1>
 <p class="lead" style="margin-top:32px">I've sold social retainers for £1,000 a month and social retainers for £10,000 a month. I've done full-service retainers at $20,000 a month. The camera didn't change. What changed was who I was selling to, what I was promising, what it cost me to make, and what I decided I wanted to earn. This kit is that thinking, written down, with a calculator to run your own numbers.</p>
-<p class="lead" style="margin-top:20px">And to be straight with you: this isn't about everyone charging £10k a month. You can make very good money on £1,500 retainers. What matters is what each one pays you for the time it takes, and how many you can run without burning out. Know your numbers, then pick your route.</p>
+<p class="lead" style="margin-top:20px">And to be straight with you: this isn't about everyone charging £10k a month. You can make very good money on £1,500 retainers. What matters is what each one pays you for the time it takes, and how many you can run without burning out. It all comes down to one thing: time in, money out. Know your numbers, then pick your route.</p>
 <p class="lbl" style="margin-top:28px;display:flex;gap:28px;flex-wrap:wrap"><a href="#calc">Skip to the calculator</a><a href="/pricing-kit/retainer-pricing-kit.pdf" download>Download the PDF with the worksheet</a></p>
 </section>
 
@@ -68,7 +68,8 @@
 <div class="fld"><label for="c-brief">What they're really buying</label><select id="c-brief"><option value="1">Content to post</option><option value="1.25" selected>Attention, leads or sales they can see</option><option value="1.5">Growth, with you owning the outcome</option></select></div>
 </form>
 <div class="out" aria-live="polite">
-<div class="res" style="border-top:0;padding-top:0"><p class="lbl">The gap</p><p class="v" id="r-gap" style="color:var(--yellow)">£0</p><p class="s" id="r-gap-s"></p></div>
+<div class="res" style="border-top:0;padding-top:0"><p class="lbl">Time in, money out</p><p class="v" id="r-hour" style="color:var(--yellow)">£0</p><p class="s" id="r-hour-s"></p></div>
+<div class="res"><p class="lbl">The gap</p><p class="v" id="r-gap" style="font-size:clamp(32px,4vw,52px)">£0</p><p class="s" id="r-gap-s"></p></div>
 <div class="res"><p class="lbl">Your floor</p><p class="v" id="r-floor">£0</p><p class="s">What it costs to make plus your day rate. Never quote below this.</p></div>
 <div class="res"><p class="lbl">Your price</p><p class="v" id="r-price">£0</p><p class="s" id="r-price-s">A month.</p></div>
 <div class="res"><p class="lbl">What you actually earn</p><p class="v" id="r-day" style="font-size:clamp(32px,4vw,52px)">£0</p><p class="s" id="r-day-s">A day, after crew and costs.</p></div>
@@ -139,10 +140,13 @@ function calc(){
   var nClients=earn>0?Math.ceil(goal/earn):0, nDays=Math.round(nClients*days);
   $('r-route').textContent=nClients?(nClients+(nClients===1?' client':' clients')):'n/a';
   $('r-route-s').textContent=nClients?('At this price, to make '+gbp(goal)+' a month. That\'s about '+nDays+' days of your time a month'+(nDays>18?'. More than you have: raise the price, or bring in an editor and the agents so it isn\'t all you.':nDays>12?'. Doable, but full. Leverage is what gets you time back.':'. That\'s a good business.')):'';
+  var hNow=hours>0?Math.max(0,(now-crew-kit)/hours):0, hPrice=hours>0?Math.max(0,earn/hours):0;
+  $('r-hour').textContent=hours>0?(gbp(hNow)+' → '+gbp(hPrice)):'£0';
+  $('r-hour-s').textContent=hours>0?('An hour of your time, after costs. What you earn now, and at your price, for the same '+Math.round(hours)+' hours of work.'):'Add some work to see what an hour pays you.';
   var gap=Math.max(0,price-now);
   $('r-gap').textContent=gap>0?gbp(gap):'£0';
   $('r-gap-s').textContent=gap>0?('A month you\'re leaving on the table. '+gbp(gap*12)+' a year.'):(now>0?'You\'re at or above your price. Now go and find more clients like this one.':'Put in what you charge now to see the gap.');
-  last={now:now,price:price,floor:round(floor),gap:gap,day:Math.round(perDay)};
+  last={now:now,price:price,floor:round(floor),gap:gap,day:Math.round(perDay),hours:Math.round(hours),hnow:Math.round(hNow),hprice:Math.round(hPrice)};
   $('r-price').textContent=gbp(price);
   $('r-price-s').textContent='A month, for about '+Math.round(hours)+' hours of your time ('+(Math.round(days*10)/10)+' days).';
   $('r-day').textContent=gbp(perDay);
@@ -179,7 +183,7 @@ function card(){
   if(last.now>0){ t('I WAS CHARGING',72,y,30,500,M); var sz=fit(gbp(last.now),y+170,170,800,P);
     g.font='800 '+sz+'px '+F; var w=g.measureText(gbp(last.now)).width; g.fillStyle=P; g.fillRect(72,y+110,w,10); y+=330; }
   t('MY PRICE',72,y,30,500,M); fit(gbp(last.price),y+290,300,800,Y); t('A MONTH',72,y+360,34,700,P);
-  if(last.gap>0){ g.fillStyle='#333'; g.fillRect(72,y+430,936,2); t('THE GAP',72,y+500,30,500,M); fit(gbp(last.gap*12)+' A YEAR',y+600,96,800,P); }
+  g.fillStyle='#333'; g.fillRect(72,y+430,936,2); t('TIME IN, MONEY OUT',72,y+500,30,500,M); fit((last.now>0?gbp(last.hnow)+' TO ':'')+gbp(last.hprice)+' AN HOUR',y+600,96,800,P);
   g.fillStyle=P; g.fillRect(72,1690,936,2);
   t('SAME CAMERA. SAME SKILL.',72,1760,40,800,P); t('FIND YOURS: LOCKEDINDEPT.COM/PRICING-KIT',72,1812,26,500,M);
   return c;

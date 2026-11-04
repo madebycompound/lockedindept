@@ -37,7 +37,7 @@ async function saveCalc(b, res) {
   if (!/^[0-9a-f-]{36}$/i.test(id) || b.t !== token(id)) return res.status(400).json({ error: "bad id" });
   if (!key) return res.status(503).json({ error: "not configured" });
   const n = k => Math.max(0, Math.min(1e6, Math.round(+c[k] || 0)));
-  const line = `Calc: now=${n("now")} price=${n("price")} floor=${n("floor")} gap=${n("gap")} day=${n("day")}`;
+  const line = `Calc: now=${n("now")} price=${n("price")} floor=${n("floor")} gap=${n("gap")} day=${n("day")} hours=${n("hours")} hnow=${n("hnow")} hprice=${n("hprice")}`;
   const url = process.env.SUPABASE_URL || "https://pqsgymxddtrmzpcawzxi.supabase.co", H = { apikey: key, authorization: "Bearer " + key, "content-type": "application/json" };
   const g = await fetch(`${url}/rest/v1/leads?id=eq.${id}&select=note`, { headers: H }); const row = g.ok ? (await g.json())[0] : null;
   if (!row) return res.status(404).json({ error: "not found" });
