@@ -101,6 +101,7 @@ nav{display:flex;flex-wrap:wrap;gap:24px}nav a{text-decoration:none;min-height:4
 @media (max-width:860px){.fcell{border-left:0!important}}
 @media (max-width:640px){.bar nav a,.foot a{min-height:44px;display:inline-flex;align-items:center}.bar>span:nth-child(n+3){display:none}.kitb>span:last-child{display:none}}
 @media (max-width:860px){.ffig{flex:1 1 100%!important;min-height:440px!important}}
+.out5{display:grid;grid-template-columns:repeat(5,1fr)}.out5 .cell{gap:14px;padding-top:28px;padding-bottom:36px}.out5 p:not(.big){font-size:15px;line-height:1.5;margin:0}@media (max-width:1100px){.out5{grid-template-columns:1fr}.out5 .cellR{border-right:0;border-bottom:1px solid var(--ink)}}
 .ag6{display:grid;grid-template-columns:repeat(4,1fr);column-gap:40px}@media (max-width:1100px){.ag6{grid-template-columns:repeat(2,1fr)}}@media (max-width:640px){.ag6{grid-template-columns:1fr}}
 .fig .cap{text-shadow:0 1px 10px rgba(0,0,0,.55)}.fig.r .cap{color:var(--ink);opacity:.9;top:14px;bottom:auto}
 .fin{position:relative;height:clamp(240px,40vw,600px);overflow:hidden;border-top:1px solid var(--ink);background:var(--ink);color:var(--paper)}
@@ -140,7 +141,7 @@ img{max-width:100%}
 <div class="bar gut lbl">
 <span style="font-weight:700">Locked In Dept.</span>
 <span>Founding cohort / Ten places</span>
-<span>Starts Jan 2027</span>
+<span>Calls start Jan 2027</span>
 <nav aria-label="Main"><a href="/">Home</a><a href="#case">Case 001</a><a href="#how">How it works</a><a href="#programme">Price</a><a href="#apply">Apply</a></nav>
 </div>
 </header>
@@ -149,7 +150,7 @@ img{max-width:100%}
 <div class="cell cellR" style="flex:1 1 560px;gap:32px;padding-top:56px;padding-bottom:56px;justify-content:center">
 <p class="lbl in" style="animation-delay:.1s">The 90 days / Applications close 30 November</p>
 <h1 class="big" style="font-size:clamp(44px,7.2vw,112px)"><span class="mask"><span class="up" style="animation-delay:.05s">Charge like</span></span><span class="mask"><span class="up" style="animation-delay:.15s">the expert.</span></span><span class="mask"><span class="up" style="animation-delay:.25s">Scale without</span></span><span class="mask"><span class="up" style="animation-delay:.35s">the payroll.</span></span></h1>
-<p class="lead in" style="animation-delay:.7s;font-size:clamp(17px,1.4vw,20px);max-width:520px">Ninety days locked in with Josh Pearson. Fix the offer, the price and the pitch. Then install the agents that do the work a team used to. Ten creatives. January 2027.</p>
+<p class="lead in" style="animation-delay:.7s;font-size:clamp(17px,1.4vw,20px);max-width:520px">For freelance filmmakers, photographers and editors who already have clients and feel stuck: undercharging, or too busy to grow. Ninety days with Josh Pearson to fix your offer, your price and your pitch, then install the agents that do the work a team used to. Ten places. January 2027.</p>
 <div class="in" style="animation-delay:.9s;display:flex;flex-wrap:wrap;gap:12px 24px;align-items:center">
 <a class="btn" href="#apply" style="background:var(--yellow);color:var(--ink);border-color:var(--yellow)">Apply for January <svg aria-hidden="true" width="22" height="12" viewBox="0 0 22 12" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M0 6h20M15 1l5 5-5 5"></path></svg></a>
 <a class="lbl" href="/pricing-kit" style="min-height:44px;display:inline-flex;align-items:center;gap:8px;font-weight:700">Not ready? Get the free pricing kit <svg aria-hidden="true" width="22" height="12" viewBox="0 0 22 12" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M0 6h20M15 1l5 5-5 5"></path></svg></a>
@@ -249,13 +250,24 @@ img{max-width:100%}
 <div class="gut ag6" style="padding-bottom:28px"><div style="padding:16px 0;border-top:1px solid var(--ink);display:flex;gap:16px;align-items:baseline"><span class="lbl" style="flex:0 0 28px">00</span><span style="flex:1 1 auto"><strong style="display:block;font-size:17px">Offer creator</strong><span style="font-size:14px;line-height:1.4;color:var(--mute)">Your offer, written and priced. Run first.</span></span><span class="lbl" style="background:var(--yellow);padding:3px 7px;flex:0 0 auto">Ready</span></div><div style="padding:16px 0;border-top:1px solid var(--ink);display:flex;gap:16px;align-items:baseline"><span class="lbl" style="flex:0 0 28px">01</span><span style="flex:1 1 auto"><strong style="display:block;font-size:17px">Edit assistant</strong><span style="font-size:14px;line-height:1.4;color:var(--mute)">First cuts from your footage</span></span><span class="lbl mute" style="flex:0 0 auto">Soon</span></div><div style="padding:16px 0;border-top:1px solid var(--ink);display:flex;gap:16px;align-items:baseline"><span class="lbl" style="flex:0 0 28px">02</span><span style="flex:1 1 auto"><strong style="display:block;font-size:17px">Content scheduler</strong><span style="font-size:14px;line-height:1.4;color:var(--mute)">A week of posts from voice notes</span></span><span class="lbl mute" style="flex:0 0 auto">Soon</span></div><div style="padding:16px 0;border-top:1px solid var(--ink);display:flex;gap:16px;align-items:baseline"><span class="lbl" style="flex:0 0 28px">03</span><span style="flex:1 1 auto"><strong style="display:block;font-size:17px">Inbox agent</strong><span style="font-size:14px;line-height:1.4;color:var(--mute)">Replies drafted in your voice</span></span><span class="lbl" style="background:var(--yellow);padding:3px 7px;flex:0 0 auto">Ready</span></div><div style="padding:16px 0;border-top:1px solid var(--ink);display:flex;gap:16px;align-items:baseline"><span class="lbl" style="flex:0 0 28px">04</span><span style="flex:1 1 auto"><strong style="display:block;font-size:17px">Proposal builder</strong><span style="font-size:14px;line-height:1.4;color:var(--mute)">Call notes to priced proposal</span></span><span class="lbl mute" style="flex:0 0 auto">Soon</span></div><div style="padding:16px 0;border-top:1px solid var(--ink);display:flex;gap:16px;align-items:baseline"><span class="lbl" style="flex:0 0 28px">05</span><span style="flex:1 1 auto"><strong style="display:block;font-size:17px">Outreach agent</strong><span style="font-size:14px;line-height:1.4;color:var(--mute)">Finds and emails ideal clients</span></span><span class="lbl mute" style="flex:0 0 auto">Soon</span></div><div style="padding:16px 0;border-top:1px solid var(--ink);display:flex;gap:16px;align-items:baseline"><span class="lbl" style="flex:0 0 28px">06</span><span style="flex:1 1 auto"><strong style="display:block;font-size:17px">Client onboarding</strong><span style="font-size:14px;line-height:1.4;color:var(--mute)">Welcome, brief and kickoff booked</span></span><span class="lbl mute" style="flex:0 0 auto">Soon</span></div><div style="padding:16px 0;border-top:1px solid var(--ink);display:flex;gap:16px;align-items:baseline"><span class="lbl" style="flex:0 0 28px">07</span><span style="flex:1 1 auto"><strong style="display:block;font-size:17px">Brand kit</strong><span style="font-size:14px;line-height:1.4;color:var(--mute)">Locks your look, builds your templates</span></span><span class="lbl" style="background:var(--yellow);padding:3px 7px;flex:0 0 auto">Ready</span></div></div>
 </section>
 
+<section class="rule" id="outcome" aria-label="What you walk away with">
+<div class="strip gut meta lbl"><span>05 / By day 90</span><span>What you walk away with</span></div>
+<div class="out5">
+<div class="cell cellR"><span class="lbl">01</span><p class="big" style="font-size:clamp(24px,2.2vw,34px);line-height:.95;letter-spacing:-.04em">An offer you can send.</p><p>Written, priced on value, and ready to go out before January.</p></div>
+<div class="cell cellR"><span class="lbl">02</span><p class="big" style="font-size:clamp(24px,2.2vw,34px);line-height:.95;letter-spacing:-.04em">A rate card and the words.</p><p>Three options, one obvious choice, and exactly what to say when they ask the price.</p></div>
+<div class="cell cellR"><span class="lbl">03</span><p class="big" style="font-size:clamp(24px,2.2vw,34px);line-height:.95;letter-spacing:-.04em">Agents doing the work.</p><p>Installed in your own Claude, so the inbox, edits and outreach stop eating your week.</p></div>
+<div class="cell cellR"><span class="lbl">04</span><p class="big" style="font-size:clamp(24px,2.2vw,34px);line-height:.95;letter-spacing:-.04em">A business built to your hours.</p><p>Your constraints set on day one: hours, protected time and the number. Core Four scored again at day ninety.</p></div>
+<div class="cell"><span class="lbl">05</span><p class="big" style="font-size:clamp(24px,2.2vw,34px);line-height:.95;letter-spacing:-.04em">Proof it paid.</p><p>20 offers sent, and the guarantee: you make back what you paid, or Josh keeps working with you free.</p></div>
+</div>
+</section>
+
 <section class="rule" id="programme" aria-label="Price and apply">
-<div class="strip gut meta lbl"><span>05 / The 90 days</span><span>Founding cohort / Ten places</span></div>
+<div class="strip gut meta lbl"><span>06 / The 90 days</span><span>Founding cohort / Ten places</span></div>
 <div class="split">
 <div class="cell cellR" style="flex:1 1 420px;gap:32px;padding-top:40px;padding-bottom:48px">
 <div><p class="rv" style="font-size:clamp(56px,7vw,110px);line-height:.85;font-weight:800;letter-spacing:-.05em">£3,000</p><p class="lbl" style="margin-top:12px">Founding price / Rises for cohort two / 1:1 version £6,000</p></div>
 <ul class="list rv" style="max-width:520px">
-<li><span class="lbl">A</span><span><strong>Starts in December.</strong> Portal and agents open the day you join. Workshop recorded, with a workbook.</span></li>
+<li><span class="lbl">A</span><span><strong>Opens in December.</strong> Portal and agents open the day you join, and the live workshop is recorded with a workbook. The 90 days of weekly calls start in January.</span></li>
 <li><span class="lbl">B</span><span><strong>Weekly calls for 90 days</strong>, the Core Four tracked, the AI assistant trained on all of it.</span></li>
 <li><span class="lbl">C</span><span><strong>Every agent</strong>, set up and documented, plus new ones as the cohort asks.</span></li>
 <li><span class="lbl">D</span><span><strong>After:</strong> stay on monthly for the portal and the room, or step up to the mastermind: four events a year, Bali and beyond.</span></li>
