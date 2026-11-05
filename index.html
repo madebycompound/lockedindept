@@ -49,7 +49,7 @@ h1,h2,h3,p{margin:0}
 .fig{position:relative;overflow:hidden;background:var(--ghost)}
 .fig.o{background:var(--orange)}.fig.r{background:var(--red)}.fig.b{background:var(--blue)}
 .fig .cap{position:absolute;left:16px;bottom:14px;color:var(--paper);opacity:.85}
-.fig.o .cap{color:var(--ink)}
+.fig .cap{text-shadow:0 1px 10px rgba(0,0,0,.55)}.fig.o .cap{color:var(--paper)}
 .grain{position:fixed;inset:0;pointer-events:none;z-index:30;opacity:.05;background:url(/img/grain.png)}
 header{border-bottom:1px solid var(--ink)}
 .bar{min-height:52px;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px 32px;padding-block:8px}
@@ -88,6 +88,8 @@ nav{display:flex;flex-wrap:wrap;gap:24px}nav a{text-decoration:none;min-height:4
 .dark .core p:not(.ghost){color:#C9C8C3}
 .dark .core h3{color:var(--paper)}
 @media (max-width:640px){.dark .cellR{border-bottom-color:#2A2A28}}
+@media (max-width:640px){.bar nav a,.foot a,.door a{min-height:44px;display:inline-flex;align-items:center}}
+@media (max-width:640px){.bar>span:nth-child(n+2){display:none}.door>span:nth-child(2),.door>a:last-child{display:none}.door{gap:0 16px}}
 .core h3{font-size:clamp(28px,2.6vw,38px);line-height:1;font-weight:800;letter-spacing:-.035em;text-transform:uppercase;margin-bottom:12px}
 .core>div:last-child>p{min-height:calc(15px * 1.5 * 3)}
 .code{padding:18px 20px;background:var(--ink);color:var(--paper);font-family:'SF Mono',Menlo,Consolas,monospace;font-size:13px;overflow-x:auto;white-space:nowrap}

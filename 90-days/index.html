@@ -62,7 +62,7 @@ h1,h2,h3,p{margin:0}
 .fig{position:relative;overflow:hidden;background:var(--ghost)}
 .fig.o{background:var(--orange)}.fig.r{background:var(--red)}.fig.b{background:var(--blue)}
 .fig .cap{position:absolute;left:16px;bottom:14px;color:var(--paper);opacity:.85}
-.fig.o .cap{color:var(--ink)}
+.fig.o .cap{color:var(--paper)}
 .grain{position:fixed;inset:0;pointer-events:none;z-index:30;opacity:.05;background:url(/img/grain.png)}
 header{border-bottom:1px solid var(--ink)}
 .bar{min-height:52px;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px 32px;padding-block:8px}
@@ -99,8 +99,9 @@ nav{display:flex;flex-wrap:wrap;gap:24px}nav a{text-decoration:none;min-height:4
 .list li{display:flex;gap:24px;padding-block:18px;border-bottom:1px solid var(--ink);font-size:17px;line-height:1.4}
 .list li .lbl{flex:0 0 32px;padding-top:5px}
 @media (max-width:860px){.fcell{border-left:0!important}}
+@media (max-width:640px){.bar nav a,.foot a{min-height:44px;display:inline-flex;align-items:center}.bar>span:nth-child(n+3){display:none}.kitb>span:last-child{display:none}}
 .ag6{display:grid;grid-template-columns:repeat(3,1fr);column-gap:48px}@media (max-width:860px){.ag6{grid-template-columns:1fr}}
-.fig.r .cap{color:var(--ink);opacity:.9}
+.fig .cap{text-shadow:0 1px 10px rgba(0,0,0,.55)}.fig.r .cap{color:var(--ink);opacity:.9;top:14px;bottom:auto}
 .fin{position:relative;height:clamp(240px,40vw,600px);overflow:hidden;border-top:1px solid var(--ink);background:var(--ink);color:var(--paper)}
 .fin .meta{z-index:2;color:var(--paper)}.fin .meta a{color:var(--paper)}
 .phys{position:absolute;inset:0;width:100%;height:100%;z-index:0}
@@ -175,7 +176,7 @@ img{max-width:100%}
 <div class="split">
 <div class="cell cellR" style="flex:1 1 360px;gap:16px;padding-top:32px;padding-bottom:36px"><span class="lbl">Trap 01 / Under-charging</span><p class="big rv" style="font-size:clamp(30px,3.4vw,52px);line-height:.9;letter-spacing:-.04em">Fear sets<br>your price.</p><p class="rv" style="font-size:16px;line-height:1.5;max-width:420px">You know you're good. But when it's time to say the number, you shave it down before they can. Small-budget clients, treated like a camera operator, chasing the next project before the last one's paid.</p></div>
 <div class="cell cellR" style="flex:1 1 360px;gap:16px;padding-top:32px;padding-bottom:36px"><span class="lbl">Trap 02 / Over-booked</span><p class="big rv" style="font-size:clamp(30px,3.4vw,52px);line-height:.9;letter-spacing:-.04em">Too busy<br>to grow.</p><p class="rv" style="font-size:16px;line-height:1.5;max-width:420px">Fully booked and it still isn't enough. Every client, every edit, every late night is you. More clients feels impossible. Stopping feels worse. Trapped in the business you built to get free.</p></div>
-<div class="fig r wp" style="flex:1 1 280px;min-height:360px"><img src="/img/orange-motion.webp" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 70%" loading="lazy" decoding="async"><span class="cap lbl">The way out isn't more hours</span></div>
+<div class="fig r wp" style="flex:1 1 280px;min-height:360px"><img src="/img/orange-motion.webp" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 70%" loading="lazy" decoding="async"></div>
 </div>
 <p class="big gut rv" style="font-size:clamp(26px,3.6vw,56px);line-height:.95;letter-spacing:-.04em;padding-block:36px;border-top:1px solid var(--ink)">Either way, the life you actually want gets further away.</p>
 </section>
@@ -186,7 +187,7 @@ img{max-width:100%}
 <div class="cell cellR" style="flex:1 1 420px;gap:24px;padding-top:40px;padding-bottom:48px;justify-content:center">
 <h2 class="big rv" style="font-size:clamp(36px,5vw,76px);line-height:.88;letter-spacing:-.05em">The gap isn't<br>your pricing.<br>It's you.</h2>
 <p class="lead rv">You're not under-skilled. You're under-sold, mostly by yourself. The fix is two things at once. <strong>Expertise:</strong> own a result and charge like the expert who delivers it. <strong>Leverage:</strong> build the system so the work doesn't need you in every frame.</p>
-<p class="rv" style="font-size:15px;line-height:1.5;color:var(--mute);max-width:480px">Start with the life you want, then build the business inside it. With four-hour days you can't sell hours, so this is the only way the maths works.</p>
+<p class="rv" style="font-size:15px;line-height:1.5;max-width:480px">Start with the life you want, then build the business inside it. With four-hour days you can't sell hours, so this is the only way the maths works.</p>
 </div>
 <div class="cell rv" style="flex:1 1 420px;padding-top:40px;padding-bottom:48px;justify-content:center"><div role="img" aria-label="Expertise times leverage. Service provider: low both. Busy expert: high expertise, low leverage. Content factory: low expertise, high leverage. The Dept.: high both." style="display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--ink)">
 <div style="padding:20px;border-right:1px solid var(--ink);border-bottom:1px solid var(--ink)"><span class="lbl" style="color:var(--mute)">Expertise, no leverage</span><p style="margin:8px 0 6px;font-weight:800;text-transform:uppercase;letter-spacing:-.03em;line-height:.95;font-size:clamp(20px,2.2vw,30px)">Busy expert</p><p style="font-size:15px;line-height:1.45">Good money, capped by your hours.</p></div>
@@ -293,7 +294,7 @@ img{max-width:100%}
 <a class="btn apply-bar" href="#apply" aria-hidden="true" tabindex="-1" style="justify-content:space-between"><span>Apply / Ten places</span><svg aria-hidden="true" width="22" height="12" viewBox="0 0 22 12" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M0 6h20M15 1l5 5-5 5"></path></svg></a>
 
 <section class="rule" aria-label="Free pricing kit" >
-<div class="gut lbl" style="display:flex;justify-content:space-between;gap:16px;padding-block:20px;border-bottom:1px solid var(--ink)"><span>Not ready to apply? Free kit</span><span>The Retainer Pricing Kit</span></div>
+<div class="gut lbl kitb" style="display:flex;justify-content:space-between;gap:16px;padding-block:20px;border-bottom:1px solid var(--ink)"><span>Not ready to apply? Free kit</span><span>The Retainer Pricing Kit</span></div>
 <div class="gut" style="display:flex;flex-wrap:wrap;gap:32px 48px;align-items:flex-end;padding-block:56px">
 <h2 class="big" style="flex:1 1 520px;min-width:0;margin:0;font-size:clamp(40px,6vw,96px);line-height:.88;letter-spacing:-.05em ">Same camera.<br>Same skill.<br>£1k or £10k.</h2>
 <div style="flex:1 1 320px;min-width:0;max-width:460px;display:flex;flex-direction:column;gap:24px">
@@ -304,7 +305,7 @@ img{max-width:100%}
 </section>
 <section class="fin" aria-label="Finale">
 <canvas class="phys" data-phys="field" aria-hidden="true"></canvas>
-<div class="gut meta lbl" style="position:absolute;top:24px;left:0;right:0"><span>Applications close 30 November</span><a class="arrow" href="#apply" style="text-decoration:none;display:inline-flex;align-items:center;gap:10px;min-height:44px;margin-top:-14px">Apply for January <svg aria-hidden="true" width="22" height="12" viewBox="0 0 22 12" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M0 6h20M15 1l5 5-5 5"></path></svg></a></div>
+<div class="gut meta lbl" style="position:absolute;top:24px;left:0;right:0"><span>Applications close 30 November</span><a class="btn" href="#apply" style="background:var(--yellow);color:var(--ink);border-color:var(--yellow);min-height:44px;padding:0 18px;margin-top:-6px">Apply for January <svg aria-hidden="true" width="22" height="12" viewBox="0 0 22 12" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M0 6h20M15 1l5 5-5 5"></path></svg></a></div>
 <p class="crop rs" aria-hidden="true">Lock</p>
 </section>
 
