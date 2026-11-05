@@ -15,7 +15,7 @@ ${unsub ? `<tr><td style="padding:12px 24px 16px;font-size:11px;line-height:1.5;
 }
 async function send({ to, subject, ...rest }) {
   const key = process.env.RESEND_API_KEY; if (!key) throw new Error("RESEND_API_KEY not set");
-  const r = await fetch("https://api.resend.com/emails", { method: "POST", headers: { authorization: "Bearer " + key, "content-type": "application/json" }, body: JSON.stringify(Object.assign({ from: FROM, to: [to], subject, html: shell(rest) }, rest.unsub ? { headers: { "List-Unsubscribe": "<" + rest.unsub + ">", "List-Unsubscribe-Post": "List-Unsubscribe=One-Click" } } : {})) });
+  const r = await fetch("https://api.resend.com/emails", { method: "POST", headers: { authorization: "Bearer " + key, "content-type": "application/json" }, body: JSON.stringify(Object.assign({ from: FROM, reply_to: "info@madebycompound.com", to: [to], subject, html: shell(rest) }, rest.unsub ? { headers: { "List-Unsubscribe": "<" + rest.unsub + ">", "List-Unsubscribe-Post": "List-Unsubscribe=One-Click" } } : {})) });
   if (!r.ok) throw new Error("Resend " + r.status + " " + await r.text());
   return r.json();
 }
