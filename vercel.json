@@ -10,12 +10,34 @@
           "value": "noindex"
         }
       ]
+    },
+    {
+      "source": "/fonts/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/img/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=604800, stale-while-revalidate=86400"
+        }
+      ]
     }
   ],
   "crons": [
     {
       "path": "/api/remind",
       "schedule": "0 9 * * *"
+    },
+    {
+      "path": "/api/course",
+      "schedule": "0 8 * * *"
     }
   ],
   "functions": {

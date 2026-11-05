@@ -14,6 +14,12 @@
       "version": "0.1.0"
     },
     {
+      "name": "brand-kit",
+      "source": "./plugins/brand-kit",
+      "description": "Load your brand material, references and Pinterest boards. It finds the look, locks a brand you own, then builds your video style guide, social templates and any asset you need. Run after the offer creator. LID-BRD-07",
+      "version": "0.1.0"
+    },
+    {
       "name": "inbox-agent",
       "source": "./plugins/inbox-agent",
       "description": "Sorts your inbox and drafts replies in your voice. You read and hit send. LID-INB-03",

@@ -1,0 +1,17 @@
+{
+  "name": "brand-kit",
+  "version": "0.1.0",
+  "description": "Locked In Dept. brand kit builder (LID-BRD-07). Load your existing brand material, references and Pinterest boards. It finds the look you're reaching for, translates it into a system you own, then builds your video style guide, social templates and any brand asset you need from it.",
+  "author": {
+    "name": "Josh Pearson",
+    "url": "https://lockedindept.com"
+  },
+  "homepage": "https://lockedindept.com/portal/agents",
+  "keywords": [
+    "brand",
+    "identity",
+    "video style",
+    "social templates",
+    "creative business"
+  ]
+}
