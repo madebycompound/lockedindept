@@ -63,7 +63,7 @@ h1,h2,h3,p{margin:0}
 .fig.o{background:var(--orange)}.fig.r{background:var(--red)}.fig.b{background:var(--blue)}
 .fig .cap{position:absolute;left:16px;bottom:14px;color:var(--paper);opacity:.85}
 .fig.o .cap{color:var(--ink)}
-.grain{position:fixed;inset:0;pointer-events:none;z-index:30;opacity:.35;mix-blend-mode:multiply}
+.grain{position:fixed;inset:0;pointer-events:none;z-index:30;opacity:.05;background:url(/img/grain.png)}
 header{border-bottom:1px solid var(--ink)}
 .bar{min-height:52px;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px 32px;padding-block:8px}
 nav{display:flex;flex-wrap:wrap;gap:24px}nav a{text-decoration:none;min-height:44px;display:inline-flex;align-items:center}
@@ -98,6 +98,9 @@ nav{display:flex;flex-wrap:wrap;gap:24px}nav a{text-decoration:none;min-height:4
 .list{list-style:none;margin:0;padding:0}
 .list li{display:flex;gap:24px;padding-block:18px;border-bottom:1px solid var(--ink);font-size:17px;line-height:1.4}
 .list li .lbl{flex:0 0 32px;padding-top:5px}
+@media (max-width:860px){.fcell{border-left:0!important}}
+.ag6{display:grid;grid-template-columns:repeat(3,1fr);column-gap:48px}@media (max-width:860px){.ag6{grid-template-columns:1fr}}
+.fig.r .cap{color:var(--ink);opacity:.9}
 .fin{position:relative;height:clamp(240px,40vw,600px);overflow:hidden;border-top:1px solid var(--ink);background:var(--ink);color:var(--paper)}
 .fin .meta{z-index:2;color:var(--paper)}.fin .meta a{color:var(--paper)}
 .phys{position:absolute;inset:0;width:100%;height:100%;z-index:0}
@@ -129,7 +132,7 @@ img{max-width:100%}
 </head>
 <body>
 
-<svg class="grain" aria-hidden="true"><filter id="g"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" stitchTiles="stitch"></feTurbulence><feColorMatrix values="0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 0.18 0"></feColorMatrix></filter><rect width="100%" height="100%" filter="url(#g)"></rect></svg>
+<div class="grain" aria-hidden="true"></div>
 
 <header>
 <div class="bar gut lbl">
@@ -143,7 +146,7 @@ img{max-width:100%}
 <section class="rule split" id="top" aria-label="The 90 days">
 <div class="cell cellR" style="flex:1 1 560px;gap:32px;padding-top:56px;padding-bottom:56px;justify-content:center">
 <p class="lbl in" style="animation-delay:.1s">The 90 days / Applications close 30 November</p>
-<h1 class="big" style="font-size:clamp(44px,7.2vw,112px)"><span class="mask"><span class="up" style="animation-delay:.05s">Charge like</span></span><span class="mask"><span class="up" style="animation-delay:.15s">the expert.</span></span><span class="mask"><span class="up" style="animation-delay:.25s;color:var(--grey)">Scale without</span></span><span class="mask"><span class="up" style="animation-delay:.35s;color:var(--grey)">the payroll.</span></span></h1>
+<h1 class="big" style="font-size:clamp(44px,7.2vw,112px)"><span class="mask"><span class="up" style="animation-delay:.05s">Charge like</span></span><span class="mask"><span class="up" style="animation-delay:.15s">the expert.</span></span><span class="mask"><span class="up" style="animation-delay:.25s">Scale without</span></span><span class="mask"><span class="up" style="animation-delay:.35s">the payroll.</span></span></h1>
 <p class="lead in" style="animation-delay:.7s;font-size:clamp(17px,1.4vw,20px);max-width:520px">Ninety days locked in with Josh Pearson. Fix the offer, the price and the pitch. Then install the agents that do the work a team used to. Ten creatives. January 2027.</p>
 <div class="in" style="animation-delay:.9s;display:flex;flex-wrap:wrap;gap:12px 24px;align-items:center">
 <a class="btn" href="#apply" style="background:var(--yellow);color:var(--ink);border-color:var(--yellow)">Apply for January <svg aria-hidden="true" width="22" height="12" viewBox="0 0 22 12" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M0 6h20M15 1l5 5-5 5"></path></svg></a>
@@ -154,11 +157,11 @@ img{max-width:100%}
 </section>
 
 <section class="rule split" aria-label="Proof" style="background:var(--ink);color:var(--paper)">
-<div class="gut" style="flex:1 1 240px;padding-block:20px;display:flex;align-items:center;gap:12px"><span class="lbl" style="color:#A9A8A3">Case 001</span><span class="lbl">Josh Gore / Filmmaker</span></div>
+<div class="gut" style="flex:1 1 240px;padding-block:20px;display:flex;align-items:center;gap:12px"><span class="lbl" style="color:#A9A8A3">Results</span><span class="lbl">Case 001 and clients</span></div>
 <div style="flex:3 1 600px;display:flex;flex-wrap:wrap">
-<div class="gut" style="flex:1 1 180px;padding-block:20px;border-left:1px solid #333"><p style="font-weight:800;font-size:clamp(26px,2.6vw,40px);letter-spacing:-.04em;line-height:.9">£500 → £5K</p><p class="lbl" style="margin-top:6px;color:#A9A8A3">Shoots to monthly retainers</p></div>
-<div class="gut" style="flex:1 1 180px;padding-block:20px;border-left:1px solid #333"><p style="font-weight:800;font-size:clamp(26px,2.6vw,40px);letter-spacing:-.04em;line-height:.9">£5K → £25K</p><p class="lbl" style="margin-top:6px;color:#A9A8A3">Months, burnt out to a team</p></div>
-<div class="gut" style="flex:1 1 180px;padding-block:20px;border-left:1px solid #333"><p style="font-weight:800;font-size:clamp(26px,2.6vw,40px);letter-spacing:-.04em;line-height:.9">100</p><p class="lbl" style="margin-top:6px;color:#A9A8A3">Ideal clients in one room</p></div>
+<div class="gut" style="flex:1 1 180px;padding-block:20px;border-left:1px solid #333"><p style="font-weight:800;font-size:clamp(26px,2.6vw,40px);letter-spacing:-.04em;line-height:.9">£500 → £5K</p><p class="lbl" style="margin-top:6px;color:#A9A8A3">Josh Gore: shoots to monthly retainers</p></div>
+<div class="gut" style="flex:1 1 180px;padding-block:20px;border-left:1px solid #333"><p style="font-weight:800;font-size:clamp(26px,2.6vw,40px);letter-spacing:-.04em;line-height:.9">£5K → £25K</p><p class="lbl" style="margin-top:6px;color:#A9A8A3">Creatives I coach: burnt out at £5K to a £25K month</p></div>
+<div class="gut" style="flex:1 1 180px;padding-block:20px;border-left:1px solid #333"><p style="font-weight:800;font-size:clamp(26px,2.6vw,40px);letter-spacing:-.04em;line-height:.9">100</p><p class="lbl" style="margin-top:6px;color:#A9A8A3">Josh Gore: ideal clients in one room</p></div>
 </div>
 </section>
 
@@ -181,7 +184,7 @@ img{max-width:100%}
 <div class="strip gut meta lbl"><span>02 / The shift</span><span>You win on expertise × leverage</span></div>
 <div class="split">
 <div class="cell cellR" style="flex:1 1 420px;gap:24px;padding-top:40px;padding-bottom:48px;justify-content:center">
-<h2 class="big rv" style="font-size:clamp(36px,5vw,76px);line-height:.88;letter-spacing:-.05em">The gap isn't<br>your pricing.<br><span style="color:var(--grey)">It's you.</span></h2>
+<h2 class="big rv" style="font-size:clamp(36px,5vw,76px);line-height:.88;letter-spacing:-.05em">The gap isn't<br>your pricing.<br>It's you.</h2>
 <p class="lead rv">You're not under-skilled. You're under-sold, mostly by yourself. The fix is two things at once. <strong>Expertise:</strong> own a result and charge like the expert who delivers it. <strong>Leverage:</strong> build the system so the work doesn't need you in every frame.</p>
 <p class="rv" style="font-size:15px;line-height:1.5;color:var(--mute);max-width:480px">Start with the life you want, then build the business inside it. With four-hour days you can't sell hours, so this is the only way the maths works.</p>
 </div>
@@ -224,17 +227,28 @@ img{max-width:100%}
 </section>
 
 
-<section class="rule" id="how" aria-label="How it works">
-<div class="strip gut meta lbl"><span>03 / How it works</span><span>Dec 2026 to Mar 2027</span></div>
-<div class="split">
-<div class="cell cellR" style="flex:1 1 300px;gap:16px;padding-top:32px;padding-bottom:40px"><span class="lbl">01 / The offer</span><p class="big rv" style="font-size:clamp(26px,2.6vw,40px);line-height:.92;letter-spacing:-.04em">Offer, price,<br>pitch. Fixed.</p><p class="rv" style="font-size:15px;line-height:1.5">A live online workshop in December: walk out with offers ready to send before January. Then weekly group calls for 90 days on pricing, selling and going to market, with the psychology underneath.</p></div>
-<div class="cell cellR" style="flex:1 1 300px;gap:16px;padding-top:32px;padding-bottom:40px"><span class="lbl">02 / The person</span><p class="big rv" style="font-size:clamp(26px,2.6vw,40px);line-height:.92;letter-spacing:-.04em">Core Four,<br>scored day one.</p><p class="rv" style="font-size:15px;line-height:1.5">Wealth, self, health, relationships, out of ten. It shows where you're bleeding energy. You set your constraints next to it: hours, protected time, the number. Then we build to fit them, and track it to day ninety.</p></div>
-<div class="cell" style="flex:1 1 300px;gap:16px;padding-top:32px;padding-bottom:40px"><span class="lbl">03 / The leverage</span><p class="big rv" style="font-size:clamp(26px,2.6vw,40px);line-height:.92;letter-spacing:-.04em">Your team,<br>without hiring one.</p><p class="rv" style="font-size:15px;line-height:1.5">A library of working AI agents, installed in one line. They do the work you've been doing at midnight, so you own more of the result without adding hours.</p><div class="rv" style="margin-top:8px"><div style="padding:16px 0;border-top:1px solid var(--ink);display:flex;gap:16px;align-items:baseline"><span class="lbl" style="flex:0 0 28px">01</span><span style="flex:1 1 auto"><strong style="display:block;font-size:17px">Edit assistant</strong><span style="font-size:14px;line-height:1.4;color:var(--mute)">First cuts from your footage</span></span></div><div style="padding:16px 0;border-top:1px solid var(--ink);display:flex;gap:16px;align-items:baseline"><span class="lbl" style="flex:0 0 28px">02</span><span style="flex:1 1 auto"><strong style="display:block;font-size:17px">Content scheduler</strong><span style="font-size:14px;line-height:1.4;color:var(--mute)">A week of posts from voice notes</span></span></div><div style="padding:16px 0;border-top:1px solid var(--ink);display:flex;gap:16px;align-items:baseline"><span class="lbl" style="flex:0 0 28px">03</span><span style="flex:1 1 auto"><strong style="display:block;font-size:17px">Inbox agent</strong><span style="font-size:14px;line-height:1.4;color:var(--mute)">Replies drafted in your voice</span></span></div><div style="padding:16px 0;border-top:1px solid var(--ink);display:flex;gap:16px;align-items:baseline"><span class="lbl" style="flex:0 0 28px">04</span><span style="flex:1 1 auto"><strong style="display:block;font-size:17px">Proposal builder</strong><span style="font-size:14px;line-height:1.4;color:var(--mute)">Call notes to priced proposal</span></span></div><div style="padding:16px 0;border-top:1px solid var(--ink);display:flex;gap:16px;align-items:baseline"><span class="lbl" style="flex:0 0 28px">05</span><span style="flex:1 1 auto"><strong style="display:block;font-size:17px">Outreach agent</strong><span style="font-size:14px;line-height:1.4;color:var(--mute)">Finds and emails ideal clients</span></span></div><div style="padding:16px 0;border-top:1px solid var(--ink);display:flex;gap:16px;align-items:baseline"><span class="lbl" style="flex:0 0 28px">06</span><span style="flex:1 1 auto"><strong style="display:block;font-size:17px">Offer creator</strong><span style="font-size:14px;line-height:1.4;color:var(--mute)">Your offer, written and priced</span></span></div></div></div>
+<section class="rule split" aria-label="Founder">
+<div class="fig wp" style="flex:0 1 380px;min-width:260px;min-height:420px;background:var(--ink)"><img src="/img/josh-pearson-2.webp" alt="Josh Pearson, founder of Locked In Dept." loading="lazy" decoding="async" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 58%"><span class="cap lbl" style="top:14px;bottom:auto">Josh Pearson / Founder</span></div>
+<div class="cell fcell" style="flex:1 1 420px;gap:24px;padding-top:40px;padding-bottom:48px;border-left:1px solid var(--ink);justify-content:center">
+<p class="lbl">03 / Who's behind it</p>
+<p class="big rv" style="font-size:clamp(26px,3vw,46px);line-height:.95;letter-spacing:-.04em">The bigger the climb in business, the bigger the climb you make inside your own head.</p>
+<p class="rv" style="font-size:16px;line-height:1.55;max-width:560px">I've been on the entrepreneur path since I was 13: twenty-two years of building, more than a decade behind a camera, retainers from £1,000 to $20,000 a month. I've taken creatives from burning out at £5k months to their first £20k, £25k and £30k months. The work was never what held them back. It was what they believed they were allowed to charge, and whether they backed themselves. I find where you're holding yourself back, and I don't let you stay there.</p>
 </div>
 </section>
 
+<section class="rule" id="how" aria-label="How it works">
+<div class="strip gut meta lbl"><span>04 / How it works</span><span>Dec 2026 to Mar 2027</span></div>
+<div class="split">
+<div class="cell cellR" style="flex:1 1 300px;gap:16px;padding-top:32px;padding-bottom:40px"><span class="lbl">01 / The offer</span><p class="big rv" style="font-size:clamp(26px,2.6vw,40px);line-height:.92;letter-spacing:-.04em">Offer, price,<br>pitch. Fixed.</p><p class="rv" style="font-size:15px;line-height:1.5">A live online workshop in December: walk out with offers ready to send before January. Then weekly group calls for 90 days on pricing, selling and going to market, with the psychology underneath.</p></div>
+<div class="cell cellR" style="flex:1 1 300px;gap:16px;padding-top:32px;padding-bottom:40px"><span class="lbl">02 / The person</span><p class="big rv" style="font-size:clamp(26px,2.6vw,40px);line-height:.92;letter-spacing:-.04em">Core Four,<br>scored day one.</p><p class="rv" style="font-size:15px;line-height:1.5">Wealth, self, health, relationships, out of ten. It shows where you're bleeding energy. You set your constraints next to it: hours, protected time, the number. Then we build to fit them, and track it to day ninety.</p></div>
+<div class="cell" style="flex:1 1 300px;gap:16px;padding-top:32px;padding-bottom:40px"><span class="lbl">03 / The leverage</span><p class="big rv" style="font-size:clamp(26px,2.6vw,40px);line-height:.92;letter-spacing:-.04em">Your team,<br>without hiring one.</p><p class="rv" style="font-size:15px;line-height:1.5">A library of working AI agents, installed in one line. They do the work you've been doing at midnight, so you own more of the result without adding hours.</p></div>
+</div>
+<div class="gut" style="border-top:1px solid var(--ink);padding-block:28px 12px"><p class="lbl mute">Six agents, installed into your own Claude. More every month.</p></div>
+<div class="gut ag6" style="padding-bottom:28px"><div style="padding:16px 0;border-top:1px solid var(--ink);display:flex;gap:16px;align-items:baseline"><span class="lbl" style="flex:0 0 28px">01</span><span style="flex:1 1 auto"><strong style="display:block;font-size:17px">Edit assistant</strong><span style="font-size:14px;line-height:1.4;color:var(--mute)">First cuts from your footage</span></span></div><div style="padding:16px 0;border-top:1px solid var(--ink);display:flex;gap:16px;align-items:baseline"><span class="lbl" style="flex:0 0 28px">02</span><span style="flex:1 1 auto"><strong style="display:block;font-size:17px">Content scheduler</strong><span style="font-size:14px;line-height:1.4;color:var(--mute)">A week of posts from voice notes</span></span></div><div style="padding:16px 0;border-top:1px solid var(--ink);display:flex;gap:16px;align-items:baseline"><span class="lbl" style="flex:0 0 28px">03</span><span style="flex:1 1 auto"><strong style="display:block;font-size:17px">Inbox agent</strong><span style="font-size:14px;line-height:1.4;color:var(--mute)">Replies drafted in your voice</span></span></div><div style="padding:16px 0;border-top:1px solid var(--ink);display:flex;gap:16px;align-items:baseline"><span class="lbl" style="flex:0 0 28px">04</span><span style="flex:1 1 auto"><strong style="display:block;font-size:17px">Proposal builder</strong><span style="font-size:14px;line-height:1.4;color:var(--mute)">Call notes to priced proposal</span></span></div><div style="padding:16px 0;border-top:1px solid var(--ink);display:flex;gap:16px;align-items:baseline"><span class="lbl" style="flex:0 0 28px">05</span><span style="flex:1 1 auto"><strong style="display:block;font-size:17px">Outreach agent</strong><span style="font-size:14px;line-height:1.4;color:var(--mute)">Finds and emails ideal clients</span></span></div><div style="padding:16px 0;border-top:1px solid var(--ink);display:flex;gap:16px;align-items:baseline"><span class="lbl" style="flex:0 0 28px">06</span><span style="flex:1 1 auto"><strong style="display:block;font-size:17px">Offer creator</strong><span style="font-size:14px;line-height:1.4;color:var(--mute)">Your offer, written and priced</span></span></div></div>
+</section>
+
 <section class="rule" id="programme" aria-label="Price and apply">
-<div class="strip gut meta lbl"><span>04 / The 90 days</span><span>Founding cohort / Ten places</span></div>
+<div class="strip gut meta lbl"><span>05 / The 90 days</span><span>Founding cohort / Ten places</span></div>
 <div class="split">
 <div class="cell cellR" style="flex:1 1 420px;gap:32px;padding-top:40px;padding-bottom:48px">
 <div><p class="rv" style="font-size:clamp(56px,7vw,110px);line-height:.85;font-weight:800;letter-spacing:-.05em">£3,000</p><p class="lbl" style="margin-top:12px">Founding price / Rises for cohort two / 1:1 version £6,000</p></div>
@@ -275,29 +289,22 @@ img{max-width:100%}
 </div>
 </section>
 
-<section class="rule split" aria-label="Founder">
-<div class="fig wp" style="flex:0 1 380px;min-width:260px;min-height:420px;background:var(--ink)"><img src="/img/josh-pearson-2.webp" alt="Josh Pearson, founder of Locked In Dept." loading="lazy" decoding="async" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 58%"><span class="cap lbl" style="top:14px;bottom:auto">Josh Pearson / Founder</span></div>
-<div class="cell" style="flex:1 1 420px;gap:24px;padding-top:40px;padding-bottom:48px;border-left:1px solid var(--ink);justify-content:center">
-<p class="lbl">05 / Who's behind it</p>
-<p class="big rv" style="font-size:clamp(26px,3vw,46px);line-height:.95;letter-spacing:-.04em">The bigger the climb in business, the bigger the climb you make inside your own head.</p>
-<p class="rv" style="font-size:16px;line-height:1.55;max-width:560px">I've been on the entrepreneur path since I was 13: twenty-two years of building, more than a decade behind a camera, retainers from £1,000 to $20,000 a month. I've taken creatives from burning out at £5k months to their first £20k, £25k and £30k months. The work was never what held them back. It was what they believed they were allowed to charge, and whether they backed themselves. I find where you're holding yourself back, and I don't let you stay there.</p>
-</div>
-</section>
+
 <a class="btn apply-bar" href="#apply" aria-hidden="true" tabindex="-1" style="justify-content:space-between"><span>Apply / Ten places</span><svg aria-hidden="true" width="22" height="12" viewBox="0 0 22 12" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M0 6h20M15 1l5 5-5 5"></path></svg></a>
 
-<section class="rule" aria-label="Free pricing kit" style="background:var(--ink);color:var(--paper)">
-<div class="gut lbl" style="display:flex;justify-content:space-between;gap:16px;padding-block:20px;border-bottom:1px solid #333"><span>Free / Kit 01</span><span>The Retainer Pricing Kit</span></div>
+<section class="rule" aria-label="Free pricing kit" >
+<div class="gut lbl" style="display:flex;justify-content:space-between;gap:16px;padding-block:20px;border-bottom:1px solid var(--ink)"><span>Not ready to apply? Free kit</span><span>The Retainer Pricing Kit</span></div>
 <div class="gut" style="display:flex;flex-wrap:wrap;gap:32px 48px;align-items:flex-end;padding-block:56px">
-<h2 class="big" style="flex:1 1 520px;min-width:0;margin:0;font-size:clamp(40px,6vw,96px);line-height:.88;letter-spacing:-.05em;color:var(--paper)">Same camera.<br>Same skill.<br>£1k or £10k.</h2>
+<h2 class="big" style="flex:1 1 520px;min-width:0;margin:0;font-size:clamp(40px,6vw,96px);line-height:.88;letter-spacing:-.05em ">Same camera.<br>Same skill.<br>£1k or £10k.</h2>
 <div style="flex:1 1 320px;min-width:0;max-width:460px;display:flex;flex-direction:column;gap:24px">
 <p style="font-size:17px;line-height:1.5;margin:0">The formula Josh uses to price retainers from £1k to £15k+ a month, a calculator to run your own numbers, and five days of short lessons by email. Free.</p>
-<a class="btn" href="/pricing-kit" style="background:var(--yellow);color:var(--ink);border-color:var(--yellow);justify-content:space-between">Get the kit <svg aria-hidden="true" width="22" height="12" viewBox="0 0 22 12" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M0 6h20M15 1l5 5-5 5"></path></svg></a>
+<a class="btn" href="/pricing-kit" style="justify-content:space-between">Get the kit <svg aria-hidden="true" width="22" height="12" viewBox="0 0 22 12" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M0 6h20M15 1l5 5-5 5"></path></svg></a>
 </div>
 </div>
 </section>
 <section class="fin" aria-label="Finale">
 <canvas class="phys" data-phys="field" aria-hidden="true"></canvas>
-<div class="gut meta lbl" style="position:absolute;top:24px;left:0;right:0"><span>Applications close 30 November</span><a class="arrow" href="#apply" style="text-decoration:none;display:inline-flex;align-items:center;gap:10px;min-height:44px;margin-top:-14px">Get locked in <svg aria-hidden="true" width="22" height="12" viewBox="0 0 22 12" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M0 6h20M15 1l5 5-5 5"></path></svg></a></div>
+<div class="gut meta lbl" style="position:absolute;top:24px;left:0;right:0"><span>Applications close 30 November</span><a class="arrow" href="#apply" style="text-decoration:none;display:inline-flex;align-items:center;gap:10px;min-height:44px;margin-top:-14px">Apply for January <svg aria-hidden="true" width="22" height="12" viewBox="0 0 22 12" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M0 6h20M15 1l5 5-5 5"></path></svg></a></div>
 <p class="crop rs" aria-hidden="true">Lock</p>
 </section>
 
