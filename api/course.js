@@ -1,7 +1,9 @@
-// Daily cron (vercel.json): sends lesson N of the pricing-kit course to anyone who signed up N days ago (N = 1 to 5).
+// Daily cron (vercel.json). Kit subscribers: lesson N (1 to 5) on day N, with catch-up if a run was missed, then two closing emails before applications shut.
+// Applicants: a 'book your call' nudge two days after applying. Anyone who has applied is dropped from the pitch emails.
+// Each send is recorded on the lead's note as 'SENT <tag>' so nothing goes out twice.
 // Also handles unsubscribe links: /api/course?unsub=<lead id>&t=<token>.
 // Needs SUPABASE_SERVICE_ROLE_KEY, RESEND_API_KEY and CRON_SECRET in Vercel (the same ones the check-in reminders use).
-// Test by hand: /api/course?key=<CRON_SECRET>&to=<your email>&day=<1-5> sends that lesson to you only.
+// Test by hand (sends to you only, records nothing): /api/course?key=<CRON_SECRET>&to=<your email>&day=<1-5>, or &closing=1|2, or &nudge=1
 const { send } = require("./_mail");
 const course = require("./_course");
 const { token } = require("./kit");
@@ -24,21 +26,50 @@ module.exports = async (req, res) => {
   const auth = req.headers.authorization || "";
   if (process.env.CRON_SECRET && auth !== "Bearer " + process.env.CRON_SECRET && q.key !== process.env.CRON_SECRET) return res.status(401).json({ error: "no" });
   if (!key) return res.status(503).json({ error: "SUPABASE_SERVICE_ROLE_KEY not set" });
-  const now = new Date(), since = new Date(now.getTime() - 7 * 864e5).toISOString();
-  const r = await fetch(`${URL_}/rest/v1/leads?select=id,email,note,created_at&note=like.KIT*&created_at=gte.${since}`, { headers: H });
-  const rows = r.ok ? await r.json() : [];
-  const only = (q.to || "").toLowerCase(), forceDay = +q.day || 0, sent = [];
-  for (const L of rows) {
+  const now = new Date(), ymd = now.toISOString().slice(0, 10), since = new Date(now.getTime() - 45 * 864e5).toISOString();
+  const get = async like => { const r = await fetch(`${URL_}/rest/v1/leads?select=id,email,note,created_at&note=like.${like}*&created_at=gte.${since}`, { headers: H }); return r.ok ? await r.json() : []; };
+  const [kits, apps] = [await get("KIT"), await get("APPLICATION")];
+  const applied = new Set(apps.map(a => (a.email || "").toLowerCase()));
+  const only = (q.to || "").toLowerCase(), forceDay = +q.day || 0, test = !!(forceDay || q.closing || q.nudge), sent = [];
+  const has = (L, tag) => new RegExp("SENT " + tag + "(\\s|$)").test(L.note || "");
+  const mark = async (L, tag) => { if (test) return; L.note = (L.note || "") + "\nSENT " + tag; await fetch(`${URL_}/rest/v1/leads?id=eq.${L.id}`, { method: "PATCH", headers: H, body: JSON.stringify({ note: L.note }) }); };
+  const firstOf = L => ((L.note || "").match(/Name: ([^\n]+)/) || [, "there"])[1].split(" ")[0];
+  const unsubOf = L => `https://lockedindept.com/api/course?unsub=${L.id}&t=${token(L.id)}`;
+  for (const L of kits) {
     if (!L.email || /UNSUBSCRIBED/.test(L.note || "")) continue;
     if (only && L.email.toLowerCase() !== only) continue;
-    const d = forceDay || dayDiff(new Date(L.created_at), now);
-    const lesson = course.lessons[d]; if (!lesson) continue;
-    const first = ((L.note || "").match(/Name: ([^\n]+)/) || [, "there"])[1].split(" ")[0];
-    const cm = (L.note || "").match(/Calc: now=(\d+) price=(\d+) floor=(\d+) gap=(\d+)/);
-    const hm = (L.note || "").match(/hours=(\d+) hnow=(\d+) hprice=(\d+)/);
+    const gone = applied.has(L.email.toLowerCase());
+    const elapsed = dayDiff(new Date(L.created_at), now);
+    let tag = null, mail = null;
+    const cm = (L.note || "").match(/Calc: now=(\d+) price=(\d+) floor=(\d+) gap=(\d+)/), hm = (L.note || "").match(/hours=(\d+) hnow=(\d+) hprice=(\d+)/);
     const calc = cm ? Object.assign({ now: +cm[1], price: +cm[2], floor: +cm[3], gap: +cm[4] }, hm ? { hours: +hm[1], hnow: +hm[2], hprice: +hm[3] } : {}) : null;
-    try { await send(Object.assign({ to: L.email }, lesson(first, calc), { unsub: `https://lockedindept.com/api/course?unsub=${L.id}&t=${token(L.id)}` })); sent.push([L.email, d]); }
+    if (forceDay) { if (course.lessons[forceDay]) { tag = "d" + forceDay; mail = course.lessons[forceDay](firstOf(L), calc); } }
+    else if (q.closing) { const c = course.closing[(+q.closing || 1) - 1]; if (c) { tag = "c" + q.closing; mail = c(firstOf(L)); } }
+    else if (!q.nudge) {
+      // lessons: today's, or the earliest one missed (only for leads already tracked by SENT markers)
+      const tracked = /SENT /.test(L.note || "");
+      let n = null;
+      if (tracked) { for (let i = 1; i <= Math.min(elapsed, 5); i++) if (!has(L, "d" + i)) { n = i; break; } }
+      else if (elapsed >= 1 && elapsed <= 5) n = elapsed;
+      if (n && !(gone && n === 5)) { tag = "d" + n; mail = course.lessons[n](firstOf(L), calc); }
+      // closing emails: only for people who finished the course and haven't applied
+      else if (!gone && elapsed > 5 && course.isOpen()) {
+        if (ymd >= "2026-11-25" && ymd <= "2026-11-27" && !has(L, "c1")) { tag = "c1"; mail = course.closing[0](firstOf(L)); }
+        else if (ymd >= "2026-11-29" && ymd <= "2026-11-30" && !has(L, "c2")) { tag = "c2"; mail = course.closing[1](firstOf(L)); }
+      }
+    }
+    if (!mail) continue;
+    try { await send(Object.assign({ to: L.email }, mail, { unsub: unsubOf(L) })); await mark(L, tag); sent.push([L.email, tag]); }
     catch (e) { console.error(L.email, e.message); }
   }
-  return res.status(200).json({ checked: rows.length, sent });
+  // applicants: book-your-call nudge two days after applying
+  for (const L of apps) {
+    if (!L.email || (only && L.email.toLowerCase() !== only)) continue;
+    const el = dayDiff(new Date(L.created_at), now);
+    if (!q.nudge && !(el >= 2 && el <= 4 && !has(L, "nudge"))) continue;
+    if (q.day || q.closing) continue;
+    try { await send(Object.assign({ to: L.email }, course.applicantNudge(((L.note || "").match(/Name: ([^\n]+)/) || [, "there"])[1].split(" ")[0]))); await mark(L, "nudge"); sent.push([L.email, "nudge"]); }
+    catch (e) { console.error(L.email, e.message); }
+  }
+  return res.status(200).json({ kits: kits.length, applicants: apps.length, sent });
 };

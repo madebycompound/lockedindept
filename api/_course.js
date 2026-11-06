@@ -1,6 +1,8 @@
 // The 5-day email course that follows the Retainer Pricing Kit. Day 0 is the kit delivery, sent by api/kit.js.
 // Days 1 to 5 are sent by api/course.js (daily cron), one per calendar day after signup.
 const SITE = "https://lockedindept.com";
+const CLOSE = Date.UTC(2026, 10, 30, 23, 59, 59); // applications close 30 Nov 2026
+const open = () => Date.now() <= CLOSE;
 module.exports = {
   kit: (first) => ({
     subject: "Your Retainer Pricing Kit",
@@ -37,8 +39,31 @@ module.exports = {
     (first, c) => ({
       subject: "The number you're scared to say",
       kicker: "Lesson 05 of 05 / Belief", title: "The number you're scared to say.",
-      body: `${first}, last one.\n\nYou can know all of this and still quote low. Pricing isn't a maths problem. It's a belief problem. The number you're scared to say out loud is usually the right one.\n\n${c && c.price ? `For you, that number is £${c.price.toLocaleString("en-GB")} a month. Say it out loud once today.\n\n` : ""}Josh Gore went from £500 shoots to £5,000 a month retainers, then landed a room of 100 of his ideal clients. He didn't get better at filming. He stopped thinking like a freelancer and started acting like the expert he already was.\n\nAnd start from the life, not the business. Decide the constraint first: how many hours you'll work, what's protected for your health and your family. Mine is four-hour days, building toward a multi seven-figure business inside them. Yours doesn't have to be seven figures. A £20k to £50k a month agency that doesn't own you is a great business, and it's closer than you think. The constraint is what forces you to charge like the expert and build leverage, because selling hours stops being an option.\n\nThat's what the 90 days are for. Ten creatives, from January. We fix the offer, the price and the pitch, and we work on the person who has to say the number. It comes with an ROI guarantee: do the work, and if you haven't made back what you paid by day 90, I keep working with you free for up to six more months.\n\nApplications close 30 November.\n\nJosh`,
+      body: `${first}, last one.\n\nYou can know all of this and still quote low. Pricing isn't a maths problem. It's a belief problem. The number you're scared to say out loud is usually the right one.\n\n${c && c.price ? `For you, that number is £${c.price.toLocaleString("en-GB")} a month. Say it out loud once today.\n\n` : ""}Josh Gore went from £500 shoots to £5,000 a month retainers, then landed a room of 100 of his ideal clients. He didn't get better at filming. He stopped thinking like a freelancer and started acting like the expert he already was.\n\nAnd start from the life, not the business. Decide the constraint first: how many hours you'll work, what's protected for your health and your family. Mine is four-hour days, building toward a multi seven-figure business inside them. Yours doesn't have to be seven figures. A £20k to £50k a month agency that doesn't own you is a great business, and it's closer than you think. The constraint is what forces you to charge like the expert and build leverage, because selling hours stops being an option.\n\nThat's what the 90 days are for. Ten creatives, from January. We fix the offer, the price and the pitch, and we work on the person who has to say the number. It comes with an ROI guarantee: do the work, and if you haven't made back what you paid by day 90, I keep working with you free for up to six more months.\n\n${open() ? "Applications close 30 November." : "Applications for January have closed. Reply to this email and I'll tell you when the next round opens."}\n\nJosh`,
+      cta: open() ? "Apply for January" : null, url: open() ? SITE + "/90-days#apply" : ""
+    })
+  ],
+  // Sent by api/course.js to kit subscribers who haven't applied, in the run-up to the close.
+  closing: [
+    (first) => ({
+      subject: "Five days left for January",
+      kicker: "90 days / Closing soon", title: "Five days left.",
+      body: `${first}, applications for the January cohort close on 30 November. Ten places.\n\nIf you've got paying clients and you're stuck undercharging or too busy to grow, the 90 days is built for you. We fix the offer, the price and the pitch, then install the agents that do the work a team used to.\n\nIt's £3,000 for the group, backed by the ROI guarantee. Applying takes five minutes and there's a call before anything is decided.\n\nJosh`,
+      cta: "Apply for January", url: SITE + "/90-days#apply"
+    }),
+    (first) => ({
+      subject: "Last day tomorrow",
+      kicker: "90 days / Final call", title: "Last chance.",
+      body: `${first}, applications close tomorrow night. After that the January cohort is set.\n\nIf you've been thinking about it, apply today and book your call. If it isn't for you, no problem, the kit is yours to keep.\n\nJosh`,
       cta: "Apply for January", url: SITE + "/90-days#apply"
     })
-  ]
+  ],
+  // Sent to applicants two days after applying, if they're still on the list.
+  applicantNudge: (first) => ({
+    subject: "Booked your call yet?",
+    kicker: "Locked In Dept. / Your call", title: "Pick a time.",
+    body: `${first}, your application is in. The next step is a 30-minute call with me.\n\nIf you've already booked, ignore this. If not, grab a time here and we'll go from there.\n\nJosh`,
+    cta: "Book your call", url: SITE + "/book"
+  }),
+  isOpen: open
 };
