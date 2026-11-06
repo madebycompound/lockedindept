@@ -33,6 +33,7 @@
       g.clearRect(0,0,w,h);
       prog+=(target-prog)*0.12; const e=ease(Math.min(1,Math.max(0,prog)));
       const cx=ox+fw/2, cy=oy+fh/2;
+      if(e>0.002&&fig.style.animation!=='none') fig.style.animation='none'; // the entrance animation owns opacity; drop it once scrolling starts
       fig.style.opacity=String(Math.max(0,1-e*6)); // photo stays whole at rest, fades as the field takes over
       g.fillStyle='#0B0B0B'; g.globalAlpha=Math.max(0,1-e*2.5); g.fillRect(ox,oy,fw,fh); g.globalAlpha=1;
       if(e<0.002) return;
