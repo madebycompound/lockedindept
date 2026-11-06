@@ -30,8 +30,8 @@ module.exports = async (req, res) => {
       cta: a.handle ? "Open their Instagram" : null, url: a.handle ? "https://instagram.com/" + encodeURIComponent(a.handle) : "" });
     mailed = true;
     await send({ to: a.email, subject: "Application in. Josh will be in touch.", kicker: "Locked In Dept. / Application", title: "You're in the queue.",
-      body: `${a.name.split(" ")[0]}, your application for the founding cohort is in.\n\nJosh reads every one himself and will be in touch within 24 hours to book a 30-minute call.\n\nWhile you wait, score your Core Four. It's what we'll start the call with.`,
-      cta: "Score your Core Four", url: "https://lockedindept.com/score" });
+      body: `${a.name.split(" ")[0]}, your application for the founding cohort is in.\n\nJosh reads every one himself.\n\nNext step: book your 30-minute call. Pick any time that suits you.\n\nBefore the call, score your Core Four. It's what we'll start with: https://lockedindept.com/score`,
+      cta: "Book your call", url: "https://lockedindept.com/book" });
   } catch (e) {}
   if (!saved && !mailed) return res.status(502).json({ error: "Something went wrong. DM LOCKED IN to @lockedin.dept instead." });
   return res.status(200).json({ ok: true });
