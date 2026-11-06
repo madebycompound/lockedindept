@@ -11,7 +11,8 @@
     Object.assign(c.style,{position:'absolute',inset:'0',width:'100%',height:'100%',pointerEvents:'none',zIndex:'0'});
     stage.appendChild(c); const g=c.getContext('2d');
     let w=1,h=1,ox=0,oy=0,fw=1,fh=1,dpr=1,P=[],mx=null,my=null,on=false,raf=0,prog=0,target=0; const t0=performance.now();
-    const STEP=+fig.dataset.particles||4, FOV=900;
+    const STEP0=+fig.dataset.particles||4, FOV=900; const STEP=innerWidth<700?STEP0*1.5:STEP0;
+    const org=(fig.dataset.particlesOrigin||'50%,30%').split(',').map(v=>parseFloat(v)/100);
     function build(){
       const sr=stage.getBoundingClientRect(), r=fig.getBoundingClientRect(); w=sr.width; h=sr.height; ox=r.left-sr.left; oy=r.top-sr.top; fw=r.width; fh=r.height; dpr=Math.min(devicePixelRatio||1,2);
       c.width=w*dpr; c.height=h*dpr; g.setTransform(dpr,0,0,dpr,0,0);
@@ -23,9 +24,10 @@
       for(let y=STEP/2;y<fh;y+=STEP)for(let x=STEP/2;x<fw;x+=STEP){
         const i=((y|0)*s.width+(x|0))*4; const l=(d[i]*0.3+d[i+1]*0.59+d[i+2]*0.11)/255;
         if(l<0.06&&Math.random()<0.7) continue; // thin the near-black so the explosion is colour, not soot
-        const ax=(x-fw/2)/fw, ay=(y-fh/2)/fh, m=Math.hypot(ax,ay)+0.05, rnd=Math.random();
-        P.push({x:ox+x,y:oy+y,r:d[i],g:d[i+1],b:d[i+2],sz:STEP*(0.55+0.6*l),ph:Math.random()*6.283,
-          vx:ax/m*(0.6+rnd)*w*0.7, vy:ay/m*(0.6+Math.random())*h*0.9, vz:-(200+Math.random()*1400), spin:(Math.random()-0.5)*2});
+        const sx=fw*org[0], sy=fh*org[1]; const ax=(x-sx)/fw, ay=(y-sy)/fh, m=Math.hypot(ax,ay)+0.05, rnd=Math.random();
+        const dist=Math.min(1,m/0.9); // far from the source leaves later
+        P.push({x:ox+x,y:oy+y,r:d[i],g:d[i+1],b:d[i+2],sz:STEP*(0.55+0.6*l),ph:Math.random()*6.283,delay:dist*0.35,
+          vx:ax/m*(0.6+rnd)*w*0.7, vy:ay/m*(0.6+Math.random())*h*0.9, vz:-(200+Math.random()*1400), spin:(Math.random()-0.5)*2, yel:Math.random()<0.04});
       }
 
     }
@@ -37,15 +39,21 @@
       fig.style.opacity=String(Math.max(0,1-e*6)); // photo stays whole at rest, fades as the field takes over
       g.fillStyle='#0B0B0B'; g.globalAlpha=Math.max(0,1-e*2.5); g.fillRect(ox,oy,fw,fh); g.globalAlpha=1;
       if(e<0.002) return;
+      const pos=(p,ee)=>{ let x=p.x+p.vx*ee, y=p.y+p.vy*ee, z=p.vz*ee;
+        if(ee>0.001){ const a=p.spin*ee*2; const dx=x-cx, dy=y-cy; x=cx+dx*Math.cos(a)-dy*Math.sin(a); y=cy+dx*Math.sin(a)+dy*Math.cos(a); }
+        const sc=FOV/(FOV+z); return [cx+(x-cx)*sc, cy+(y-cy)*sc, sc]; };
       for(const p of P){
-        let x=p.x+p.vx*e, y=p.y+p.vy*e, z=p.vz*e;
-        if(e>0.001){ const a=p.spin*e*2; const dx=x-cx, dy=y-cy; x=cx+dx*Math.cos(a)-dy*Math.sin(a); y=cy+dx*Math.sin(a)+dy*Math.cos(a); }
-        const sc=FOV/(FOV+z); if(sc<=0||sc>12) continue;
-        x=cx+(x-cx)*sc; y=cy+(y-cy)*sc;
-        if(mx!=null&&e<0.2){const dx=x-mx,dy=y-my,dd=Math.hypot(dx,dy)+1; const f=Math.max(0,1-dd/(w*0.18)); x+=dx/dd*f*22; y+=dy/dd*f*22;}
+        const ee=Math.max(0,Math.min(1,(e-p.delay)/(1-p.delay)));
+        const [x,y,sc]=pos(p,ee); if(sc<=0||sc>12) continue;
         if(x<-40||y<-40||x>w+40||y>h+40) continue;
-        const sz=p.sz*sc*(1+0.08*Math.sin(t*2+p.ph)), al=Math.max(0,1-e*0.5)*(sc>3?Math.max(0,1-(sc-3)/6):1);
-        g.fillStyle=`rgba(${p.r},${p.g},${p.b},${al})`; g.fillRect(x-sz/2,y-sz/2,sz,sz);
+        // colour drains to paper as the particle leaves the picture; a few go yellow
+        const k=Math.min(1,ee*1.6), r=p.r+(236-p.r)*k, gg=p.g+(235-p.g)*k, b=p.b+(231-p.b)*k;
+        const col=p.yel&&k>0.5?'232,255,42':`${r|0},${gg|0},${b|0}`;
+        const sz=p.sz*sc*(1+0.08*Math.sin(t*2+p.ph)), al=Math.max(0,1-ee*0.45)*(sc>3?Math.max(0,1-(sc-3)/6):1);
+        if(sc>1.15&&ee>0.05&&ee<1){ // streak toward where it came from
+          const [px,py]=pos(p,Math.max(0,ee-0.03)); g.strokeStyle=`rgba(${col},${al*0.5})`; g.lineWidth=Math.max(1,sz*0.6); g.beginPath(); g.moveTo(px,py); g.lineTo(x,y); g.stroke();
+        }
+        g.fillStyle=`rgba(${col},${al})`; g.fillRect(x-sz/2,y-sz/2,sz,sz);
       }
     }
     function onScroll(){ const r=fig.getBoundingClientRect(); const top=r.top+scrollY; target=Math.min(1,Math.max(0,(scrollY-top*0.1)/(r.height*2.2))); }
