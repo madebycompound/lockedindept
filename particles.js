@@ -27,14 +27,15 @@
         P.push({x:ox+x,y:oy+y,r:d[i],g:d[i+1],b:d[i+2],sz:STEP*(0.55+0.6*l),ph:Math.random()*6.283,
           vx:ax/m*(0.6+rnd)*w*0.7, vy:ay/m*(0.6+Math.random())*h*0.9, vz:-(200+Math.random()*1400), spin:(Math.random()-0.5)*2});
       }
-      fig.style.background='transparent';
-      img.style.visibility='hidden';
+
     }
     function draw(t){
       g.clearRect(0,0,w,h);
       prog+=(target-prog)*0.12; const e=ease(Math.min(1,Math.max(0,prog)));
       const cx=ox+fw/2, cy=oy+fh/2;
-      g.fillStyle='#0B0B0B'; g.globalAlpha=Math.max(0,1-e*2.5); g.fillRect(ox,oy,fw,fh); g.globalAlpha=1; fig.style.opacity=String(Math.max(0,1-e*2.5));
+      fig.style.opacity=String(Math.max(0,1-e*6)); // photo stays whole at rest, fades as the field takes over
+      g.fillStyle='#0B0B0B'; g.globalAlpha=Math.max(0,1-e*2.5); g.fillRect(ox,oy,fw,fh); g.globalAlpha=1;
+      if(e<0.002) return;
       for(const p of P){
         let x=p.x+p.vx*e, y=p.y+p.vy*e, z=p.vz*e;
         if(e>0.001){ const a=p.spin*e*2; const dx=x-cx, dy=y-cy; x=cx+dx*Math.cos(a)-dy*Math.sin(a); y=cy+dx*Math.sin(a)+dy*Math.cos(a); }
