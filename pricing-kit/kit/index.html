@@ -10,7 +10,16 @@
 <meta name="theme-color" content="#0B0B0B">
 <link rel="preload" href="/fonts/archivo-800.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/page.css">
-<style>.two{display:flex;flex-wrap:wrap}
+<style>.step{display:flex;align-items:center;gap:12px;margin:8px 0 0;font-size:13px;font-weight:800;letter-spacing:.04em;text-transform:uppercase}
+.step span{width:26px;height:26px;border:1px solid var(--ink);display:inline-flex;align-items:center;justify-content:center;font-size:12px}
+.pick{border:0;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+.pick legend{font-size:17px;margin-bottom:10px;padding:0}
+.pick label{position:relative;flex:1 1 140px}
+.pick input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+.pick span{display:flex;align-items:center;min-height:52px;padding:10px 14px;border:1px solid var(--ink);font-size:14px;line-height:1.25;height:100%}
+.pick input:checked+span{background:var(--ink);color:var(--paper)}
+.pick input:focus-visible+span{outline:2px solid var(--ink);outline-offset:3px}
+.two{display:flex;flex-wrap:wrap}
 .two>.side{flex:1 1 260px;padding:40px var(--g);border-right:1px solid var(--ink);display:flex;flex-direction:column;gap:12px}
 .two>.main{flex:999 1 560px;min-width:0;padding:40px var(--g)}
 @media (max-width:860px){.two>.side{border-right:0;border-bottom:1px solid var(--ink);padding-bottom:20px}.two>.main{padding-top:24px}}
@@ -91,35 +100,34 @@
 <div class="strip lbl"><span>03 / The calculator</span><span>Run your own numbers</span></div>
 <div class="calc">
 <form class="in" id="calcForm" aria-label="Retainer calculator">
-<p class="lbl mute" style="margin:0">Right now</p>
-<div class="fld"><div class="row"><label for="c-now">What you charge this client now, a month</label><output for="c-now" id="o-now"></output></div><input type="range" id="c-now" min="0" max="15000" step="100" value="1500"><span class="lbl mute">Or what you'd quote a client like them. Be honest.</span></div>
-<p class="lbl mute" style="margin:12px 0 0">Cost to make</p>
-<div class="fld"><div class="row"><label for="c-shoot">Shoot days a month</label><output for="c-shoot" id="o-shoot"></output></div><input type="range" id="c-shoot" min="0" max="8" step="1" value="1"></div>
-<div class="fld"><div class="row"><label for="c-edits">Edits a month</label><output for="c-edits" id="o-edits"></output></div><input type="range" id="c-edits" min="0" max="30" step="1" value="8"></div>
-<div class="fld"><div class="row"><label for="c-hpe">Hours per edit</label><output for="c-hpe" id="o-hpe"></output></div><input type="range" id="c-hpe" min="1" max="20" step="1" value="4"></div>
-<div class="fld"><div class="row"><label for="c-admin">Strategy, calls and admin hours</label><output for="c-admin" id="o-admin"></output></div><input type="range" id="c-admin" min="0" max="40" step="1" value="6"></div>
-<div class="fld"><div class="row"><label for="c-crew">Crew and freelancers, per month</label><output for="c-crew" id="o-crew"></output></div><input type="range" id="c-crew" min="0" max="10000" step="100" value="0"></div>
-<div class="fld"><div class="row"><label for="c-kit">Kit, software and travel, per month</label><output for="c-kit" id="o-kit"></output></div><input type="range" id="c-kit" min="0" max="2000" step="50" value="150"></div>
-<p class="lbl mute" style="margin:12px 0 0">What you want to make</p>
+<p class="step"><span>1</span>The client</p>
+<fieldset class="pick"><legend>Who are they?</legend>
+<label><input type="radio" name="who" value="1"><span>Small local business</span></label>
+<label><input type="radio" name="who" value="1.4" checked><span>Growing brand</span></label>
+<label><input type="radio" name="who" value="2"><span>Established brand, real budget</span></label>
+</fieldset>
+<fieldset class="pick"><legend>What are they really buying?</legend>
+<label><input type="radio" name="brief" value="1"><span>Content to post</span></label>
+<label><input type="radio" name="brief" value="1.25" checked><span>Results they can see</span></label>
+<label><input type="radio" name="brief" value="1.5"><span>Growth, with you owning it</span></label>
+</fieldset>
+<p class="step"><span>2</span>The work</p>
+<div class="fld"><div class="row"><label for="c-days">Days of your time a month</label><output for="c-days" id="o-days"></output></div><input type="range" id="c-days" min="0.5" max="20" step="0.5" value="6"><span class="lbl mute">Shooting, editing, calls and admin, added up. 8 hours is a day.</span></div>
+<div class="fld"><div class="row"><label for="c-costs">What you pay out a month</label><output for="c-costs" id="o-costs"></output></div><input type="range" id="c-costs" min="0" max="10000" step="50" value="150"><span class="lbl mute">Crew, freelancers, kit hire, software, travel.</span></div>
+<p class="step"><span>3</span>You</p>
 <div class="fld"><div class="row"><label for="c-rate">Your day rate</label><output for="c-rate" id="o-rate"></output></div><input type="range" id="c-rate" min="200" max="1500" step="50" value="500"></div>
-<div class="fld"><div class="row"><label for="c-goal">What you want to make a month, after costs</label><output for="c-goal" id="o-goal"></output></div><input type="range" id="c-goal" min="2000" max="30000" step="500" value="8000"></div>
-<p class="lbl mute" style="margin:12px 0 0">Who and what</p>
-<div class="fld"><label for="c-who">Who the client is</label><select id="c-who"><option value="1">Small local business</option><option value="1.4" selected>Growing brand with ambition</option><option value="2">Established brand with real budget</option></select></div>
-<div class="fld"><label for="c-brief">What they're really buying</label><select id="c-brief"><option value="1">Content to post</option><option value="1.25" selected>Attention, leads or sales they can see</option><option value="1.5">Growth, with you owning the outcome</option></select></div>
+<div class="fld"><div class="row"><label for="c-now">What you charge them now, a month</label><output for="c-now" id="o-now"></output></div><input type="range" id="c-now" min="0" max="15000" step="100" value="1500"><span class="lbl mute">Or what you'd quote. Leave at £0 if it's a new client.</span></div>
 </form>
 <div class="out" aria-live="polite">
-<div class="res" style="border-top:0;padding-top:0"><p class="lbl">Time in, money out</p><p class="v" id="r-hour" style="color:var(--yellow)">£0</p><p class="s" id="r-hour-s"></p></div>
+<div class="res" style="border-top:0;padding-top:0"><p class="lbl">Your price</p><p class="v" id="r-price" style="color:var(--yellow)">£0</p><p class="s" id="r-price-s">A month.</p></div>
 <div class="res"><p class="lbl">The gap</p><p class="v" id="r-gap" style="font-size:clamp(32px,4vw,52px)">£0</p><p class="s" id="r-gap-s"></p></div>
-<div class="res"><p class="lbl">Your floor</p><p class="v" id="r-floor">£0</p><p class="s">What it costs to make plus your day rate. Never quote below this.</p></div>
-<div class="res"><p class="lbl">Your price</p><p class="v" id="r-price">£0</p><p class="s" id="r-price-s">A month.</p></div>
-<div class="res"><p class="lbl">What you actually earn</p><p class="v" id="r-day" style="font-size:clamp(32px,4vw,52px)">£0</p><p class="s" id="r-day-s">A day, after crew and costs.</p></div>
-<div class="res"><p class="lbl">Your route to your number</p><p class="v" id="r-route" style="font-size:clamp(32px,4vw,52px)">0</p><p class="s" id="r-route-s"></p></div>
 <div class="res"><p class="lbl">Say it as three options</p>
 <ul class="list" style="margin-top:8px;color:var(--paper)">
 <li style="border-color:#333"><span class="lbl">A</span><span id="t-a"></span></li>
 <li style="border-color:#333"><span class="lbl">B</span><span id="t-b"></span></li>
 <li style="border-color:#333"><span class="lbl">C</span><span id="t-c"></span></li>
 </ul></div>
+<div class="res"><p class="s" id="r-floor-s" style="margin:0"></p></div>
 <p class="note" id="r-note" hidden></p>
 <div style="display:flex;flex-direction:column;gap:10px"><button type="button" class="btn y" id="shareBtn" style="width:100%"><span>Share my number</span><svg aria-hidden="true" width="22" height="12" viewBox="0 0 22 12" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M0 6h20M15 1l5 5-5 5"></path></svg></button><p class="lbl" style="color:#A9A8A3;margin:0">Makes a story-sized card. Post it and tag @lockedin.dept.</p></div>
 </div>
@@ -167,39 +175,30 @@ var $=function(id){return document.getElementById(id)};
 var gbp=function(n){return '£'+Math.round(n).toLocaleString('en-GB')};
 var last={};
 var round=function(n){return n<2000?Math.round(n/50)*50:Math.round(n/100)*100};
+function pick(n){var r=document.querySelector('input[name="'+n+'"]:checked');return r?+r.value:1}
 function calc(){
-  var now=+$('c-now').value, shoot=+$('c-shoot').value, edits=+$('c-edits').value, hpe=+$('c-hpe').value, admin=+$('c-admin').value,
-      crew=+$('c-crew').value, kit=+$('c-kit').value, rate=+$('c-rate').value, goal=+$('c-goal').value, who=+$('c-who').value, brief=+$('c-brief').value;
-  $('o-now').textContent=gbp(now); $('o-shoot').textContent=shoot; $('o-edits').textContent=edits; $('o-hpe').textContent=hpe+'h'; $('o-admin').textContent=admin+'h';
-  $('o-crew').textContent=gbp(crew); $('o-kit').textContent=gbp(kit); $('o-rate').textContent=gbp(rate); $('o-goal').textContent=gbp(goal);
-  var hours=shoot*10+edits*hpe+admin, days=hours/8;
-  var floor=days*rate+crew+kit, price=round(floor*who*brief);
-  var earn=price-crew-kit, perDay=days>0?earn/days:0;
-  $('r-floor').textContent=gbp(round(floor));
-  var nClients=earn>0?Math.ceil(goal/earn):0, nDays=Math.round(nClients*days);
-  $('r-route').textContent=nClients?(nClients+(nClients===1?' client':' clients')):'n/a';
-  $('r-route-s').textContent=nClients?('At this price, to make '+gbp(goal)+' a month. That\'s about '+nDays+' days of your time a month'+(nDays>18?'. More than you have: raise the price, or bring in an editor and the agents so it isn\'t all you.':nDays>12?'. Doable, but full. Leverage is what gets you time back.':'. That\'s a good business.')):'';
-  var hNow=hours>0?Math.max(0,(now-crew-kit)/hours):0, hPrice=hours>0?Math.max(0,earn/hours):0;
-  $('r-hour').textContent=hours>0?(gbp(hNow)+' → '+gbp(hPrice)):'£0';
-  $('r-hour-s').textContent=hours>0?('An hour of your time, after costs. What you earn now, and at your price, for the same '+Math.round(hours)+' hours of work.'):'Add some work to see what an hour pays you.';
-  var gap=Math.max(0,price-now);
-  $('r-gap').textContent=gap>0?gbp(gap):'£0';
-  $('r-gap-s').textContent=gap>0?('A month you\'re leaving on the table. '+gbp(gap*12)+' a year.'):(now>0?'You\'re at or above your price. Now go and find more clients like this one.':'Put in what you charge now to see the gap.');
-  last={now:now,price:price,floor:round(floor),gap:gap,day:Math.round(perDay),hours:Math.round(hours),hnow:Math.round(hNow),hprice:Math.round(hPrice)};
+  var now=+$('c-now').value, days=+$('c-days').value, costs=+$('c-costs').value, rate=+$('c-rate').value, who=pick('who'), brief=pick('brief');
+  $('o-now').textContent=now?gbp(now):'New client'; $('o-days').textContent=days+(days===1?' day':' days'); $('o-costs').textContent=gbp(costs); $('o-rate').textContent=gbp(rate);
+  var hours=days*8, floor=days*rate+costs, price=round(floor*who*brief);
+  var earn=price-costs, perDay=days>0?earn/days:0;
+  var hNow=hours>0?Math.max(0,(now-costs)/hours):0, hPrice=hours>0?Math.max(0,earn/hours):0;
   $('r-price').textContent=gbp(price);
-  $('r-price-s').textContent='A month, for about '+Math.round(hours)+' hours of your time ('+(Math.round(days*10)/10)+' days).';
-  $('r-day').textContent=gbp(perDay);
-  $('r-day-s').textContent='A day, after crew and costs. You set '+gbp(rate)+'.';
+  $('r-price-s').textContent='A month. That pays you '+gbp(perDay)+' a day after costs, against the '+gbp(rate)+' you set.';
+  var gap=Math.max(0,price-now);
+  $('r-gap').textContent=now>0?gbp(gap):'n/a';
+  $('r-gap-s').textContent=now===0?'New client: no gap yet. Quote the price above.':gap>0?('A month you\'re leaving on the table. '+gbp(gap*12)+' a year. Your hour goes from '+gbp(hNow)+' to '+gbp(hPrice)+'.'):'You\'re at or above your price. Find more clients like this one.';
   $('t-a').textContent=gbp(round(price*0.6))+' / a lighter version: fewer edits, no strategy.';
-  $('t-b').textContent=gbp(price)+' / the one above. The one you want them to pick.';
+  $('t-b').textContent=gbp(price)+' / the one you want them to pick.';
   $('t-c').textContent=gbp(round(price*1.7))+' / more output, more ownership, priority on everything.';
+  $('r-floor-s').textContent='Never go under '+gbp(round(floor))+'. That\'s your costs plus your day rate, before any value is counted.';
+  last={now:now,price:price,floor:round(floor),gap:gap,day:Math.round(perDay),hours:Math.round(hours),hnow:Math.round(hNow),hprice:Math.round(hPrice)};
   var note=$('r-note'), msg='';
-  if(hours===0) msg='Add some work to see a price.';
-  else if(price<1000) msg='Under £1k can still work if it\'s quick to make. Check what you actually earn a day, and how many of these you\'d need to hit your number.';
-  else if(days>12) msg='That\'s over 12 days a month of your time for one client. Either the price goes up or someone else does the making.';
+  if(price<1000) msg='Under £1k can still work if it\'s quick to make and you run several. If it eats your week, it\'s a trap.';
+  else if(days>12) msg='Over 12 days a month for one client. Either the price goes up or someone else does the making.';
   note.textContent=msg; note.hidden=!msg;
 }
-['c-goal','c-now','c-shoot','c-edits','c-hpe','c-admin','c-crew','c-kit','c-rate','c-who','c-brief'].forEach(function(id){$(id).addEventListener('input',calc)});
+document.getElementById('calcForm').addEventListener('input',calc);
+document.getElementById('calcForm').addEventListener('change',calc);
 calc();
 
 // Save the numbers to the lead (if they signed up on this device) so emails and DMs can use them.
