@@ -54,8 +54,8 @@ module.exports = async (req, res) => {
       if (n && !(gone && n === 5)) { tag = "d" + n; mail = course.lessons[n](firstOf(L), calc); }
       // closing emails: only for people who finished the course and haven't applied
       else if (!gone && elapsed > 5 && course.isOpen()) {
-        if (ymd >= "2026-11-25" && ymd <= "2026-11-27" && !has(L, "c1")) { tag = "c1"; mail = course.closing[0](firstOf(L)); }
-        else if (ymd >= "2026-11-29" && ymd <= "2026-11-30" && !has(L, "c2")) { tag = "c2"; mail = course.closing[1](firstOf(L)); }
+        if (ymd >= "2026-12-15" && ymd <= "2026-12-17" && !has(L, "c1")) { tag = "c1"; mail = course.closing[0](firstOf(L)); }
+        else if (ymd >= "2026-12-19" && ymd <= "2026-12-20" && !has(L, "c2")) { tag = "c2"; mail = course.closing[1](firstOf(L)); }
       }
     }
     if (!mail) continue;
