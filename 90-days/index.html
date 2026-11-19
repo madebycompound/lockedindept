@@ -140,6 +140,58 @@ nav{display:flex;flex-wrap:wrap;gap:24px}nav a{text-decoration:none;min-height:4
 img{max-width:100%}
 @media (max-width:640px){.vidh{display:none}.stat{min-height:0;gap:14px;padding-bottom:28px}.stat .n{font-size:48px}}
 </style>
+<style>
+/* V4.1 flow: fewer boxes. Open sections, one rule per chapter, images and graphics between. */
+.flow{padding-block:clamp(72px,10vw,140px);border-top:1px solid var(--ink)}
+.flow .prose{max-width:620px;margin-top:32px;display:flex;flex-direction:column;gap:18px}
+.flow .prose p{font-size:18px;line-height:1.55;margin:0}
+.giant{font-weight:800;letter-spacing:-.05em;line-height:.92;font-size:clamp(40px,6.6vw,104px);text-transform:uppercase;margin:28px 0 0;max-width:16ch;text-wrap:balance}
+.src{margin-top:24px;color:var(--mute)}
+.twoup{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:clamp(32px,6vw,96px);align-items:center}
+.twoup.rev>.gfx{order:-1}
+.gfx{position:relative;aspect-ratio:1/1;width:100%;max-width:560px;justify-self:center}
+.gfx canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+@media (max-width:900px){.twoup{grid-template-columns:1fr}.twoup.rev>.gfx{order:0}.gfx{max-width:420px}}
+.proofrow{display:flex;flex-wrap:wrap;gap:10px 40px;align-items:baseline;padding-block:20px;font-size:15px}
+.proofrow b{font-weight:800;font-size:clamp(20px,2vw,28px);letter-spacing:-.03em;margin-right:6px}
+.bleed{position:relative;min-height:clamp(420px,62vw,820px);overflow:hidden;background:var(--ink);color:var(--paper);display:flex;align-items:flex-end}
+.bleed.short{min-height:clamp(260px,34vw,480px)}
+.bleed img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.bleed::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,11,11,0) 35%,rgba(11,11,11,.75) 100%)}
+.bleed.short::after{display:none}
+.bleed-txt{position:relative;z-index:1;padding-block:56px;display:flex;flex-direction:column;gap:18px}
+.bleed-txt .big{font-size:clamp(34px,5vw,80px);max-width:18ch;line-height:.92}
+.pl{margin:32px 0 0}
+.pl div{padding-block:16px;border-top:1px solid var(--ink)}
+.pl dt{font-weight:800;text-transform:uppercase;letter-spacing:-.02em;font-size:20px}
+.pl dd{margin:4px 0 0;font-size:16px;line-height:1.5;color:#3a3a38}
+.dark-ch{background:var(--ink);color:var(--paper)}
+.dark-ch .flow{border-top:0}
+.rit{list-style:none;margin:32px 0 0;padding:0}
+.rit li{display:flex;gap:20px;padding-block:16px;border-top:1px solid #333;font-size:17px;line-height:1.45}
+.rit li span{font-size:11px;letter-spacing:.04em;color:var(--yellow);padding-top:5px;flex:0 0 24px}
+.rit b{font-weight:800}
+.tl{list-style:none;margin:56px 0 0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0 32px;position:relative}
+.tl::before{content:"";position:absolute;left:0;right:0;top:7px;height:1px;background:var(--ink)}
+.tl li{position:relative;padding-top:36px;display:flex;flex-direction:column;gap:8px}
+.tl li::before{content:"";position:absolute;top:0;left:0;width:15px;height:15px;border-radius:50%;background:var(--paper);border:1px solid var(--ink)}
+.tl li.hot::before{background:var(--yellow);border-color:var(--ink)}
+.tl b{font-weight:800;text-transform:uppercase;letter-spacing:-.03em;font-size:clamp(22px,2.2vw,32px);line-height:.95}
+.tl p{margin:0;font-size:15px;line-height:1.5;max-width:30ch}
+@media (max-width:900px){.tl{grid-template-columns:1fr;gap:36px}.tl::before{left:7px;right:auto;top:0;bottom:0;width:1px;height:auto}.tl li{padding:0 0 0 40px}}
+.nums{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:32px;margin-top:48px}
+.nums .n{font-weight:800;letter-spacing:-.05em;font-size:clamp(36px,4.4vw,68px);line-height:.9;margin:0 0 12px}
+.nums p:not(.n){margin:0;font-size:15px;line-height:1.5;max-width:32ch}
+@media (max-width:760px){.nums{grid-template-columns:1fr}}
+.founder{border-top:1px solid var(--ink)}
+.got{list-style:none;margin:0;padding:0}
+.got li{padding-block:14px;border-top:1px solid var(--ink);font-size:17px;line-height:1.45}
+.got b{font-weight:800}
+.oneone{margin-top:40px;padding-top:24px;border-top:1px solid var(--ink)}
+.lnk{display:inline-flex;align-items:center;gap:10px;min-height:44px;font-size:13px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;text-decoration:none}
+.faq2{border-top:1px solid var(--ink);padding-block:clamp(64px,8vw,112px)}
+</style>
+
 </head>
 <body>
 
@@ -154,8 +206,8 @@ img{max-width:100%}
 </div>
 </header>
 
-<section class="rule split" id="top" aria-label="The 90 days">
-<div class="cell cellR" style="flex:1 1 560px;gap:32px;padding-top:56px;padding-bottom:56px;justify-content:center">
+<section class="split" id="top" aria-label="The 90 days">
+<div class="cell" style="flex:1 1 560px;gap:32px;padding-top:56px;padding-bottom:56px;justify-content:center">
 <p class="lbl in" style="animation-delay:.1s">The 90 days / Founding cohort / Doors close 20 December</p>
 <h1 class="big" style="font-size:clamp(44px,7.2vw,112px)"><span class="mask"><span class="up" style="animation-delay:.05s">Locked in.</span></span><span class="mask"><span class="up" style="animation-delay:.15s">Not locked</span></span><span class="mask"><span class="up" style="animation-delay:.25s">away.</span></span></h1>
 <p class="lead in" style="animation-delay:.7s;font-size:clamp(17px,1.4vw,20px);max-width:540px">Ninety days to charge like the expert, build the business around your genius, and get your health, your focus and your people back. For creatives who are burnt out, underpaid, or both.</p>
@@ -163,155 +215,163 @@ img{max-width:100%}
 <a class="btn" href="#join" style="background:var(--yellow);color:var(--ink);border-color:var(--yellow)">Join for £697 <svg aria-hidden="true" width="22" height="12" viewBox="0 0 22 12" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M0 6h20M15 1l5 5-5 5"></path></svg></a>
 <span class="lbl" style="color:var(--mute)">Or 3 payments of £247 / Rises to £1,497 next cohort</span>
 </div>
-<p class="lbl in" style="animation-delay:1s">Instant access to the 14-day cash sprint / Programme starts 1 January</p>
 </div>
-<div class="fig o in" style="animation-delay:.5s;flex:1 1 360px;min-height:420px"><img src="/img/red-exit.webp" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 30%" fetchpriority="high" decoding="async"></div>
+<div class="fig o in" style="animation-delay:.5s;flex:1 1 360px;min-height:440px"><img src="/img/red-exit.webp" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 30%" fetchpriority="high" decoding="async"></div>
 </section>
 
-<section class="rule split" aria-label="Proof" style="background:var(--ink);color:var(--paper)">
-<div class="gut" style="flex:1 1 240px;padding-block:20px;display:flex;align-items:center;gap:12px"><span class="lbl" style="color:#A9A8A3">Case 001</span><span class="lbl">Josh Gore / Filmmaker</span></div>
-<div style="flex:3 1 600px;display:flex;flex-wrap:wrap">
-<div class="gut" style="flex:1 1 180px;padding-block:20px;border-left:1px solid #333"><p style="font-weight:800;font-size:clamp(26px,2.6vw,40px);letter-spacing:-.04em;line-height:.9">£500 → £5K</p><p class="lbl" style="margin-top:6px;color:#A9A8A3">Shoots to monthly retainers</p></div>
-<div class="gut" style="flex:1 1 180px;padding-block:20px;border-left:1px solid #333"><p style="font-weight:800;font-size:clamp(26px,2.6vw,40px);letter-spacing:-.04em;line-height:.9">£5K → £25K</p><p class="lbl" style="margin-top:6px;color:#A9A8A3">Months, now running a team</p></div>
-<div class="gut" style="flex:1 1 180px;padding-block:20px;border-left:1px solid #333"><p style="font-weight:800;font-size:clamp(26px,2.6vw,40px);letter-spacing:-.04em;line-height:.9">100</p><p class="lbl" style="margin-top:6px;color:#A9A8A3">Ideal clients in one room</p></div>
-</div>
-</section>
-
-<div class="marq rule lbl" aria-hidden="true"><div>
-<span>Not a course</span><span>/</span><span>Not hustle</span><span>/</span><span>Not a ghost to the people you love</span><span>/</span><span>Not running on empty</span><span>/</span><span>Not another team to manage</span><span>/</span>
-<span>Not a course</span><span>/</span><span>Not hustle</span><span>/</span><span>Not a ghost to the people you love</span><span>/</span><span>Not running on empty</span><span>/</span><span>Not another team to manage</span><span>/</span>
-</div></div>
-
-<section class="rule" aria-label="The problem">
-<div class="strip gut meta lbl"><span>01 / The problem</span><span>Creative Boom, State of the Creative Industry 2026</span></div>
-<div class="split">
-<div class="stat cellR"><span class="lbl">Burnout</span><p class="n rv">69%</p><span style="font-size:15px;line-height:1.4">of creatives burnt out in the last twelve months. Mid-career, it's 77%.</span></div>
-<div class="stat cellR"><span class="lbl">Income</span><p class="n rv">47%</p><span style="font-size:15px;line-height:1.4">of self-employed creatives earn under £30,000 a year.</span></div>
-<div class="fig r wp" style="flex:1 1 280px;min-height:320px"><img src="/img/orange-motion.webp" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 70%" loading="lazy" decoding="async"></div>
-</div>
-<div class="gut" style="padding-block:40px 48px;display:flex;flex-wrap:wrap;gap:24px 40px;border-top:1px solid var(--ink)">
-<span class="lbl" style="flex:1 1 260px">One problem, not two</span>
-<div style="flex:999 1 640px;min-width:0;display:flex;flex-direction:column;gap:20px">
-<p class="quote rv">Working too much for too little, and your body paying for it. So you lock in harder, and lose the things you were working for.</p>
-<p class="rv" style="font-size:17px;line-height:1.5;max-width:620px">Locking in doesn't mean becoming a ghost to the people you love. It doesn't mean making money while you run your body into the ground. It means focus on what has to happen in your business, your body and your being, so you can live free.</p>
-</div>
+<section aria-label="Proof" style="background:var(--ink);color:var(--paper)">
+<div class="gut proofrow">
+<span class="lbl" style="color:#A9A8A3">Case 001 / Josh Gore, filmmaker</span>
+<span><b>£500 → £5K</b> shoots to retainers</span>
+<span><b>£5K → £25K</b> months, now with a team</span>
+<span><b>100</b> ideal clients in one room</span>
 </div>
 </section>
 
-<section class="rule" id="idea" aria-label="The idea">
-<div class="strip gut meta lbl"><span>02 / The idea</span><span>Capacity is the whole game</span></div>
-<div class="split">
-<div class="cell cellR" style="flex:1 1 420px;gap:24px;padding-top:40px;padding-bottom:48px;justify-content:center">
-<h2 class="big rv" style="font-size:clamp(36px,5vw,76px);line-height:.88;letter-spacing:-.05em">Expand your<br>capacity.<br>Everything<br>follows.</h2>
-<p class="lead rv">Financial, mental, physical. The more you work on your health and your head, the easier business gets. The less you do, the harder every client, every pitch and every price feels.</p>
-</div>
-<div class="cell" style="flex:1 1 420px;gap:24px;padding-top:40px;padding-bottom:48px;justify-content:center">
-<p class="big rv" style="font-size:clamp(26px,3vw,46px);line-height:.95;letter-spacing:-.04em">Freedom is choice. Doing what you want, with the people you love, when you want.</p>
-<p class="rv" style="font-size:16px;line-height:1.55;max-width:520px">Creative skill alone doesn't win any more. There's too much noise. You need the conviction to take yourself to market and the expertise that makes clients come to you. You don't show up like that burnt out. You show up like that when you're thriving.</p>
-</div>
+<!-- The problem: type only, no boxes -->
+<section class="flow gut" aria-label="The problem">
+<p class="lbl">01 / The problem</p>
+<p class="giant rv"><span class="count" data-to="69">69</span>% of creatives burnt out in the last year.</p>
+<p class="giant rv" style="color:var(--mute)"><span class="count" data-to="47">47</span>% of the self-employed earn under £30k.</p>
+<p class="lbl src">Creative Boom, State of the Creative Industry 2026. 882 creatives. Mid-career burnout: 77%.</p>
+<div class="prose">
+<p class="rv">It's one problem, not two. Working too much for too little, with your body paying for it. So you lock in harder, and lose the very things you were working for.</p>
 </div>
 </section>
 
-<section class="rule" id="pillars" aria-label="Three pillars">
-<div class="strip gut meta lbl"><span>03 / Three pillars</span><span>Built on every week for 90 days, not one per month</span></div>
-<div class="split">
-<div class="core cellR" style="min-height:320px"><p class="ghost" aria-hidden="true">01</p><div><h3>Money</h3><p style="font-size:15px;line-height:1.5">Direction and numbers. What you need to earn for the life you want, what you charge, and the cash coming in this month.</p></div></div>
-<div class="core cellR" style="min-height:320px"><p class="ghost" aria-hidden="true">02</p><div><h3>Expertise</h3><p style="font-size:15px;line-height:1.5">Who you serve, the message, the offer, the brand. Where you sit in the industry, and how you lead it so clients come to you.</p></div></div>
-<div class="core" style="min-height:320px"><p class="ghost" aria-hidden="true">03</p><div><h3>Capacity</h3><p style="font-size:15px;line-height:1.5">Body and being. The daily ritual that gets you back to full power, so you show up for clients and for the people at home.</p></div></div>
+<section class="bleed" aria-label="Not a ghost">
+<img src="/img/red-blur.webp" alt="" loading="lazy" decoding="async" style="object-position:center 35%">
+<div class="bleed-txt gut"><p class="big rv">Locking in doesn't mean becoming a ghost to the people you love.</p><p class="rv" style="max-width:520px;font-size:17px;line-height:1.5">It doesn't mean making money while you run your body into the ground. It means focus on what has to happen in your business, your body and your being, so you can live free.</p></div>
+</section>
+
+<!-- The idea: capacity, with the rings graphic -->
+<section class="flow gut twoup" id="idea" aria-label="The idea">
+<div>
+<p class="lbl">02 / The idea</p>
+<h2 class="big rv" style="font-size:clamp(40px,5.6vw,88px)">Expand your capacity. Everything follows.</h2>
+<div class="prose">
+<p class="rv">Financial, mental, physical. The more you work on your health and your head, the easier business gets. The less you do, the harder every client, every pitch and every price feels.</p>
+<p class="rv">Creative skill alone doesn't win any more. There's too much noise. You need the conviction to take yourself to market and the expertise that makes clients come to you. You don't show up like that burnt out.</p>
+<p class="rv"><strong>Freedom is choice.</strong> Doing what you want, with the people you love, when you want.</p>
+</div>
+</div>
+<div class="gfx"><canvas class="g" data-g="rings" aria-label="Three rings of capacity, financial, mental and physical, expanding outward" role="img"></canvas></div>
+</section>
+
+<!-- The pillars: one animated graphic, three short lines -->
+<section class="flow gut twoup rev" id="pillars" aria-label="Three pillars">
+<div class="gfx"><canvas class="g" data-g="venn" aria-label="Money, expertise and capacity overlapping. Freedom sits where all three meet." role="img"></canvas></div>
+<div>
+<p class="lbl">03 / Three pillars</p>
+<h2 class="big rv" style="font-size:clamp(40px,5.6vw,88px)">Money. Expertise. Capacity.</h2>
+<p class="lead rv" style="margin-top:20px">Built on every week for ninety days, not one per month. Where all three meet is the business that gives you your life back.</p>
+<dl class="pl">
+<div class="rv"><dt>Money</dt><dd>What the life costs, what you charge, and the cash coming in this month.</dd></div>
+<div class="rv"><dt>Expertise</dt><dd>Who you serve, the message, the offer. Lead your corner so clients come to you.</dd></div>
+<div class="rv"><dt>Capacity</dt><dd>Body and being. The daily ritual that gets you back to full power.</dd></div>
+</dl>
 </div>
 </section>
 
-<section class="rule" id="ritual" aria-label="The Locked In Ritual">
-<div class="strip gut meta lbl"><span>04 / The Locked In Ritual</span><span>Four habits, ticked off daily in the portal</span></div>
-<div class="split">
-<div class="cell cellR" style="flex:1 1 300px;gap:14px;padding-top:32px;padding-bottom:36px"><span class="lbl">01 / Feed the mind</span><p class="big rv" style="font-size:clamp(24px,2.4vw,36px);line-height:.92;letter-spacing:-.04em">Read. Learn.<br>Fill the tank.</p><p style="font-size:15px;line-height:1.5">Books, wisdom, people who lift you. What you put in decides how you show up.</p></div>
-<div class="cell cellR" style="flex:1 1 300px;gap:14px;padding-top:32px;padding-bottom:36px"><span class="lbl">02 / Calm the body</span><p class="big rv" style="font-size:clamp(24px,2.4vw,36px);line-height:.92;letter-spacing:-.04em">Walk. Breathe.<br>Write it down.</p><p style="font-size:15px;line-height:1.5">Walks, meditation, journaling. Space to think, so you stop reacting and start deciding.</p></div>
-<div class="cell cellR" style="flex:1 1 300px;gap:14px;padding-top:32px;padding-bottom:36px"><span class="lbl">03 / Move the body</span><p class="big rv" style="font-size:clamp(24px,2.4vw,36px);line-height:.92;letter-spacing:-.04em">Three. Five.<br>Every day.</p><p style="font-size:15px;line-height:1.5">Gym or sport. Level one is three times a week, level two is five, level three is daily. Pick your level and climb.</p></div>
-<div class="cell" style="flex:1 1 300px;gap:14px;padding-top:32px;padding-bottom:36px"><span class="lbl">04 / Fuel the body</span><p class="big rv" style="font-size:clamp(24px,2.4vw,36px);line-height:.92;letter-spacing:-.04em">Protein.<br>Real food.</p><p style="font-size:15px;line-height:1.5">High-protein, nutrient-dense meals. Want more? The trainer agent builds your plan and your targets.</p></div>
+<!-- The ritual: a dark chapter, list plus the tick graphic -->
+<section class="dark-ch" id="ritual" aria-label="The Locked In Ritual">
+<div class="flow gut twoup" style="padding-block:96px">
+<div>
+<p class="lbl" style="color:#A9A8A3">04 / The Locked In Ritual</p>
+<h2 class="big rv" style="font-size:clamp(40px,5.6vw,88px)">Four habits. <span style="color:var(--yellow)">Every day.</span></h2>
+<ol class="rit">
+<li class="rv"><span>01</span><div><b>Feed the mind.</b> Books, wisdom, people who lift you.</div></li>
+<li class="rv"><span>02</span><div><b>Calm the body.</b> Walks, breathing, a page of journaling.</div></li>
+<li class="rv"><span>03</span><div><b>Move the body.</b> Level one is three times a week. Level two is five. Level three is every day.</div></li>
+<li class="rv"><span>04</span><div><b>Fuel the body.</b> Protein, real food. The trainer agent builds your plan if you want one.</div></li>
+</ol>
+<p class="rv" style="font-size:15px;line-height:1.5;color:#C9C8C3;max-width:520px;margin-top:28px">Ticked off in the portal every day. Your Core Four is scored on day one and day ninety. This isn't a body transformation programme. It's how you get your power back.</p>
 </div>
-<div class="gut" style="padding-block:28px;border-top:1px solid var(--ink);display:flex;flex-wrap:wrap;gap:12px 40px;align-items:baseline">
-<span class="lbl" style="flex:1 1 260px">Tracked</span>
-<p style="flex:999 1 640px;min-width:0;font-size:17px;line-height:1.5;margin:0">Your Core Four (wealth, self, health, relationships, out of ten) is scored on day one and day ninety. The ritual is how you move it. This isn't a body transformation programme. It's how you get your power back.</p>
-</div>
-</section>
-
-<section class="rule" id="roadmap" aria-label="The roadmap">
-<div class="strip gut meta lbl"><span>05 / The roadmap</span><span>Join now, start earning before it starts</span></div>
-<div class="split">
-<div class="cell cellR" style="flex:1 1 260px;gap:14px;padding-top:32px;padding-bottom:36px;background:var(--ink);color:var(--paper)"><span class="lbl" style="color:#A9A8A3">Day you join</span><p class="big" style="font-size:clamp(24px,2.4vw,36px);line-height:.92;letter-spacing:-.04em;color:var(--yellow)">The 14-day<br>cash sprint.</p><p style="font-size:15px;line-height:1.5">Instant access. Short trainings and action steps to bring cash in from past clients, warm leads and one sharp offer. Go at your own pace, over Christmas or in a day.</p></div>
-<div class="cell cellR" style="flex:1 1 260px;gap:14px;padding-top:32px;padding-bottom:36px"><span class="lbl">Month 01 / January</span><p class="big rv" style="font-size:clamp(24px,2.4vw,36px);line-height:.92;letter-spacing:-.04em">Reset<br>and cash.</p><p style="font-size:15px;line-height:1.5">Score your Core Four, set your constraints and your number, start the ritual. Get money moving.</p></div>
-<div class="cell cellR" style="flex:1 1 260px;gap:14px;padding-top:32px;padding-bottom:36px"><span class="lbl">Month 02 / February</span><p class="big rv" style="font-size:clamp(24px,2.4vw,36px);line-height:.92;letter-spacing:-.04em">Expertise<br>to market.</p><p style="font-size:15px;line-height:1.5">Niche, message, offer, price. Take yourself to market with conviction, and send the offers.</p></div>
-<div class="cell" style="flex:1 1 260px;gap:14px;padding-top:32px;padding-bottom:36px"><span class="lbl">Month 03 / March</span><p class="big rv" style="font-size:clamp(24px,2.4vw,36px);line-height:.92;letter-spacing:-.04em">Scale and<br>leverage.</p><p style="font-size:15px;line-height:1.5">Agents doing the work you do at midnight. More of the result, without more of your hours.</p></div>
+<div class="gfx"><canvas class="g" data-g="ticks" aria-label="A week of the ritual being ticked off, day by day" role="img"></canvas></div>
 </div>
 </section>
 
-<section class="rule" id="case" aria-label="Case 001">
-<div class="strip gut meta lbl"><span>Case 001</span><span>Josh Gore / Filmmaker</span></div>
-<!-- Case 001 interview film. 16:9, 1080p. To go live: replace the placeholder div with
-<video controls playsinline preload="none" poster="/img/case-001-poster.webp" src="[VIDEO URL]" style="width:100%;height:100%;display:block;object-fit:cover"></video> -->
-<figure class="gut" style="margin:0;padding-block:40px;border-bottom:1px solid var(--ink)">
+<!-- The roadmap: one timeline, no boxes -->
+<section class="flow gut" id="roadmap" aria-label="The roadmap">
+<p class="lbl">05 / The roadmap</p>
+<h2 class="big rv" style="font-size:clamp(40px,5.6vw,88px);max-width:14ch">Start earning before it starts.</h2>
+<ol class="tl">
+<li class="rv hot"><span class="lbl">The day you join</span><b>The 14-day cash sprint</b><p>Instant access. Bring money in from past clients, warm leads and one sharp offer. At your own pace, over Christmas or in a day.</p></li>
+<li class="rv"><span class="lbl">January</span><b>Reset and cash</b><p>Core Four, your constraints, your number. Start the ritual. Get money moving.</p></li>
+<li class="rv"><span class="lbl">February</span><b>Expertise to market</b><p>Niche, message, offer, price. Take yourself to market and send the offers.</p></li>
+<li class="rv"><span class="lbl">March</span><b>Scale and leverage</b><p>Agents doing the work you do at midnight. More of the result, fewer of your hours.</p></li>
+</ol>
+</section>
+
+<section class="bleed short" aria-hidden="true">
+<img src="/img/orange-motion.webp" alt="" loading="lazy" decoding="async" style="object-position:center 60%">
+</section>
+
+<section class="flow gut" id="case" aria-label="Case 001">
+<p class="lbl">06 / Case 001 / Josh Gore, filmmaker</p>
+<!-- Case 001 interview film. To go live, replace the .vid div's contents with a <video> element. -->
+<figure style="margin:24px 0 0">
 <div class="vid" style="position:relative;aspect-ratio:16/9;width:100%;background:var(--ink);color:var(--paper);overflow:hidden">
 <img src="/img/case-001-poster.webp" alt="Josh Gore, mid-interview" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:70% center" loading="lazy" decoding="async">
 <div style="position:absolute;inset:0;display:flex;flex-direction:column;justify-content:space-between;padding:clamp(16px,2.4vw,32px)">
-<div class="meta lbl" style="display:flex;justify-content:space-between;gap:16px;opacity:.7"><span>Interview / 1080p</span><span>Film coming</span></div>
+<div class="lbl" style="display:flex;justify-content:space-between;gap:16px;opacity:.7"><span>Interview / 1080p</span><span>Film coming</span></div>
 <div style="display:flex;align-items:center;gap:clamp(14px,2vw,24px)">
 <span aria-hidden="true" style="width:clamp(52px,6vw,84px);height:clamp(52px,6vw,84px);border:1px solid var(--paper);border-radius:50%;display:inline-flex;align-items:center;justify-content:center;flex:none"><svg width="22" height="24" viewBox="0 0 22 24" fill="currentColor"><path d="M2 1.5v21L21 12z"/></svg></span>
 <p class="big vidh" style="margin:0;font-size:clamp(28px,4.4vw,64px);line-height:.92;letter-spacing:-.04em">IN HIS<br>OWN WORDS</p>
 </div>
 </div>
 </div>
-<figcaption class="lbl" style="margin-top:14px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap"><span>Josh Gore on going from £500 shoots to the stage (recorded early 2026)</span><span style="color:var(--mute)">Case 001 / Film</span></figcaption>
 </figure>
-<div class="split">
-<div class="stat cellR"><span class="lbl">Rate</span><p class="n rv">£500<br>→ £5K</p><span style="font-size:15px;line-height:1.4">From £500 shoots to £5,000 a month retainers. Since the film, a team and £25,000 months.</span></div>
-<div class="stat cellR"><span class="lbl">Stage</span><p class="n rv">100</p><span style="font-size:15px;line-height:1.4">Booked to speak to a room of 100 of his ideal clients.</span></div>
-<div class="stat"><span class="lbl">Vision</span><p class="n rv">30K<br>→ 100K</p><span style="font-size:15px;line-height:1.4">His monthly goal, reset in Bali with his ops manager. Now he's building the business that hits it.</span></div>
+<div class="nums">
+<div class="rv"><p class="n">£500 → £5K</p><p>Shoots to monthly retainers. Since the film, a team and £25,000 months.</p></div>
+<div class="rv"><p class="n">100</p><p>Booked to speak to a room of 100 of his ideal clients.</p></div>
+<div class="rv"><p class="n">30K → 100K</p><p>His monthly goal, reset in Bali with his ops manager.</p></div>
 </div>
-<p class="gut lbl" style="padding-block:24px;color:var(--mute)">Individual result over several years of work together. Yours depends on your work, your market and your effort.</p>
+<p class="quote rv" style="margin-top:56px">He didn't get better at filming. He stopped thinking like a freelancer and started acting like the expert he already was.</p>
+<p class="lbl" style="margin-top:20px;color:var(--mute)">Individual result over several years of work together. Yours depends on your work, your market and your effort.</p>
 </section>
 
-<section class="rule split" aria-label="Founder">
-<div class="fig wp ffig" style="flex:0 1 380px;min-width:260px;min-height:420px;background:var(--ink)"><img src="/img/josh-pearson-2.webp" alt="Josh Pearson, founder of Locked In Dept." loading="lazy" decoding="async" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 58%"><span class="cap lbl" style="top:14px;bottom:auto">Josh Pearson / Founder</span></div>
-<div class="cell fcell" style="flex:1 1 420px;gap:24px;padding-top:40px;padding-bottom:48px;border-left:1px solid var(--ink);justify-content:center">
-<p class="lbl">06 / Who's behind it</p>
-<p class="big rv" style="font-size:clamp(26px,3vw,46px);line-height:.95;letter-spacing:-.04em">The bigger the climb in business, the bigger the climb you make inside your own head.</p>
-<p class="rv" style="font-size:16px;line-height:1.55;max-width:560px">Twenty-two years of building, more than a decade behind a camera, retainers from £1,000 to about £15,000 a month. I've coached creatives from burning out at £5k months to their first £20k, £25k and £30k months, and I was a personal trainer before any of it. The work was never what held them back. It was what they believed they could charge, and whether they had the energy to back themselves.</p>
+<section class="split founder" aria-label="Founder">
+<div class="fig wp" style="flex:0 1 440px;min-width:260px;min-height:480px;background:var(--ink)"><img src="/img/josh-pearson-2.webp" alt="Josh Pearson, founder of Locked In Dept." loading="lazy" decoding="async" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 58%"></div>
+<div class="cell" style="flex:1 1 420px;gap:24px;padding-top:56px;padding-bottom:56px;justify-content:center">
+<p class="lbl">07 / Who's behind it / Josh Pearson</p>
+<p class="big rv" style="font-size:clamp(28px,3.2vw,50px);line-height:.95;letter-spacing:-.04em">The bigger the climb in business, the bigger the climb you make inside your own head.</p>
+<p class="rv" style="font-size:16px;line-height:1.6;max-width:560px">Twenty-two years of building, more than a decade behind a camera, retainers from £1,000 to about £15,000 a month. I've coached creatives from burning out at £5k months to their first £20k, £25k and £30k months, and I was a personal trainer before any of it. The work was never what held them back. It was what they believed they could charge, and whether they had the energy to back themselves.</p>
 </div>
 </section>
 
-<section class="rule" id="join" aria-label="Join">
-<div class="strip gut meta lbl"><span>07 / Join</span><span>Founding cohort / Doors close 20 December</span></div>
-<div class="split">
-<div class="cell cellR" style="flex:1 1 440px;gap:28px;padding-top:40px;padding-bottom:48px">
-<div><p class="lbl" style="margin-bottom:10px">The 90 days / Group</p><p class="rv" style="font-size:clamp(64px,8vw,124px);line-height:.85;font-weight:800;letter-spacing:-.05em">£697</p><p class="lbl" style="margin-top:12px">Founding price / £1,497 from the next cohort</p></div>
-<ul class="list" style="max-width:540px">
-<li><span class="lbl">A</span><span><strong>The 14-day cash sprint</strong>, the moment you join.</span></li>
-<li><span class="lbl">B</span><span><strong>Weekly group calls</strong> on Tuesdays from 5 January, recorded if you can't make it live.</span></li>
-<li><span class="lbl">C</span><span><strong>The portal:</strong> the Locked In Ritual tracker, your Core Four, your numbers and an AI assistant trained on all of it.</span></li>
-<li><span class="lbl">D</span><span><strong>The agents</strong>, installed into your own Claude: offer creator, trainer, inbox, proposals, outreach and more.</span></li>
-<li><span class="lbl">E</span><span><strong>The room.</strong> A cohort of creatives doing the same work, at the same time.</span></li>
-</ul>
-<div style="display:flex;flex-direction:column;gap:10px;max-width:540px">
+<section id="join" aria-label="Join" class="flow gut joinx">
+<p class="lbl">08 / Join the founding cohort / Doors close 20 December</p>
+<div class="twoup" style="padding:0;margin-top:24px;align-items:start">
+<div>
+<p class="rv" style="font-size:clamp(80px,11vw,170px);line-height:.82;font-weight:800;letter-spacing:-.06em;margin:0">£697</p>
+<p class="lbl" style="margin-top:14px">Or 3 monthly payments of £247 / £1,497 from the next cohort</p>
+<div style="display:flex;flex-direction:column;gap:10px;max-width:480px;margin-top:32px">
 <a class="btn buy" data-plan="full" href="#join" style="background:var(--yellow);color:var(--ink);border-color:var(--yellow);justify-content:space-between;min-height:60px"><span>Join for £697</span><svg aria-hidden="true" width="22" height="12" viewBox="0 0 22 12" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M0 6h20M15 1l5 5-5 5"></path></svg></a>
-<a class="btn buy" data-plan="split" href="#join" style="justify-content:space-between"><span>Or 3 monthly payments of £247</span><svg aria-hidden="true" width="22" height="12" viewBox="0 0 22 12" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M0 6h20M15 1l5 5-5 5"></path></svg></a>
+<a class="btn buy" data-plan="split" href="#join" style="justify-content:space-between"><span>3 payments of £247</span><svg aria-hidden="true" width="22" height="12" viewBox="0 0 22 12" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M0 6h20M15 1l5 5-5 5"></path></svg></a>
 </div>
-<div class="rv" id="guarantee" style="border:1px solid var(--ink);padding:20px;max-width:540px">
-<p class="lbl" style="margin-bottom:10px">The guarantee</p>
-<p style="font-size:clamp(20px,2vw,28px);line-height:1.05;font-weight:800;letter-spacing:-.03em;text-transform:uppercase;margin:0 0 10px">Make back the £697 in 90 days, or your seat in the next cohort is free.</p>
-<p style="font-size:14px;line-height:1.5;margin:0">That's a £1,497 seat. One condition: you do the work. The cash sprint, 10 of the weekly calls, 20 offers sent, numbers logged each week. <a href="/terms#guarantee">Full terms</a>.</p>
+<p class="rv" style="margin-top:32px;font-size:clamp(20px,2vw,26px);line-height:1.15;font-weight:800;letter-spacing:-.03em;text-transform:uppercase;max-width:480px" id="guarantee">Make back the £697 in 90 days, or your seat in the next cohort is free.</p>
+<p style="font-size:14px;line-height:1.5;max-width:480px;margin-top:10px;color:var(--mute)">That's a £1,497 seat. You do the work: the cash sprint, 10 weekly calls, 20 offers sent, numbers logged. <a href="/terms#guarantee">Full terms</a>.</p>
 </div>
+<div>
+<p class="lbl" style="margin-bottom:18px">What you get</p>
+<ul class="got">
+<li class="rv"><b>The 14-day cash sprint</b>, the moment you join.</li>
+<li class="rv"><b>Weekly group calls</b> on Tuesdays from 5 January, recorded.</li>
+<li class="rv"><b>The portal</b>: ritual tracker, Core Four, your numbers, and an AI assistant trained on all of it.</li>
+<li class="rv"><b>The agents</b>, installed into your own Claude: offer creator, trainer, inbox, proposals, outreach and more.</li>
+<li class="rv"><b>The room.</b> A cohort doing the same work, at the same time.</li>
+</ul>
+<div class="oneone rv">
+<p class="lbl">Want Josh in your corner?</p>
+<p style="font-size:17px;line-height:1.45;margin:8px 0 14px"><b>1:1 for £2,000.</b> Three months. Everything in the group, plus fortnightly calls with Josh and direct access between them. A handful of places.</p>
+<a class="lnk buy" data-plan="oneone" href="#join">Go 1:1 <svg aria-hidden="true" width="22" height="12" viewBox="0 0 22 12" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M0 6h20M15 1l5 5-5 5"></path></svg></a>
+<span class="lbl" style="color:var(--mute);margin-left:18px">Questions? <a href="https://ig.me/m/lockedin.dept" target="_blank" rel="noopener">DM LOCKED IN</a></span>
 </div>
-<div class="cell" style="flex:1 1 380px;gap:24px;padding-top:40px;padding-bottom:48px;background:var(--ink);color:var(--paper)">
-<p class="lbl" style="color:#A9A8A3">Want Josh in your corner? / 1:1</p>
-<p style="font-size:clamp(56px,6vw,96px);line-height:.85;font-weight:800;letter-spacing:-.05em">£2,000</p>
-<p class="lbl" style="color:#A9A8A3">Three months / A handful of places</p>
-<p style="font-size:16px;line-height:1.55;max-width:440px">Everything in the group, plus your own calls with Josh every fortnight and direct access between them. For the creative or studio already turning over £10k+ a month who wants it built around them.</p>
-<a class="btn buy" data-plan="oneone" href="#join" style="background:var(--paper);color:var(--ink);border-color:var(--paper);justify-content:space-between;max-width:440px"><span>Go 1:1 for £2,000</span><svg aria-hidden="true" width="22" height="12" viewBox="0 0 22 12" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M0 6h20M15 1l5 5-5 5"></path></svg></a>
-<p class="lbl" style="color:#A9A8A3;line-height:1.7">Not sure which? <a href="https://ig.me/m/lockedin.dept" target="_blank" rel="noopener" style="color:var(--paper)">DM LOCKED IN to @lockedin.dept</a> and ask.</p>
 </div>
 </div>
 
-<div id="reserve" class="gut" hidden style="padding-block:40px;border-top:1px solid var(--ink)">
+<div id="reserve" hidden style="padding-top:48px;margin-top:48px;border-top:1px solid var(--ink)">
 <div style="max-width:620px">
 <p class="lbl" style="margin-bottom:12px" id="rs-plan">Reserve your place</p>
 <h2 class="big" style="font-size:clamp(32px,3.6vw,56px);line-height:.88;letter-spacing:-.05em">Checkout opens<br>in the next few days.</h2>
@@ -330,9 +390,10 @@ img{max-width:100%}
 </div>
 </section>
 
-<section class="rule" id="faq" aria-label="Questions">
-<div class="strip gut meta lbl"><span>08 / Questions</span><span>Anything else, DM LOCKED IN to @lockedin.dept</span></div>
-<div class="gut faq" style="padding-block:12px 40px">
+<section class="faq2 gut" id="faq" aria-label="Questions">
+<p class="lbl">09 / Questions</p>
+<h2 class="big" style="font-size:clamp(36px,4.4vw,68px);margin:16px 0 24px">Before you join.</h2>
+<div class="faq">
 <details><summary>Who is it for?</summary><p>Freelance filmmakers, photographers, editors and designers who have done paid work and feel stuck: undercharging, overbooked, burnt out, or all three. You don't need to be making big money. You need to want the next 90 days to be different.</p></details>
 <details><summary>I've just come out of burnout. Is this too much?</summary><p>It's built for exactly that. The ritual comes first, the work fits inside your constraints, and you set your own levels. Nobody's asking you to grind.</p></details>
 <details><summary>When are the calls?</summary><p>Tuesdays, starting 5 January. Every call is recorded and goes in the portal, so you can watch it back if life gets in the way.</p></details>
@@ -457,6 +518,52 @@ var bar=document.querySelector('.apply-bar'), jn=document.getElementById('join')
 if(bar&&'IntersectionObserver' in window){var past=false,near=false;function u(){bar.classList.toggle('on',past&&!near)}
  new IntersectionObserver(function(e){near=e[0].isIntersecting;u()},{rootMargin:'0px 0px 200px 0px'}).observe(jn);
  window.addEventListener('scroll',function(){past=window.scrollY>window.innerHeight*0.9;u()},{passive:true});}
+})();
+</script>
+<script>
+/* Graphics: capacity rings, the pillars venn, the ritual ticks. Pure canvas, run only on screen. */
+(function(){
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches, Y='#E8FF2A';
+const ease=x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;
+document.querySelectorAll('canvas.g').forEach(c=>{
+  const kind=c.dataset.g, g=c.getContext('2d'); let w=1,h=1,on=false,raf=0,t0=0; const dark=!!c.closest('.dark-ch');
+  const FG=dark?'#ECEBE7':'#0B0B0B', MU=dark?'#555':'#B9B8B2';
+  function size(){const r=c.getBoundingClientRect(),d=Math.min(devicePixelRatio||1,2);w=r.width;h=r.height;c.width=w*d;c.height=h*d;g.setTransform(d,0,0,d,0,0);}
+  size(); addEventListener('resize',()=>{size();if(reduce)draw(9)});
+  function label(t,x,y,al,col,wt){g.globalAlpha=al;g.fillStyle=col||FG;g.font=(wt||500)+' '+Math.max(10,Math.round(w*.024))+'px Archivo, sans-serif';g.textAlign='center';g.fillText(t,x,y);g.globalAlpha=1;}
+  function rings(t){ // three capacity rings breathing outward
+    const cx=w/2,cy=h/2,R=w*.44, names=['FINANCIAL','MENTAL','PHYSICAL'];
+    const grow=reduce?1:ease(Math.min(1,t/2.2));
+    for(let i=0;i<3;i++){const base=R*(.42+i*.29)*grow, r=base*(1+.03*Math.sin(t*1.2-i*.9));
+      g.strokeStyle=FG;g.lineWidth=1.2;g.globalAlpha=.9-i*.2;g.beginPath();g.arc(cx,cy,r,0,7);g.stroke();g.globalAlpha=1;
+      label(names[i],cx,cy-r+w*.045,Math.min(1,grow*1.4),FG,500);}
+    // a few particles drifting outward
+    for(let k=0;k<36;k++){const a=k*2.4+t*.15, rr=(R*.2+((t*18+k*37)%(R*.85))), al=1-rr/(R*1.05); g.globalAlpha=Math.max(0,al)*.8; g.fillStyle=FG; g.fillRect(cx+Math.cos(a)*rr,cy+Math.sin(a)*rr,2,2);} g.globalAlpha=1;
+    g.fillStyle=Y;g.beginPath();g.arc(cx,cy,w*.018,0,7);g.fill();
+  }
+  function venn(t){ // three circles slide together; the centre lights up
+    const cx=w/2,cy=h*.5,r=w*.23, p=reduce?1:ease(Math.min(1,t/2)), sp=r*(.62+.5*(1-p));
+    const pts=[[cx,cy-sp*.7],[cx-sp*.75,cy+sp*.5],[cx+sp*.75,cy+sp*.5]], names=['MONEY','EXPERTISE','CAPACITY'];
+    if(p>.95){ g.save(); g.beginPath(); g.arc(...pts[0],r,0,7); g.clip(); g.beginPath(); g.arc(...pts[1],r,0,7); g.clip(); g.beginPath(); g.arc(...pts[2],r,0,7); g.fillStyle=Y; g.globalAlpha=Math.min(1,(p-.95)*20)*(.85+.15*Math.sin(t*2)); g.fill(); g.restore(); g.globalAlpha=1; }
+    pts.forEach((q,i)=>{g.strokeStyle=FG;g.lineWidth=1.2;g.beginPath();g.arc(q[0],q[1],r,0,7);g.stroke();
+      const lx=i===0?q[0]:q[0]+(i===1?-r*.35:r*.35), ly=i===0?q[1]-r-w*.03:q[1]+r+w*.055; label(names[i],lx,ly,1,FG,800);});
+    if(p>.95) label('FREEDOM',cx,cy+w*.008,1,'#0B0B0B',800);
+  }
+  function ticks(t){ // seven days x four habits, ticking in
+    const cols=7, rows=4, pad=w*.08, gw=(w-pad*2)/cols, gh=gw, top=h/2-gh*rows/2, names=['MIND','CALM','MOVE','FUEL'], days=['M','T','W','T','F','S','S'];
+    const n=reduce?28:Math.floor((t*4)%40);
+    for(let d=0;d<cols;d++){ label(days[d],pad+gw*d+gw/2,top-gw*.35,.6,FG,500);
+      for(let r=0;r<rows;r++){ const idx=d*rows+r, x=pad+gw*d+gw*.14, y=top+gh*r+gh*.14, s=gw*.72; const lit=idx<n && !(d===2&&r===2) && !(d===5&&r===1);
+        g.strokeStyle=lit?Y:MU; g.lineWidth=1; g.strokeRect(x,y,s,s); if(lit){g.fillStyle=Y;g.fillRect(x+s*.18,y+s*.18,s*.64,s*.64);} } }
+    for(let r=0;r<rows;r++){ g.globalAlpha=.6; g.fillStyle=FG; g.font='500 '+Math.max(9,Math.round(w*.02))+'px Archivo, sans-serif'; g.textAlign='right'; g.fillText(names[r],pad-8,top+gh*r+gh*.6); g.globalAlpha=1; }
+  }
+  function draw(t){g.clearRect(0,0,w,h);({rings,venn,ticks})[kind](t);}
+  function loop(now){if(!on)return;if(!t0)t0=now;draw((now-t0)/1000);raf=requestAnimationFrame(loop);}
+  if(reduce){draw(9);return;}
+  new IntersectionObserver(es=>es.forEach(e=>{on=e.isIntersecting;if(on&&!raf){raf=requestAnimationFrame(loop);}if(!on){cancelAnimationFrame(raf);raf=0;}}),{threshold:.2}).observe(c);
+});
+// count-up for the big percentages
+const cs=document.querySelectorAll('.count'); if(!reduce&&'IntersectionObserver' in window){cs.forEach(el=>{const to=+el.dataset.to; el.textContent='0'; new IntersectionObserver((es,o)=>{if(es[0].isIntersecting){o.disconnect();const s0=performance.now();(function f(n){const u=Math.min(1,(n-s0)/1400);el.textContent=Math.round(to*ease(u));if(u<1)requestAnimationFrame(f);})(s0);}},{threshold:.5}).observe(el);});}
 })();
 </script>
 </body>
