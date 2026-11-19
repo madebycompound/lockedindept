@@ -39,8 +39,8 @@ module.exports = {
     (first, c) => ({
       subject: "The number you're scared to say",
       kicker: "Lesson 05 of 05 / Belief", title: "The number you're scared to say.",
-      body: `${first}, last one.\n\nYou can know all of this and still quote low. Pricing isn't a maths problem. It's a belief problem. The number you're scared to say out loud is usually the right one.\n\n${c && c.price ? `For you, that number is £${c.price.toLocaleString("en-GB")} a month. Say it out loud once today.\n\n` : ""}Josh Gore went from £500 shoots to £5,000 a month retainers, then landed a room of 100 of his ideal clients. He didn't get better at filming. He stopped thinking like a freelancer and started acting like the expert he already was.\n\nAnd start from the life, not the business. Decide the constraint first: how many hours you'll work, what's protected for your health and your family. Mine is four-hour days, building toward a multi seven-figure business inside them. Yours doesn't have to be seven figures. A £20k to £50k a month agency that doesn't own you is a great business, and it's closer than you think. The constraint is what forces you to charge like the expert and build leverage, because selling hours stops being an option.\n\nThat's what the 90 days are for. Ten creatives, from January. We fix the offer, the price and the pitch, and we work on the person who has to say the number. It comes with an ROI guarantee: do the work, and if you haven't made back what you paid by day 90, I keep working with you free for up to six more months.\n\n${open() ? "Applications close 20 December." : "Applications for January have closed. Reply to this email and I'll tell you when the next round opens."}\n\nJosh`,
-      cta: open() ? "Apply for January" : null, url: open() ? SITE + "/90-days#apply" : ""
+      body: `${first}, last one.\n\nYou can know all of this and still quote low. Pricing isn't a maths problem. It's a belief problem. The number you're scared to say out loud is usually the right one.\n\n${c && c.price ? `For you, that number is £${c.price.toLocaleString("en-GB")} a month. Say it out loud once today.\n\n` : ""}Josh Gore went from £500 shoots to £5,000 a month retainers, then landed a room of 100 of his ideal clients. He didn't get better at filming. He stopped thinking like a freelancer and started acting like the expert he already was.\n\nAnd start from the life, not the business. Decide the constraint first: how many hours you'll work, what's protected for your health and your family. Mine is four-hour days, building toward a multi seven-figure business inside them. Yours doesn't have to be seven figures. A £20k to £50k a month agency that doesn't own you is a great business, and it's closer than you think. The constraint is what forces you to charge like the expert and build leverage, because selling hours stops being an option.\n\nThat's what the 90 days are for. Money, expertise and capacity: we fix the offer, the price and the pitch, and we work on the person who has to say the number, with a daily ritual to get you back to full power. It's £697 for the founding cohort (£1,497 next time), and the 14-day cash sprint opens the day you join. Guarantee: do the work, and if you haven't made back the £697 by day 90, your seat in the next cohort is free.\n\n${open() ? "Doors close 20 December." : "Doors for January have closed. Reply to this email and I'll tell you when the next round opens."}\n\nJosh`,
+      cta: open() ? "Join for £697" : null, url: open() ? SITE + "/90-days#join" : ""
     })
   ],
   // Sent by api/course.js to kit subscribers who haven't applied, in the run-up to the close.
@@ -48,14 +48,14 @@ module.exports = {
     (first) => ({
       subject: "Five days left for January",
       kicker: "90 days / Closing soon", title: "Five days left.",
-      body: `${first}, applications for the January cohort close on 20 December. Ten places.\n\nIf you've got paying clients and you're stuck undercharging or too busy to grow, the 90 days is built for you. We fix the offer, the price and the pitch, then install the agents that do the work a team used to.\n\nIt's £3,000 for the group, backed by the ROI guarantee. Applying takes five minutes and there's a call before anything is decided.\n\nJosh`,
-      cta: "Apply for January", url: SITE + "/90-days#apply"
+      body: `${first}, doors for the founding cohort close on 20 December.\n\nIf you're undercharging, overbooked or running on empty, the 90 days is built for you. Money, expertise and capacity, with a daily ritual so you stop paying for the business with your health and your people.\n\nIt's £697, or 3 payments of £247. It goes up to £1,497 for the next cohort. Join today and the 14-day cash sprint opens straight away, so it can pay for itself before January.\n\nJosh`,
+      cta: "Join for £697", url: SITE + "/90-days#join"
     }),
     (first) => ({
       subject: "Last day tomorrow",
       kicker: "90 days / Final call", title: "Last chance.",
-      body: `${first}, applications close tomorrow night. After that the January cohort is set.\n\nIf you've been thinking about it, apply today and book your call. If it isn't for you, no problem, the kit is yours to keep.\n\nJosh`,
-      cta: "Apply for January", url: SITE + "/90-days#apply"
+      body: `${first}, doors close tomorrow night. After that the founding price is gone and the next cohort is £1,497.\n\nIf you've been thinking about it, join today and start the cash sprint tonight. If it isn't for you, no problem, the kit is yours to keep.\n\nJosh`,
+      cta: "Join for £697", url: SITE + "/90-days#join"
     })
   ],
   // Sent to applicants two days after applying, if they're still on the list.

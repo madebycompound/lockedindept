@@ -84,7 +84,7 @@
 <script>
 document.addEventListener("lid:ready", function () {
   var D = LID.data, S = LID.state;
-  var DEFAULT = ["Walk", "Train", "Meditate", "Sleep 7+ hours", "No phone first hour"];
+  var DEFAULT = ["Feed the mind", "Calm the body", "Move the body", "Fuel the body"];
   S.rituals = S.rituals || DEFAULT.slice(); S.days = S.days || {}; S.weeks = S.weeks || [];
   function key(d) { return d.toISOString().slice(0, 10); }
   function weekKey(d) { var x = new Date(d); x.setDate(x.getDate() - ((x.getDay() + 6) % 7)); return key(x); }

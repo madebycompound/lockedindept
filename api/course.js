@@ -28,8 +28,8 @@ module.exports = async (req, res) => {
   if (!key) return res.status(503).json({ error: "SUPABASE_SERVICE_ROLE_KEY not set" });
   const now = new Date(), ymd = now.toISOString().slice(0, 10), since = new Date(now.getTime() - 45 * 864e5).toISOString();
   const get = async like => { const r = await fetch(`${URL_}/rest/v1/leads?select=id,email,note,created_at&note=like.${like}*&created_at=gte.${since}`, { headers: H }); return r.ok ? await r.json() : []; };
-  const [kits, apps] = [await get("KIT"), await get("APPLICATION")];
-  const applied = new Set(apps.map(a => (a.email || "").toLowerCase()));
+  const [kits, apps, res_] = [await get("KIT"), await get("APPLICATION"), await get("RESERVATION")];
+  const applied = new Set(apps.concat(res_).map(a => (a.email || "").toLowerCase())); // applied or reserved: no pitch emails
   const only = (q.to || "").toLowerCase(), forceDay = +q.day || 0, test = !!(forceDay || q.closing || q.nudge), sent = [];
   const has = (L, tag) => new RegExp("SENT " + tag + "(\\s|$)").test(L.note || "");
   const mark = async (L, tag) => { if (test) return; L.note = (L.note || "") + "\nSENT " + tag; await fetch(`${URL_}/rest/v1/leads?id=eq.${L.id}`, { method: "PATCH", headers: H, body: JSON.stringify({ note: L.note }) }); };

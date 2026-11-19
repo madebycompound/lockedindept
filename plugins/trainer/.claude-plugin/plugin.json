@@ -1,0 +1,8 @@
+{
+  "name": "trainer",
+  "version": "0.1.0",
+  "description": "Locked In Dept. trainer (LID-TRN-08). Builds a training plan and simple food targets for your level, your days and your kit, so the Move and Fuel parts of the Locked In Ritual are done for you.",
+  "author": { "name": "Josh Pearson", "url": "https://lockedindept.com" },
+  "homepage": "https://lockedindept.com/portal/agents",
+  "keywords": ["training", "fitness", "nutrition", "ritual", "capacity"]
+}
