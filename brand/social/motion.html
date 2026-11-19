@@ -1,0 +1,70 @@
+<!doctype html><meta charset="utf-8">
+<!-- Locked In Dept. motion posts 2 and 3. 1080x1350, drawn entirely on canvas so every frame is a pure function of time.
+     renderScene(name, t) with name = "problem" | "offer". -->
+<style>
+@font-face{font-family:Archivo;font-weight:500;src:url(/fonts/archivo-500.woff2) format('woff2')}
+@font-face{font-family:Archivo;font-weight:800;src:url(/fonts/archivo-800.woff2) format('woff2')}
+html,body{margin:0;background:#0B0B0B}canvas{display:block}
+</style>
+<canvas id="c" width="1080" height="1350"></canvas>
+<script>
+const c=document.getElementById('c'), g=c.getContext('2d'), W=1080, H=1350, K='#0B0B0B', P='#ECEBE7', Y='#E8FF2A', M='#8E8D88';
+const ease=x=>{x=Math.max(0,Math.min(1,x));return x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2};
+const seg=(t,a,b)=>Math.max(0,Math.min(1,(t-a)/(b-a)));
+function label(s,x,y,col,align){g.font='500 22px Archivo';g.fillStyle=col;g.textAlign=align||'left';g.letterSpacing='1.3px';g.fillText(s.toUpperCase(),x,y);g.letterSpacing='0px';}
+function big(lines,x,y,size,col,lh){g.font='800 '+size+'px Archivo';g.textAlign='left';g.letterSpacing=(-size*0.05)+'px';lines.forEach((l,i)=>{const parts=Array.isArray(l)?l:[[l,col]];let cx=x;parts.forEach(([txt,cc])=>{g.fillStyle=cc;g.fillText(txt.toUpperCase(),cx,y+i*size*(lh||0.86));cx+=g.measureText(txt.toUpperCase()).width;});});g.letterSpacing='0px';}
+function sub(lines,x,y,col){g.font='500 38px Archivo';g.fillStyle=col;g.textAlign='left';lines.forEach((l,i)=>g.fillText(l,x,y+i*50));}
+function frame(bg,fg,l,r,bl,br){g.fillStyle=bg;g.fillRect(0,0,W,H);label(l,64,86,fg);label(r,W-64,86,fg,'right');label(bl,64,H-64,fg);label(br,W-64,H-64,fg,'right');}
+
+const S={
+  // 12s: 69% counts up (ring sweeps) -> 47% -> two discs become one -> the line
+  problem(t){
+    if(t<3.4){ const u=ease(seg(t,0.2,2.0)), n=Math.round(69*u);
+      frame(P,K,'The problem','Creative Boom, 2026','882 creatives','');
+      g.strokeStyle='#C9C8C3';g.lineWidth=2;g.beginPath();g.arc(W-250,330,150,0,7);g.stroke();
+      g.strokeStyle=K;g.lineWidth=16;g.beginPath();g.arc(W-250,330,150,-Math.PI/2,-Math.PI/2+Math.PI*2*n/100);g.stroke();
+      g.font='800 440px Archivo';g.fillStyle=K;g.textAlign='left';g.letterSpacing='-30px';g.fillText(n+'%',50,820);g.letterSpacing='0px';
+      if(t>2.0) sub(['of creatives burnt out','in the last twelve months.'],64,930,K);
+    } else if(t<6.6){ const tt=t-3.4, u=ease(seg(tt,0.2,2.0)), n=Math.round(47*u);
+      frame(P,K,'The problem','Creative Boom, 2026','Self-employed creatives','');
+      g.strokeStyle='#C9C8C3';g.lineWidth=2;g.beginPath();g.arc(W-250,330,150,0,7);g.stroke();
+      g.strokeStyle=K;g.lineWidth=16;g.beginPath();g.arc(W-250,330,150,-Math.PI/2,-Math.PI/2+Math.PI*2*n/100);g.stroke();
+      g.font='800 440px Archivo';g.fillStyle=K;g.textAlign='left';g.letterSpacing='-30px';g.fillText(n+'%',50,820);g.letterSpacing='0px';
+      if(tt>2.0) sub(['earn under £30,000 a year.'],64,930,K);
+    } else { const tt=t-6.6, p=ease(seg(tt,0.3,1.8));
+      frame(K,P,'Locked In Dept.','Not two','Burnt out / Underpaid','@lockedin.dept');
+      const cy=330, r=150, gap=260*(1-p), ax=W-250-gap/2-(1-p)*120, bx=W-250+gap/2-(1-p)*120;
+      g.lineWidth=2.5;g.strokeStyle=P;g.beginPath();g.arc(ax,cy,r,0,7);g.stroke();g.beginPath();g.arc(bx,cy,r,0,7);g.stroke();
+      if(p>0.02){g.save();g.beginPath();g.arc(ax,cy,r,0,7);g.clip();g.beginPath();g.arc(bx,cy,r,0,7);g.fillStyle=Y;g.fill();g.restore();}
+      const show=tt>1.9;
+      big(['Burnt out','and','underpaid'],64,650,136,P);
+      if(show) big([[['is ',P],['one',Y]],'problem.'],64,650+3*136*0.86,136,P);
+    }
+  },
+  // 12s: three pillars slide together -> FREEDOM -> £697 counts up -> until 20 Dec, then £1,497
+  offer(t){
+    if(t<5.2){ const p=ease(seg(t,0.4,2.6));
+      frame(K,P,'The 90 days','Three pillars','Every week, not one a month','@lockedin.dept');
+      const cx=W/2, cy=570, r=205, sp=r*(0.62+0.75*(1-p)), pts=[[cx,cy-sp*0.7],[cx-sp*0.75,cy+sp*0.5],[cx+sp*0.75,cy+sp*0.5]], names=['MONEY','EXPERTISE','CAPACITY'];
+      if(p>0.97){g.save();g.beginPath();g.arc(pts[0][0],pts[0][1],r,0,7);g.clip();g.beginPath();g.arc(pts[1][0],pts[1][1],r,0,7);g.clip();g.beginPath();g.arc(pts[2][0],pts[2][1],r,0,7);g.fillStyle=Y;g.fill();g.restore();}
+      g.strokeStyle=P;g.lineWidth=2.5;pts.forEach(q=>{g.beginPath();g.arc(q[0],q[1],r,0,7);g.stroke();});
+      g.font='800 26px Archivo';g.textAlign='center';g.fillStyle=P;g.letterSpacing='1px';
+      g.fillText(names[0],pts[0][0],pts[0][1]-r-22);g.fillText(names[1],pts[1][0]-r*0.35,pts[1][1]+r+44);g.fillText(names[2],pts[2][0]+r*0.35,pts[2][1]+r+44);
+      if(p>0.97){g.fillStyle=K;g.fillText('FREEDOM',cx,cy+14);} g.letterSpacing='0px';
+      if(t>3.0) big(['Money.','Expertise.','Capacity.'],64,1010,84,P,0.9);
+    } else if(t<9.0){ const tt=t-5.2, u=ease(seg(tt,0.2,1.8)), n=Math.round(697*u);
+      frame(K,P,'Locked In Dept.','Founding cohort','Doors close 20 December','@lockedin.dept');
+      label('The 90 days / Founding cohort',64,420,P);
+      g.font='800 400px Archivo';g.fillStyle=Y;g.textAlign='left';g.letterSpacing='-28px';g.fillText('£'+n,44,760);g.letterSpacing='0px';
+      if(tt>1.9) sub(['Ninety days on money, expertise and capacity.','Cash sprint opens the day you join.'],64,860,P);
+    } else { const tt=t-9.0;
+      frame(Y,K,'Locked In Dept.','','Link in bio','@lockedin.dept');
+      big(['£697','until','20 Dec.'],64,560,170,K);
+      if(tt>0.9) sub(['Then £1,497. Or 3 payments of £247.'],64,1010,K);
+    }
+  }
+};
+window.renderScene=function(name,t){g.clearRect(0,0,W,H);S[name](t);};
+window.DUR={problem:11.5,offer:12};
+document.fonts.load('800 40px Archivo').then(()=>document.fonts.load('500 40px Archivo')).then(()=>{const q=new URLSearchParams(location.search);renderScene(q.get('s')||'problem',+(q.get('t')||8.9));});
+</script>
