@@ -345,7 +345,7 @@ img{max-width:100%}
 <div class="twoup" style="padding:0;margin-top:24px;align-items:start">
 <div>
 <p class="rv" style="font-size:clamp(80px,11vw,170px);line-height:.82;font-weight:800;letter-spacing:-.06em;margin:0">£697</p>
-<p class="lbl" style="margin-top:14px">Founding price. Or 3 monthly payments of £247.</p>
+<p class="lbl" style="margin-top:14px">Founding price. Or 3 monthly payments of £247 (£741 in total).</p>
 <p style="margin-top:14px;font-size:17px;line-height:1.4;max-width:480px"><b>After 20 December the price is <s>£697</s> £1,497.</b> Founding members save £800.</p>
 <div style="display:flex;flex-direction:column;gap:10px;max-width:480px;margin-top:32px">
 <a class="btn buy" data-plan="full" href="#join" style="background:var(--yellow);color:var(--ink);border-color:var(--yellow);justify-content:space-between;min-height:60px"><span>Join for £697</span><svg aria-hidden="true" width="22" height="12" viewBox="0 0 22 12" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M0 6h20M15 1l5 5-5 5"></path></svg></a>
@@ -486,9 +486,9 @@ document.querySelectorAll('canvas.phys').forEach(c=>{
 <script>
 /* Checkout. Paste the three Stripe Payment Link URLs here. Until a link is set, its button opens the reserve form instead. */
 var CHECKOUT = {
-  full:   "",   // £697 one-off
-  split:  "",   // £247 a month, 3 payments
-  oneone: ""    // £2,000 1:1
+  full:   "https://buy.stripe.com/bJe9ATeHdfwC5hLeut7AI0D",   // £697 one-off
+  split:  "https://buy.stripe.com/3cIcN56aH98e5hLeut7AI0E",   // £247 a month, 3 payments (ended after the third by api/stripe.js)
+  oneone: "https://buy.stripe.com/00wdR9cz5bgm7pT1HH7AI0F"    // £2,000 1:1
 };
 (function(){
 var NAMES={full:'Group / £697',split:'Group / 3 × £247',oneone:'1:1 / £2,000'};
