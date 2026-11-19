@@ -1,0 +1,108 @@
+<!doctype html><meta charset="utf-8">
+<!-- Locked In Dept. grid posts. 1080x1350 (4:5). Each .s is one slide; ?s=<id> shows one. Motion post is #m1 (canvas, driven by renderFrame(t)). -->
+<style>
+@font-face{font-family:Archivo;font-weight:500;src:url(/fonts/archivo-500.woff2) format('woff2')}
+@font-face{font-family:Archivo;font-weight:700;src:url(/fonts/archivo-700.woff2) format('woff2')}
+@font-face{font-family:Archivo;font-weight:800;src:url(/fonts/archivo-800.woff2) format('woff2')}
+:root{--ink:#0B0B0B;--paper:#ECEBE7;--yellow:#E8FF2A;--mute:#8E8D88}
+*{box-sizing:border-box}html,body{margin:0;background:#333}
+.s{position:relative;width:1080px;height:1350px;overflow:hidden;font-family:Archivo,Helvetica,Arial,sans-serif;display:flex;flex-direction:column;justify-content:space-between;padding:64px}
+.ink{background:var(--ink);color:var(--paper)}.pap{background:var(--paper);color:var(--ink)}.yel{background:var(--yellow);color:var(--ink)}
+.bar{display:flex;justify-content:space-between;font-size:22px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;position:relative;z-index:2}
+.big{font-weight:800;text-transform:uppercase;letter-spacing:-.05em;line-height:.86;margin:0;position:relative;z-index:2}
+.x1{font-size:176px}.x2{font-size:136px}.x3{font-size:104px}.x4{font-size:80px}
+.sub{font-size:38px;line-height:1.3;font-weight:500;max-width:860px;margin:0;position:relative;z-index:2}
+.y{color:var(--yellow)}.m{color:var(--mute)}
+.mid{display:flex;flex-direction:column;gap:40px}
+.num{font-weight:800;font-size:420px;line-height:.78;letter-spacing:-.07em;margin:0}
+.rows{list-style:none;margin:0;padding:0;font-size:40px;line-height:1.25}
+.rows li{padding:26px 0;border-top:2px solid currentColor;display:flex;gap:28px}
+.rows li b{font-weight:800}.rows li span:first-child{font-size:22px;letter-spacing:.06em;padding-top:12px;flex:0 0 48px}
+.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.shade::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,11,11,.25) 0%,rgba(11,11,11,0) 30%,rgba(11,11,11,.85) 100%)}
+canvas{position:absolute;inset:0;width:1080px;height:1350px}
+.arrow{display:inline-block;width:64px;height:28px;vertical-align:middle}
+</style>
+<body>
+
+<!-- POST 1: motion. The idea. -->
+<section class="s ink" id="m1">
+<canvas id="cv" width="1080" height="1350"></canvas>
+<div class="bar"><span>Locked In Dept.</span><span>Est. 2026</span></div>
+<div class="mid"><h1 class="big x1">Locked<br>in.</h1><h1 class="big x1" id="m1b">Not<br>locked<br><span class="y">away.</span></h1></div>
+<div class="bar"><span>For creatives</span><span>@lockedin.dept</span></div>
+</section>
+
+<!-- POST 2: carousel. The problem. -->
+<section class="s ink" id="p1"><div class="bar"><span>Locked In Dept.</span><span>01 / 07</span></div>
+<div class="mid"><h1 class="big x2">Burnt out<br>and<br>underpaid<br>is <span class="y">one</span><br>problem.</h1></div>
+<div class="bar"><span>Not two</span><span>Swipe →</span></div></section>
+
+<section class="s pap" id="p2"><div class="bar"><span>The problem</span><span>02 / 07</span></div>
+<div class="mid"><p class="num">69%</p><p class="sub">of creatives burnt out in the last twelve months. Mid-career, it's 77%.</p></div>
+<div class="bar"><span>Creative Boom, 2026 / 882 creatives</span><span>→</span></div></section>
+
+<section class="s pap" id="p3"><div class="bar"><span>The problem</span><span>03 / 07</span></div>
+<div class="mid"><p class="num">47%</p><p class="sub">of self-employed creatives earn under £30,000 a year.</p></div>
+<div class="bar"><span>Creative Boom, 2026</span><span>→</span></div></section>
+
+<section class="s ink" id="p4"><img class="bg" src="/img/red-blur.webp" style="object-position:center 30%"><div class="shade" style="position:absolute;inset:0"></div>
+<div class="bar"><span>Locked In Dept.</span><span>04 / 07</span></div>
+<div class="mid"><h1 class="big x3">Locking in doesn't mean becoming a ghost to the people you love.</h1></div>
+<div class="bar"><span>Or running your body into the ground</span><span>→</span></div></section>
+
+<section class="s pap" id="p5"><div class="bar"><span>The idea</span><span>05 / 07</span></div>
+<div class="mid"><h1 class="big x2">Expand<br>your<br>capacity.</h1><p class="sub">Financial. Mental. Physical. The more you work on your health and your head, the easier business gets.</p></div>
+<div class="bar"><span>Everything follows</span><span>→</span></div></section>
+
+<section class="s pap" id="p6"><div class="bar"><span>Three pillars</span><span>06 / 07</span></div>
+<div class="mid"><h1 class="big x3">Money.<br>Expertise.<br>Capacity.</h1>
+<ul class="rows"><li><span>01</span><div><b>Money.</b> What the life costs, what you charge.</div></li><li><span>02</span><div><b>Expertise.</b> So clients come to you.</div></li><li><span>03</span><div><b>Capacity.</b> Body and being, every day.</div></li></ul></div>
+<div class="bar"><span>Every week for 90 days</span><span>→</span></div></section>
+
+<section class="s yel" id="p7"><div class="bar"><span>Locked In Dept.</span><span>07 / 07</span></div>
+<div class="mid"><h1 class="big x2">Locked in.<br>Not locked<br>away.</h1><p class="sub">The 90 days. Founding cohort open until 20 December.</p></div>
+<div class="bar"><span>Link in bio</span><span>@lockedin.dept</span></div></section>
+
+<!-- POST 3: carousel. The offer. -->
+<section class="s ink" id="o1"><div class="bar"><span>Locked In Dept.</span><span>01 / 06</span></div>
+<div class="mid"><p class="bar" style="font-size:26px">The 90 days / Founding cohort</p><p class="num y" style="font-size:380px">£697</p><p class="sub">Ninety days on money, expertise and capacity. Doors close 20 December.</p></div>
+<div class="bar"><span>What you get</span><span>Swipe →</span></div></section>
+
+<section class="s pap" id="o2"><div class="bar"><span>The day you join</span><span>02 / 06</span></div>
+<div class="mid"><h1 class="big x2">The<br>14-day<br>cash<br>sprint.</h1><p class="sub">Bring money in from people who already know you. Before the programme even starts.</p></div>
+<div class="bar"><span>At your own pace</span><span>→</span></div></section>
+
+<section class="s pap" id="o3"><div class="bar"><span>What you get</span><span>03 / 06</span></div>
+<div class="mid"><h1 class="big x4">From 1 January</h1>
+<ul class="rows"><li><span>A</span><div><b>Weekly group calls.</b> Tuesdays, recorded.</div></li><li><span>B</span><div><b>The portal.</b> Your numbers and your ritual, tracked.</div></li><li><span>C</span><div><b>The agents.</b> AI doing the work you do at midnight.</div></li><li><span>D</span><div><b>The room.</b> Creatives doing it with you.</div></li></ul></div>
+<div class="bar"><span>First call Tuesday 5 January</span><span>→</span></div></section>
+
+<section class="s ink" id="o4"><div class="bar"><span>The Locked In Ritual</span><span>04 / 06</span></div>
+<div class="mid"><h1 class="big x3">Four habits.<br><span class="y">Every day.</span></h1>
+<ul class="rows"><li><span>01</span><div><b>Feed the mind.</b></div></li><li><span>02</span><div><b>Calm the body.</b></div></li><li><span>03</span><div><b>Move the body.</b></div></li><li><span>04</span><div><b>Fuel the body.</b></div></li></ul></div>
+<div class="bar"><span>How you get your power back</span><span>→</span></div></section>
+
+<section class="s pap" id="o5"><div class="bar"><span>The guarantee</span><span>05 / 06</span></div>
+<div class="mid"><h1 class="big x3">Make back the £697 in 90 days, or your next cohort is free.</h1><p class="sub">One condition: you do the work.</p></div>
+<div class="bar"><span>Full terms on the site</span><span>→</span></div></section>
+
+<section class="s yel" id="o6"><div class="bar"><span>Locked In Dept.</span><span>06 / 06</span></div>
+<div class="mid"><h1 class="big x2">£697<br>until<br>20 Dec.</h1><p class="sub">Then £1,497. Or 3 payments of £247.</p></div>
+<div class="bar"><span>Link in bio</span><span>@lockedin.dept</span></div></section>
+
+<script>
+const q=new URLSearchParams(location.search).get('s');
+if(q){document.querySelectorAll('.s').forEach(e=>{if(e.id!==q)e.remove()});document.body.style.background='#0B0B0B';}
+// Motion post: capacity rings pulled outward from a yellow point, type cuts in. Pure function of time (8s loop).
+const cv=document.getElementById('cv'), g=cv&&cv.getContext('2d'), P='#ECEBE7', Y='#E8FF2A';
+window.renderFrame=function(t,dur){ if(!g)return; const W=1080,H=1350; g.clearRect(0,0,W,H);
+  const cx=W*0.74, cy=H*0.36, R=1100, N=18;
+  for(let i=0;i<N;i++){const ph=((t/dur)+i/N)%1, r=R*Math.pow(ph,1.7)+10; g.globalAlpha=0.55*(1-ph); g.strokeStyle=P; g.lineWidth=2; g.beginPath(); g.ellipse(cx,cy,r,r*0.5,-0.25,0,Math.PI*2); g.stroke();}
+  g.globalAlpha=1; g.fillStyle=Y; g.beginPath(); g.arc(cx,cy,9,0,7); g.fill();
+  // "Not locked away" cuts in at 1.6s and holds; hidden for the first beat of each loop
+  const b=document.getElementById('m1b'); if(b) b.style.visibility=(t%dur)>=1.6?'visible':'hidden';
+};
+if(g) renderFrame(4,8);
+</script>
+</body>
