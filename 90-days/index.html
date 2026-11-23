@@ -551,12 +551,15 @@ document.querySelectorAll('canvas.g').forEach(c=>{
     if(p>.95) label('FREEDOM',cx,cy+w*.008,1,'#0B0B0B',800);
   }
   function ticks(t){ // seven days x four habits, ticking in
-    const cols=7, rows=4, pad=w*.08, gw=(w-pad*2)/cols, gh=gw, top=h/2-gh*rows/2, names=['MIND','CALM','MOVE','FUEL'], days=['M','T','W','T','F','S','S'];
+    const cols=7, rows=4, names=['MIND','CALM','MOVE','FUEL'], days=['M','T','W','T','F','S','S'];
+    const fs=Math.max(11,Math.round(w*.022)); g.font='500 '+fs+'px Archivo, sans-serif';
+    const lp=Math.ceil(Math.max(...names.map(n=>g.measureText(n).width)))+14, rp=4; // left gutter sized to the longest label, so nothing clips on a phone
+    const gw=(w-lp-rp)/cols, gh=gw, top=h/2-gh*rows/2;
     const n=reduce?28:Math.floor((t*4)%40);
-    for(let d=0;d<cols;d++){ label(days[d],pad+gw*d+gw/2,top-gw*.35,.6,FG,500);
-      for(let r=0;r<rows;r++){ const idx=d*rows+r, x=pad+gw*d+gw*.14, y=top+gh*r+gh*.14, s=gw*.72; const lit=idx<n && !(d===2&&r===2) && !(d===5&&r===1);
+    for(let d=0;d<cols;d++){ label(days[d],lp+gw*d+gw/2,top-gw*.35,.6,FG,500);
+      for(let r=0;r<rows;r++){ const idx=d*rows+r, x=lp+gw*d+gw*.14, y=top+gh*r+gh*.14, s=gw*.72; const lit=idx<n && !(d===2&&r===2) && !(d===5&&r===1);
         g.strokeStyle=lit?Y:MU; g.lineWidth=1; g.strokeRect(x,y,s,s); if(lit){g.fillStyle=Y;g.fillRect(x+s*.18,y+s*.18,s*.64,s*.64);} } }
-    for(let r=0;r<rows;r++){ g.globalAlpha=.6; g.fillStyle=FG; g.font='500 '+Math.max(9,Math.round(w*.02))+'px Archivo, sans-serif'; g.textAlign='right'; g.fillText(names[r],pad-8,top+gh*r+gh*.6); g.globalAlpha=1; }
+    for(let r=0;r<rows;r++){ g.globalAlpha=.7; g.fillStyle=FG; g.font='500 '+fs+'px Archivo, sans-serif'; g.textAlign='left'; g.fillText(names[r],0,top+gh*r+gh*.5+fs*.35); g.globalAlpha=1; }
   }
   function draw(t){g.clearRect(0,0,w,h);({rings,venn,ticks})[kind](t);}
   function loop(now){if(!on)return;if(!t0)t0=now;draw((now-t0)/1000);raf=requestAnimationFrame(loop);}
